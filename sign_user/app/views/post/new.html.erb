@@ -1,0 +1,8 @@
+<h1>Post#new</h1>
+<p>Find me in app/views/post/new.html.erb</p>
+<%= form_for :post do |f| %>
+  Post Header: <%= f.text_field :post_header %><br />
+  Post Text: <%= f.text_field :post_test %><br />
+  Post Tags : <%= f.text_area :post_tags %><br />
+  <%= f.submit %>
+<% end %>
