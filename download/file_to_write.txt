@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<streets type="array">
+  <street>
+    <id type="integer">980190962</id>
+    <name>Улица Левой Резьбы</name>
+    <created-at type="dateTime">2016-11-18T07:59:41Z</created-at>
+    <updated-at type="dateTime">2016-11-18T07:59:41Z</updated-at>
+  </street>
+  <street>
+    <id type="integer">298486374</id>
+    <name>Улица Сладкой репы</name>
+    <created-at type="dateTime">2016-11-18T07:59:41Z</created-at>
+    <updated-at type="dateTime">2016-11-18T07:59:41Z</updated-at>
+  </street>
+  <street>
+    <id type="integer">113629430</id>
+    <name>Улица Позитивная</name>
+    <created-at type="dateTime">2016-11-18T07:59:41Z</created-at>
+    <updated-at type="dateTime">2016-11-18T07:59:41Z</updated-at>
+  </street>
+  <street>
+    <id type="integer">281110143</id>
+    <name>Улица Глубины Резкости</name>
+    <created-at type="dateTime">2016-11-18T07:59:41Z</created-at>
+    <updated-at type="dateTime">2016-11-18T07:59:41Z</updated-at>
+  </street>
+</streets>

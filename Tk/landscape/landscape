@@ -1,0 +1,5 @@
+require 'tk'
+
+class Land
+
+end; #class

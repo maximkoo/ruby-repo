@@ -33,16 +33,6 @@ frame1['borderwidth'] = 2
      pack
  }
 
-tv=TkVariable.new
-tv="eeee"
-  @e=TkEntry.new(frame1) do
-	textvariable tv 
-	insert(0,'ololo')
- 	pack
- end
-tv="eeee"
- 
-
 def someMethod
  puts "Ouch!"
  @a.text="ouch..."

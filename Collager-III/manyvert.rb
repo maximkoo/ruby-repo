@@ -6,40 +6,37 @@ class ManyVert
 		puts "*** ManyVert ***"
 	end;
 
-	def getRatios(imgs, xSize)
+	def getRatios(imgs, xSize, brdSize)
 		@brdX=imgs.size-1+2
-		x=[]; y=[]; a=[]
-		imgs.each do |i| 
-			x<<i["width"]
-			y<<i["height"]
+		@brdSize=brdSize
+		@imgs=imgs
+		@imgs[0]["ratio"]=xSize.fdiv(@imgs.reduce(0){|sum, x| sum+imgs.first["height"]*x["width"].fdiv(x["height"])})
+		(1..@imgs.size-1).each do |i|
+			@imgs[i]["ratio"]=@imgs[0]["ratio"]*@imgs.first["height"].fdiv(@imgs[i]["height"])
 		end;	
-		#puts x
-		#puts y
-		a[0]=xSize.fdiv(imgs.reduce(0){|sum, x| sum+imgs.first["height"]*x["width"].fdiv(x["height"])})
-		z=0
-		imgs.each do |i|
-			a[z]=a[0]*imgs.first["height"].fdiv(i["height"])
-			z+=1
-		end;	
-		puts a;
-		a
+		@imgs
 	end;
 
-	def getBrdX
-		@brdX
-	end;	
-
-	def getBrdY
-		@brdY
-	end	
-
-	def getBkgSize(imgs, brdSize)
+	def getBkgSize(imgs)
 		bkg=Hash.new
-		bkg["width"]=imgs.reduce(0){|sum, m| sum+m["reducedWidth"]}+brdSize*@brdX
-		bkg["height"]=imgs[0]["reducedHeight"]+brdSize*@brdY
+		bkg["width"]=imgs.reduce(0){|sum, m| sum+m["reducedWidth"]}+@brdSize*@brdX
+		bkg["height"]=imgs[0]["reducedHeight"]+@brdSize*@brdY
 		puts bkg
 		bkg
 	end;
 
-		
+	def getGeometry(imgs)
+		puts "---geometry---"
+		@imgs=imgs
+		z=0
+		bigX=0		
+		@imgs.each do |n|
+			n["geometry"]="+#{@brdSize*(z+1)+bigX}+#{@brdSize}"
+			bigX=@imgs[0..z].reduce(0){|sum, m| sum+m["reducedWidth"]}
+			z+=1
+			puts n["geometry"]
+		end;	
+		@imgs
+	end;
+
 end;	

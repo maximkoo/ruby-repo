@@ -1,40 +1,56 @@
 class SideWindow
 	def initialize
-		#@imgs=imgs
-		@brdX=@brdY=3
 		puts "*** SideWindow ***"
 	end;
 
-	def getRatios(imgs, xSize)
-		x=[]; y=[]; a=[]
+	def getRatios(imgs, xSize, brdSize)
+		@brdSize=brdSize
+		@imgs=[]
 		imgs.select {|q| q["orientation"]=="Vertical"}.each do |i| 
-			x<<i["width"]
-			y<<i["height"]
-			#puts "Added Image:"+i["image"].path
+			@imgs<<i
 		end;
 		imgs.select {|q| q["orientation"]=="Horizontal"}.each do |i| 
-			x<<i["width"]
-			y<<i["height"]
-			#puts"Added Image:"+ i["image"].path
+			@imgs<<i
+		end;
+		
+		@xSize=xSize-3*@brdSize;
+		puts "@xSize=#{@xSize}"
+		@imgs.each do |n|
+			if n["orientation"]=="Horizontal"
+				n["ratio"]=@xSize*@imgs[0]["height"].fdiv(@imgs[0]["width"]*@imgs.reduce(0){|sum, i| sum+n["width"]*i["height"].fdiv(i["width"])})
+				puts n["ratio"]
+			end;
 		end;	
-		puts x
-		puts y
-		a[2]=xSize.fdiv(x[1]+(x[1].fdiv(x[0])*y[0]+y[1])*x[2].fdiv(y[2]));
-		a[1]=a[2]*(x[1].fdiv(x[0]));
-		a[0]=(a[1]*y[0]+a[2]*y[1]).fdiv(y[2])
-
-		#b=@totalX.fdiv(x2+(x2.fdiv(x1)*y1+y2)*x3.fdiv(y3));
-		#a=b*(x2.fdiv(x1));
-		#c=(a*y1+b*y2).fdiv(y3)
-		puts a;
-		a
+		
+		@imgs[0]["ratio"]=(@xSize-@imgs[2]["ratio"]*@imgs[2]["width"]).fdiv(@imgs[0]["width"])
+		puts "[0]:#{@imgs[0]["ratio"]}"
+		@imgs
 	end;
 
-	def getBrdX
-		@brdX
+	def getBkgSize(imgs)
+		puts "---background---"
+		bkg=Hash.new
+		bkg["width"]=imgs[0]["reducedWidth"]+imgs[1]["reducedWidth"]+@brdSize*3
+		bkg["height"]=imgs[0]["reducedHeight"]+@brdSize*2
+		puts bkg
+		bkg
 	end;	
 
-	def getBrdY
-		@brdY
-	end		
+	def getGeometry(imgs)
+		puts "---geometry---"
+		@imgs=imgs
+		@imgs[0]["geometry"]="+#{@brdSize}+#{@brdSize}"
+		puts @imgs[0]["geometry"]
+		z=1
+		bigY=0		
+		@imgs.each do |n|
+			if n["orientation"]=="Horizontal"
+				n["geometry"]="+#{@brdSize*2+@imgs[0]["reducedWidth"]}+#{@brdSize*z+bigY}"
+				bigY=@imgs[1..z].reduce(0){|sum, m| sum+m["reducedHeight"]}
+				z+=1
+				puts n["geometry"]
+			end;	
+		end;	
+		@imgs
+	end;
 end;	

@@ -1,0 +1,1 @@
+{% img center /images/2016/black.jpg %}

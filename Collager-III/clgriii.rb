@@ -4,6 +4,7 @@ require './square.rb'
 require './sidewindow.rb'
 require './topwindow.rb'
 require './manyvert.rb'
+require './hakenkreuz.rb'
 class Collager
 	def initialize(args)
 		@imgs=[]
@@ -40,31 +41,25 @@ class Collager
 
 			#when 11 then Forel.new;	
 			when 12 then TopWindow.new;
-			#when 13 then TTwindow.new;
+			when 13 then TopWindow.new;
 			when 21 then SideWindow.new;
-			#when 22 then HakenKreuz.new;
-			#when 31 then SmallSide.new;
-				
+			when 22 then HakenKreuz.new;
+			when 31 then SideWindow.new;
+			else puts "*** NO COMBINATION ! ***"	
 			end;
 		#Square.new.getRatios(@imgs,800);
 		#SideWindow.new.getRatios(@imgs,800);
-		ratios=matchClass.getRatios(@imgs,800, @brdSize);
-		z=0
+		@imgs=matchClass.getRatios(@imgs,800, @brdSize);
+		#z=0
 		@imgs.each do |i|
-			i["ratio"]=ratios[z]
-			i["reducedWidth"]=i["width"]*ratios[z]
-			i["reducedHeight"]=i["height"]*ratios[z]
-			z+=1
+			i["reducedWidth"]=i["width"]*i["ratio"]
+			i["reducedHeight"]=i["height"]*i["ratio"]
+			puts "--- #{i["reducedWidth"]} --- #{i["reducedHeight"]}"
 		end;
 		#puts @imgs	
-		bkgSize=matchClass.getBkgSize(@imgs, @brdSize);
+		bkgSize=matchClass.getBkgSize(@imgs);
 		bkg=BackGround.new(bkgSize["width"],bkgSize["height"]).getBackGround
-		geo=matchClass.getGeometry(@imgs, @brdSize);
-		z=0
-		@imgs.each do |i|
-			i["geometry"]=geo[z]
-			z+=1
-		end;
+		@imgs=matchClass.getGeometry(@imgs);		
 
 		@imgs.each do |i|
 			reducedImage=i["image"].resize("#{i["ratio"]*100}%")
