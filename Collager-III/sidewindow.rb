@@ -15,9 +15,10 @@ class SideWindow
 		
 		@xSize=xSize-3*@brdSize;
 		puts "@xSize=#{@xSize}"
+		nb=(@imgs.size-2)*@brdSize
 		@imgs.each do |n|
 			if n["orientation"]=="Horizontal"
-				n["ratio"]=@xSize*@imgs[0]["height"].fdiv(@imgs[0]["width"]*@imgs.reduce(0){|sum, i| sum+n["width"]*i["height"].fdiv(i["width"])})
+				n["ratio"]=(@xSize*@imgs[0]["height"]-nb*@imgs[0]["width"]).fdiv(@imgs[0]["width"]*@imgs.reduce(0){|sum, i| sum+n["width"]*i["height"].fdiv(i["width"])})
 				puts n["ratio"]
 			end;
 		end;	
