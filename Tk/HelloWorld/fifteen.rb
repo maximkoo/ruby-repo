@@ -3,10 +3,11 @@ require 'mini_magick'
 class Fifteen
 	def initialize
 		@root = TkRoot.new {title "Hello Tk!"; padx 1; pady 1}
-		@cnv1=TkCanvas.new(@root){background 'gray'}.grid :sticky => 'nws', :column => 0, :row => 0
+		@cnv1=TkCanvas.new(@root){background 'gray'}.grid :sticky => 'nws', :column => 0, :row => 0, :rowspan=>2
 		#@img=MiniMagick::Image.open("1.jpg");
 		@brdSize=2
-		TkButton.new(@root, :text=>"Shuffle!",:command=>proc{shuffle}).grid :sticky => 'e', :column => 1, :row => 0
+		TkButton.new(@root, :text=>"Shuffle!",:command=>proc{shuffle}).grid :sticky => 'e', :column => 1, :row => 0, :padx=>50
+		TkButton.new(@root, :text=>"Close!",:command=>proc{@root.destroy}).grid :sticky => 'e', :column => 1, :row => 1, :padx=>50
 	end;
 
 	def crash
@@ -51,7 +52,7 @@ class Fifteen
 				h["xx"]=xx
 				h["yy"]=yy
 				#h["filename"]="./res/#{i}#{j}.gif";
-				h["filename"]="c:/Users/Maxim/Documents/Ruby/Tk/Forms/IMG_4150/#{i}#{j}.gif";
+				h["filename"]="c:/Users/Maxim/Documents/Ruby/Tk/Forms/IMG_4534/#{i}#{j}.gif";
 				begin
 					#puts h["filename"]
 					img=MiniMagick::Image.open(h["filename"]);
@@ -125,13 +126,14 @@ class Fifteen
 	end;	
 
 	def shuffle
-		#xr=1+rand(4);
-		#yr=1+rand(4);
-		20.times do
+		imgLast=@voidCell
+		35.times do
 			a=@imgs.select{|x| voidIsNear?(x["row"],x["pos"]) }
+			a.delete(imgLast)
 			aa=rand(a.size)
 			mv=whereIsVoid?(a[aa]["row"],a[aa]["pos"])
 			swapToEmpty(a[aa])
+			imgLast=a[aa]
 		end
 	end;	
 end;
