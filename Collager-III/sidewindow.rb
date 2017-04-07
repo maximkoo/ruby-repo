@@ -37,20 +37,35 @@ class SideWindow
 		bkg
 	end;	
 
-	def getGeometry(imgs)
+	def getGeometry(imgs, mods)
 		puts "---geometry---"
 		@imgs=imgs
-		@imgs[0]["geometry"]="+#{@brdSize}+#{@brdSize}"
-		puts @imgs[0]["geometry"]
-		z=1
-		bigY=0		
-		@imgs.each do |n|
-			if n["orientation"]=="Horizontal"
-				n["geometry"]="+#{@brdSize*2+@imgs[0]["reducedWidth"]}+#{@brdSize*z+bigY}"
-				bigY=@imgs[1..z].reduce(0){|sum, m| sum+m["reducedHeight"]}
-				z+=1
-				puts n["geometry"]
+		if !mods.include?("--right")
+			@imgs[0]["geometry"]="+#{@brdSize}+#{@brdSize}"
+			puts @imgs[0]["geometry"]
+			z=1
+			bigY=0		
+			@imgs.each do |n|
+				if n["orientation"]=="Horizontal"
+					n["geometry"]="+#{@brdSize*2+@imgs[0]["reducedWidth"]}+#{@brdSize*z+bigY}"
+					bigY=@imgs[1..z].reduce(0){|sum, m| sum+m["reducedHeight"]}
+					z+=1
+					puts n["geometry"]
+				end;	
 			end;	
+		else
+			z=1
+			bigY=0		
+			@imgs.each do |n|
+				if n["orientation"]=="Horizontal"
+					n["geometry"]="+#{@brdSize}+#{@brdSize*z+bigY}"
+					bigY=@imgs[1..z].reduce(0){|sum, m| sum+m["reducedHeight"]}
+					z+=1
+					puts n["geometry"]
+				end;	
+			end;
+			@imgs[0]["geometry"]="+#{@brdSize*2+@imgs[1]["reducedWidth"]}+#{@brdSize}"
+			puts @imgs[0]["geometry"]	
 		end;	
 		@imgs
 	end;

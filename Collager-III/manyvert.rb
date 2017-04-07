@@ -25,7 +25,7 @@ class ManyVert
 		bkg
 	end;
 
-	def getGeometry(imgs)
+	def getGeometry(imgs, mods)
 		puts "---geometry---"
 		@imgs=imgs
 		z=0

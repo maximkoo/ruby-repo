@@ -5,7 +5,7 @@ class Square
 		puts "*** Square ***"
 	end;
 
-	def getRatios(imgs, xSize)
+	def getRatios(imgs, xSize, brdSize)
 		x=[]; y=[]; a=[]
 		imgs.each do |i| 
 			x<<i["width"]
@@ -38,7 +38,7 @@ class Square
 		bkg
 	end;
 
-	def getGeometry(imgs, brdSize)
+	def getGeometry(imgs, mods)
 		geo=[]
 		geo[0]="+#{brdSize}+#{brdSize}"
 		geo[1]="+#{brdSize+imgs[0]['reducedWidth']+brdSize}+#{brdSize}"

@@ -42,7 +42,7 @@ def getRatios(imgs, xSize, brdSize)
 		bkg
 	end;	
 
-	def getGeometry(imgs)
+	def getGeometry(imgs, mods)
 		puts "---geometry---"
 		@imgs=imgs
 		@imgs[0]["geometry"]="+#{@brdSize}+#{@brdSize}"	

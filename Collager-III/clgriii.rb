@@ -9,6 +9,8 @@ class Collager
 	def initialize(args)
 		@imgs=[]
 		@brdSize=10
+		@mods=args.select{|i| /^--/===i}
+		args=args-@mods
 		return if args.size==1;
 		args.each do |i|
 			a=MiniMagick::Image.open(i);
@@ -59,7 +61,7 @@ class Collager
 		#puts @imgs	
 		bkgSize=matchClass.getBkgSize(@imgs);
 		bkg=BackGround.new(bkgSize["width"],bkgSize["height"]).getBackGround
-		@imgs=matchClass.getGeometry(@imgs);		
+		@imgs=matchClass.getGeometry(@imgs, @mods);		
 
 		@imgs.each do |i|
 			reducedImage=i["image"].resize("#{i["ratio"]*100}%")
