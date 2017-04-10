@@ -10,6 +10,7 @@ class GameField
 		@r=Moving.new(@cnv1);
 		@root.bind('KeyPress-Left', proc{@r.moveLeft})
 		@root.bind('KeyPress-Right', proc{@r.moveRight})
+		@root.bind('KeyPress-Up', proc{@r.rotate})
 		@tm = TkTimer.new(1000, -1,proc{makeTurn})
 	end;
 

@@ -6,20 +6,23 @@ class Square
 	end;
 
 	def getRatios(imgs, xSize, brdSize)
-		x=[]; y=[]; a=[]
-		imgs.each do |i| 
-			x<<i["width"]
-			y<<i["height"]
-		end;	
+		#x=[]; y=[]; a=[]
+		@brdSize=brdSize
+		# imgs.each do |i| 
+		# 	x<<i["width"]
+		# 	y<<i["height"]
+		# end;
+		@imgs=imgs	
 		#puts x
 		#puts y
 		#@xSize=xSize-
-		a[1]=xSize*y[1].fdiv(y[0]).fdiv(x[0]+x[1]);
-		a[0]=(xSize-a[1]*x[1])*1.fdiv(x[0]);
-		a[3]=xSize*y[3].fdiv(y[1]).fdiv(x[2]+x[3]);
-		a[2]=(xSize-a[3]*x[3])*1.fdiv(x[2]);
-		puts a;
-		a
+		@imgs[1]["ratio"]=xSize*@imgs[1]["height"].fdiv(@imgs[0]["height"]).fdiv(@imgs[0]["width"]+@imgs[1]["width"]);
+		@imgs[0]["ratio"]=(xSize-@imgs[1]["ratio"]*@imgs[1]["width"])*1.fdiv(@imgs[0]["width"]);
+		@imgs[3]["ratio"]=xSize*@imgs[3]["height"].fdiv(@imgs[1]["height"]).fdiv(@imgs[2]["width"]+@imgs[3]["width"]);
+		@imgs[2]["ratio"]=(xSize-@imgs[3]["ratio"]*@imgs[3]["width"])*1.fdiv(@imgs[2]["width"]);
+		#puts a;
+		@imgs.each {|i| puts i["ratio"]}
+		@imgs
 	end;	
 
 	def getBrdX
@@ -30,21 +33,20 @@ class Square
 		@brdY
 	end	
 
-	def getBkgSize(imgs, brdSize)
+	def getBkgSize(imgs)
 		bkg=Hash.new
-		bkg["width"]=imgs[0]["reducedWidth"]+imgs[1]["reducedWidth"]+brdSize*@brdX
-		bkg["height"]=imgs[0]["reducedHeight"]+imgs[2]["reducedHeight"]+brdSize*@brdY
+		bkg["width"]=imgs[0]["reducedWidth"]+imgs[1]["reducedWidth"]+@brdSize*@brdX
+		bkg["height"]=imgs[0]["reducedHeight"]+imgs[2]["reducedHeight"]+@brdSize*@brdY
 		puts bkg
 		bkg
 	end;
 
 	def getGeometry(imgs, mods)
-		geo=[]
-		geo[0]="+#{brdSize}+#{brdSize}"
-		geo[1]="+#{brdSize+imgs[0]['reducedWidth']+brdSize}+#{brdSize}"
-		geo[2]="+#{brdSize}+#{brdSize+imgs[0]['reducedHeight']+brdSize}"
-		geo[3]="+#{brdSize+imgs[0]['reducedWidth']+brdSize}+#{brdSize+imgs[0]['reducedHeight']+brdSize}"
-		puts geo
-		geo
+		@imgs=imgs
+		@imgs[0]["geometry"]="+#{@brdSize}+#{@brdSize}"
+		@imgs[1]["geometry"]="+#{@brdSize+imgs[0]['reducedWidth']+@brdSize}+#{@brdSize}"
+		@imgs[2]["geometry"]="+#{@brdSize}+#{@brdSize+imgs[0]['reducedHeight']+@brdSize}"
+		@imgs[3]["geometry"]="+#{@brdSize+imgs[0]['reducedWidth']+@brdSize}+#{@brdSize+imgs[0]['reducedHeight']+@brdSize}"
+		@imgs
 	end;	
 end;	
