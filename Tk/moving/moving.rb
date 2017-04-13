@@ -15,7 +15,7 @@ class Moving
 		shapeTypes=[TShape,Stick,SLeft,SRight,CornerLeft,CornerRight,Cube];
 
 		matchClass=shapeTypes[rand(7)];
-		matchClass=shapeTypes[1];
+		matchClass=shapeTypes[6];
 		@fourCoords=matchClass.new.getFourCoords
 		#super(cnv, x0,y0,x0+@step,y0+@step, :fill=>"white")
 		@fourCoords.each do |c|
