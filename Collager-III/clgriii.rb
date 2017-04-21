@@ -9,9 +9,39 @@ class Collager
 	def initialize(args)
 		@imgs=[]
 		@brdSize=10
-		@mods=args.select{|i| /^--/===i}
-		args=args-@mods
-		return if args.size==1;
+		#@mods=args.select{|i| /^--/===i}
+		#args=args-@mods
+		a=[]; @mods=[];
+		args.each_with_index do |val, indx|	
+			if /^\.|\.jpg$|.png$/===val
+				a<<val
+			end;
+			if /^--/===val
+				if ["--last","--right","--down"].include? val
+					@mods<<val
+				end;
+				if ["--latest"].include? val	
+					@mods<<val
+					@mods<<args[indx+1]
+				end;	
+			end;	
+		end;	
+		#puts a
+		puts @mods
+		
+		if !@mods.nil? && @mods.include?("--last")
+			x=@mods.index("--last")
+		 	args=Dir['*.jpg'].sort_by{|f| File.mtime(f)}.last(1)
+		else args=a
+		end;
+
+		if !@mods.nil? && @mods.include?("--latest")
+			x=@mods.index("--latest")
+		 	args=Dir['*.jpg'].sort_by{|f| File.mtime(f)}.last(@mods[x+1].to_i)
+		else args=a
+		end;	
+
+		return if args.size<=1;
 		args.each do |i|
 			a=MiniMagick::Image.open(i);
 			h=Hash.new;
