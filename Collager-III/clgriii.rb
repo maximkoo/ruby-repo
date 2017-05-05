@@ -101,7 +101,11 @@ class Collager
 			end;	
 		end;
 
-		bkg.write "collage_"+Time.now.strftime("%Y%m%d_%H%M%S")+".jpg"
+		newFileName="collage_"+Time.now.strftime("%Y%m%d_%H%M%S")+".jpg"
+		tagLine="{% img center /images/#{Time.now.year}/#{newFileName} %}"
+		bkg.write newFileName
+		FileUtils.copy(newFileName, File.join("c:","Users","Maxim","Documents","Octopress","source","images","#{Time.now.year}"));
+		File.write("tags.txt",tagLine);
 		puts "Successfully saved"	
 	end;
 end;	

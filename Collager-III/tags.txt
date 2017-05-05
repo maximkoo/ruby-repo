@@ -1,0 +1,1 @@
+{% img center /images/2017/collage_20170505_170053.jpg %}
