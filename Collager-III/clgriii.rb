@@ -74,6 +74,7 @@ class Collager
 			#when 11 then Forel.new;	
 			when 12 then TopWindow.new;
 			when 13 then TopWindow.new;
+			when 14 then TopWindow.new;
 			when 21 then SideWindow.new;
 			when 22 then HakenKreuz.new;
 			when 31 then SideWindow.new;

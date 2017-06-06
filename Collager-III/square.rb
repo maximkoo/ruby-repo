@@ -16,10 +16,17 @@ class Square
 		#puts x
 		#puts y
 		#@xSize=xSize-
-		@imgs[1]["ratio"]=xSize*@imgs[1]["height"].fdiv(@imgs[0]["height"]).fdiv(@imgs[0]["width"]+@imgs[1]["width"]);
-		@imgs[0]["ratio"]=(xSize-@imgs[1]["ratio"]*@imgs[1]["width"])*1.fdiv(@imgs[0]["width"]);
-		@imgs[3]["ratio"]=xSize*@imgs[3]["height"].fdiv(@imgs[1]["height"]).fdiv(@imgs[2]["width"]+@imgs[3]["width"]);
-		@imgs[2]["ratio"]=(xSize-@imgs[3]["ratio"]*@imgs[3]["width"])*1.fdiv(@imgs[2]["width"]);
+		# @imgs[1]["ratio"]=xSize*@imgs[1]["height"].fdiv(@imgs[0]["height"]).fdiv(@imgs[0]["width"]+@imgs[1]["width"]);
+		# @imgs[0]["ratio"]=(xSize-@imgs[1]["ratio"]*@imgs[1]["width"])*1.fdiv(@imgs[0]["width"]);
+		# @imgs[3]["ratio"]=xSize*@imgs[3]["height"].fdiv(@imgs[1]["height"]).fdiv(@imgs[2]["width"]+@imgs[3]["width"]);
+		# @imgs[2]["ratio"]=(xSize-@imgs[3]["ratio"]*@imgs[3]["width"])*1.fdiv(@imgs[2]["width"]);
+		###
+		@imgs[0]["ratio"]=(xSize*@imgs[1]["height"]).fdiv(@imgs[1]["height"]*@imgs[0]["width"]+@imgs[0]["height"]*@imgs[1]["width"])
+		@imgs[1]["ratio"]=(xSize*@imgs[0]["height"]).fdiv(@imgs[1]["height"]*@imgs[0]["width"]+@imgs[0]["height"]*@imgs[1]["width"])
+		@imgs[2]["ratio"]=(xSize*@imgs[3]["height"]).fdiv(@imgs[3]["height"]*@imgs[2]["width"]+@imgs[2]["height"]*@imgs[3]["width"])
+		@imgs[3]["ratio"]=(xSize*@imgs[2]["height"]).fdiv(@imgs[3]["height"]*@imgs[2]["width"]+@imgs[2]["height"]*@imgs[3]["width"])
+
+		##
 		#puts a;
 		@imgs.each {|i| puts i["ratio"]}
 		@imgs
