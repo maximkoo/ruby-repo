@@ -36,7 +36,8 @@ class GameField
 	end;
 
 	def makeRound
-		@r=Moving.getShape
+		@r=Moving.new
+		@r.getShape
 		puts @r.class
 	end;
 		

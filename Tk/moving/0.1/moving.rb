@@ -9,6 +9,8 @@ class Moving
 
 		#@fourCoordsInCubes=[]
 		@fourCubes=[]
+
+		@@shapeTypes=[TShape,Stick,SLeft,SRight,CornerLeft,CornerRight,Cube];
 	end;	
 
 	def self.getShape

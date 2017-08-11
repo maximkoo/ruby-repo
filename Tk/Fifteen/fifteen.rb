@@ -19,6 +19,7 @@ class Fifteen
 		(1..pieces).each do |i|
 			(1..pieces).each do |j|
 				@img=MiniMagick::Image.open("1.jpg");
+				#@img=MiniMagick::Image.open("./IMG_6666_q.gif");
 				geo="#{xx}x#{yy}+#{(j-1)*yy}+#{(i-1)*xx}"
 				h=Hash.new
 				img=@img.crop (geo);
@@ -51,8 +52,9 @@ class Fifteen
 				h["pos"]=j;
 				h["xx"]=xx
 				h["yy"]=yy
-				#h["filename"]="./res/#{i}#{j}.gif";
-				h["filename"]="c:/Users/Maxim/Documents/Ruby/Tk/Forms/IMG_4534/#{i}#{j}.gif";
+				h["filename"]="./res/#{i}#{j}.gif";
+				#h["filename"]="c:/Users/Maxim/Documents/Ruby/Tk/Forms/IMG_4534/#{i}#{j}.gif";
+				#h["filename"]="./IMG_6666_q.gif";
 				begin
 					#puts h["filename"]
 					img=MiniMagick::Image.open(h["filename"]);
