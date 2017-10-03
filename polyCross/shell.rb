@@ -1,7 +1,10 @@
 class Shell
   attr_accessor :speed, :x, :y, :angle, :moving
   def initialize()
-    @x=440; @y=100; @speed=10; @angle=180+rand(40)-20; @img=Gosu::Image.new('./laserBlue01_50.png');
+    @x=140; @y=402; @speed=10; 
+@angle=90;
+    #@angle=180+rand(40)-20; 
+    @img=Gosu::Image.new('./laserBlue01_50.png');
     #@x=500; @y=250; @speed=10; @angle=270+rand(50)-25;
     @moving=true;
   end

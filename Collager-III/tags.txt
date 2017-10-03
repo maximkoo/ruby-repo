@@ -1,1 +1,1 @@
-{% img center /images/2017/collage_20170926_143712.jpg %}
+{% img center /images/2017/collage_20171003_120939.jpg %}

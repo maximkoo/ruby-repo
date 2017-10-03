@@ -14,8 +14,8 @@ class GameWindow<Gosu::Window
     #@q1=[{x:100,y:200},{x:200,y:200}]
     #@q2=[{x:100,y:140},{x:100,y:100}]
     #@q1=[{x:100,y:130},{x:100,y:150}]
-    @q2=[{x:417,y:402},{x:474,y:402}]
-    @q1=[{x:447,y:402},{x:444,y:411}]
+    @q2=[{x:100,y:100},{x:250,y:100}]
+    @q1=[{x:50,y:100},{x:150,y:100}]
     @i=[]
     @hits=[]
     @expls=[]
@@ -32,7 +32,7 @@ class GameWindow<Gosu::Window
     #crossPoly(poly:@poly, line:@line)
 
     @m1=Meteor.new do |m|
-        m.x=400;
+        m.x=420;
         m.y=400;
     end; 
   end;
@@ -119,9 +119,9 @@ class GameWindow<Gosu::Window
     if @line
         Gosu.draw_line(@line.first[:x],@line.first[:y], Gosu::Color::RED, @line.last[:x], @line.last[:y],Gosu::Color::RED);
     end;    
-    # @i.select{|pp|!pp.nil?}.each do |p|
-    #     draw_quad(p[:x]-3,p[:y]-3,Gosu::Color::YELLOW, p[:x]+3,p[:y]-3,Gosu::Color::YELLOW, p[:x]+3,p[:y]+3,Gosu::Color::YELLOW, p[:x]-3,p[:y]+3, Gosu::Color::YELLOW,1)
-    # end;
+    @i.select{|pp|!pp.nil?}.each do |p|
+        draw_quad(p[:x]-3,p[:y]-3,Gosu::Color::YELLOW, p[:x]+3,p[:y]-3,Gosu::Color::YELLOW, p[:x]+3,p[:y]+3,Gosu::Color::YELLOW, p[:x]-3,p[:y]+3, Gosu::Color::YELLOW,1)
+    end;
 
     # @hits.select{|pp|!pp.nil?}.each do |p|
     #     draw_quad(p[:x]-3,p[:y]-3,Gosu::Color::YELLOW, p[:x]+3,p[:y]-3,Gosu::Color::YELLOW, p[:x]+3,p[:y]+3,Gosu::Color::YELLOW, p[:x]-3,p[:y]+3, Gosu::Color::YELLOW,30)
@@ -146,7 +146,8 @@ end;
 
 class Crossfinder  
   def self.cross(p1,p2) ; # два массива, в каждом два хэша    
-    p1,p2=p2,p1 if (p1.first[:x]-p1.last[:x]).abs>(p2.first[:x]-p2.last[:x]).abs #более вертикальные вперед
+    #p1,p2=p2,p1 if (p1.first[:x]-p1.last[:x]).abs>(p2.first[:x]-p2.last[:x]).abs #более вертикальные вперед
+    p1,p2=p2,p1 if (p2.first[:x]-p2.last[:x]).abs==0 
     x1=p1.first[:x]; y1=p1.first[:y].round; x2=p1.last[:x];y2=p1.last[:y].round
     xx1=p2.first[:x]; yy1=p2.first[:y].round; xx2=p2.last[:x];yy2=p2.last[:y].round
     return unless ([x1,x2].min<=[xx1,xx2].max) && ([xx1,xx2].min<=[x1,x2].max) && ([y1,y2].min<=[yy1,yy2].max) && ([yy1,yy2].min<=[y1,y2].max)
@@ -154,6 +155,7 @@ class Crossfinder
     #puts p2.to_s
 
     dx=(x2-x1); dxx=(xx2-xx1);
+    dy=(y2-y1); dyy=(yy2-yy1);
     case 
         when dx==0 && dxx==0
             puts "Two verticals"
@@ -169,6 +171,15 @@ class Crossfinder
             ss=(yy2-yy1).fdiv(xx2-xx1);
             ix=x1;
             iy=ss*ix-ss*xx1+yy1;
+        when dy==0 && dy==0
+            puts "Two horizontal"
+            return if y1!=y1
+            iy=y1
+            if xx1.between?([x1,x2].min,[x1,x2].max)
+                ix=xx1;
+            elsif x1.between?([xx1,xx2].min,[xx1,xx2].max)
+                ix=x1;
+            end;       
         else
             s=(y2-y1).fdiv(x2-x1);
             ss=(yy2-yy1).fdiv(xx2-xx1);
