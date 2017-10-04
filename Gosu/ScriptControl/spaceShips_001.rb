@@ -8,7 +8,7 @@ class SpaceShips_001<GameObject
         @x,@y,@angle=x,y,angle
         @ph=SpaceShips_001_physics.new(self);
         @gr=SpaceShips_001_graphics.new(self,x,y,angle);
-        @pl=SpaceShips_001_polygon.new(self,x,y);
+        @pl=SpaceShips_001_polygon.new(self);
         puts @components  
     end;
 
@@ -22,7 +22,7 @@ class SpaceShips_001<GameObject
     
     def draw
         #puts "Components draw"
-        components.map(&:draw)
+        components.each(&:draw)
     end;     
 end;
 
@@ -34,8 +34,8 @@ class SpaceShips_001_physics<Component
         @speed=10;
         @cr=0
         @obj_id=0
-        puts @object.inspect
-        puts "cr=#{@object.cr}"          
+        #puts @object.inspect
+        #puts "cr=#{@object.cr}"          
         #puts @object.x, @object.y    
         
     end;
@@ -107,44 +107,72 @@ class SpaceShips_001_graphics<Component
     end;  
 
     def draw
-        @img.draw_rot(@object.x,@object.y,GRAPHICS_LAYER,@object.angle)
+        @img.draw_rot(@object.x,@object.y,GRAPHICS_LAYER,@object.angle) if DRAW_GRAPHICS
     end;        
 end;
 
 class SpaceShips_001_polygon<Component
     attr_accessor :poly
-    def initialize(obj,x,y)
+    def initialize(obj)
         super(obj)
-        @x,@y=x,y
-        @poly=[]
-        @poly<<{:x=>27, :y=>0}
-        @poly<<{:x=>47, :y=>0}
-        @poly<<{:x=>47, :y=>7}
-        @poly<<{:x=>57, :y=>7}
-        @poly<<{:x=>57, :y=>0}
-        @poly<<{:x=>77, :y=>0}
-        @poly<<{:x=>77, :y=>4}
-        @poly<<{:x=>93, :y=>9}
-        @poly<<{:x=>105, :y=>56}
-        @poly<<{:x=>82, :y=>80}
-        @poly<<{:x=>74, :y=>75}
-        #здесь пропуск
-        @poly<<{:x=>68, :y=>44}
-        @poly<<{:x=>61, :y=>63}
-        @poly<<{:x=>44, :y=>63}
-        @poly<<{:x=>37, :y=>44}
-        #здесь пропуск
-        @poly<<{:x=>30, :y=>75}
-        @poly<<{:x=>23, :y=>80}
-        @poly<<{:x=>0, :y=>56}
-        @poly<<{:x=>13, :y=>9}
-        @poly<<{:x=>27, :y=>4}
+        #@x,@y=x,y
+        @poly0=[]
+        @poly0<<{:x=>9, :y=>0}
+        @poly0<<{:x=>21, :y=>7}
+        @poly0<<{:x=>29, :y=>7}
+        @poly0<<{:x=>41, :y=>0}
+        @poly0<<{:x=>51, :y=>11}
+        @poly0<<{:x=>45, :y=>35}
+        @poly0<<{:x=>37, :y=>39}
+        @poly0<<{:x=>12, :y=>39}
+        @poly0<<{:x=>5, :y=>35}
+        @poly0<<{:x=>0, :y=>11}
 
-        @poly<<@poly.first.clone;
-        @poly.each{|p| p[:x]=p[:x].fdiv(2)+x; p[:y]=p[:y].fdiv(2)+y;}
+        # @poly<<{:x=>27, :y=>0}
+        # @poly<<{:x=>47, :y=>0}
+        # @poly<<{:x=>47, :y=>7}
+        # @poly<<{:x=>57, :y=>7}
+        # @poly<<{:x=>57, :y=>0}
+        # @poly<<{:x=>77, :y=>0}
+        # @poly<<{:x=>77, :y=>4}
+        # @poly<<{:x=>93, :y=>9}
+        # @poly<<{:x=>105, :y=>56}
+        # @poly<<{:x=>82, :y=>80}
+        # @poly<<{:x=>74, :y=>75}
+        # #здесь пропуск
+        # @poly<<{:x=>68, :y=>44}
+        # @poly<<{:x=>61, :y=>63}
+        # @poly<<{:x=>44, :y=>63}
+        # @poly<<{:x=>37, :y=>44}
+        # #здесь пропуск
+        # @poly<<{:x=>30, :y=>75}
+        # @poly<<{:x=>23, :y=>80}
+        # @poly<<{:x=>0, :y=>56}
+        # @poly<<{:x=>13, :y=>9}
+        # @poly<<{:x=>27, :y=>4}
+        @poly0<<@poly0.first.clone;   
+        @poly=@poly0.clone   
+        @poly.each{|p| p[:x]=p[:x]-26; p[:y]=p[:y]-20;}
+        @poly=@poly0.map{|p| {:x=>p[:x]+@object.x, :y=>p[:y]+@object.y}}
+        # puts 1
+        # puts @poly0
+        # puts 2
+        # puts @poly
     end;
 
+    def update
+        @poly=@poly0.map{|p| {:x=>p[:x]+@object.x, :y=>p[:y]+@object.y}}
+        #puts 3
+        #puts @poly
+    end;
+        
     def draw
-
+        if DRAW_POLYGONS
+            (@poly.size-1).times do |i|
+                #puts "poly=#{@poly}"
+                Gosu.draw_line(@poly[i][:x],@poly[i][:y],Gosu::Color::WHITE, @poly[i+1][:x],@poly[i+1][:y],Gosu::Color::GRAY,POLYGON_LAYER);                
+            end
+        #puts :draw_line
+        end;    
     end;    
 end;     

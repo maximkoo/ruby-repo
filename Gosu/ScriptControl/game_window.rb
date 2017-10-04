@@ -4,9 +4,11 @@ require './spaceShips_001.rb'
 require './routine_holder.rb'
 
 	POLYGON_LAYER=10
+	IDLE_OBJECTS_LAYER=15
 	GRAPHICS_LAYER=20
 
 	DRAW_POLYGONS=true
+	DRAW_GRAPHICS=true
 
 class ObjectPool
 	attr_accessor :objects
