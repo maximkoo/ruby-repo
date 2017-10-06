@@ -2,13 +2,13 @@ require './component.rb'
 require './laserBlue01.rb'
 SHOOT_DELAY=300
 class SpaceShips_001<GameObject
-    attr_accessor :x,:y, :speed, :angle, :cr, :object_pool
+    attr_accessor :x,:y, :speed, :angle, :cr, :object_pool, :xCenter, :yCenter
     def initialize(object_pool, x,y, angle)
         super(object_pool) 
         @x,@y,@angle=x,y,angle
         @ph=SpaceShips_001_physics.new(self);
-        @gr=SpaceShips_001_graphics.new(self,x,y,angle);
-        @pl=SpaceShips_001_polygon.new(self);
+        @gr=SpaceShips_001_graphics.new(self);
+        @pl=SpaceShips_001_polygon.new(self);        
         puts @components  
     end;
 
@@ -34,10 +34,6 @@ class SpaceShips_001_physics<Component
         @speed=10;
         @cr=0
         @obj_id=0
-        #puts @object.inspect
-        #puts "cr=#{@object.cr}"          
-        #puts @object.x, @object.y    
-        
     end;
 
     def move
@@ -98,12 +94,14 @@ end;
 
 class SpaceShips_001_graphics<Component
     attr_accessor :img
-    def initialize(obj, x,y,angle)
+    def initialize(obj)
         super(obj)
-        #@x,@y,@angle=x,y,angle
         #f=File.join("c:","Users","kopa","Documents","Ruby","Graphics","kenney_spaceShooterExtension","PNG","Sprites","Ships","spaceShips_001.png")
         f='./spaceShips_001_50.png';
         @img=Gosu::Image.new(f);
+        @object.xCenter=@img.width.fdiv(2)
+        @object.yCenter=@img.height.fdiv(2)
+        puts @object.xCenter, @object.yCenter
     end;  
 
     def draw
@@ -123,47 +121,22 @@ class SpaceShips_001_polygon<Component
         @poly0<<{:x=>41, :y=>0}
         @poly0<<{:x=>51, :y=>11}
         @poly0<<{:x=>45, :y=>35}
-        @poly0<<{:x=>37, :y=>39}
-        @poly0<<{:x=>12, :y=>39}
+        @poly0<<{:x=>37, :y=>38}
+        @poly0<<{:x=>12, :y=>38}
         @poly0<<{:x=>5, :y=>35}
         @poly0<<{:x=>0, :y=>11}
 
-        # @poly<<{:x=>27, :y=>0}
-        # @poly<<{:x=>47, :y=>0}
-        # @poly<<{:x=>47, :y=>7}
-        # @poly<<{:x=>57, :y=>7}
-        # @poly<<{:x=>57, :y=>0}
-        # @poly<<{:x=>77, :y=>0}
-        # @poly<<{:x=>77, :y=>4}
-        # @poly<<{:x=>93, :y=>9}
-        # @poly<<{:x=>105, :y=>56}
-        # @poly<<{:x=>82, :y=>80}
-        # @poly<<{:x=>74, :y=>75}
-        # #здесь пропуск
-        # @poly<<{:x=>68, :y=>44}
-        # @poly<<{:x=>61, :y=>63}
-        # @poly<<{:x=>44, :y=>63}
-        # @poly<<{:x=>37, :y=>44}
-        # #здесь пропуск
-        # @poly<<{:x=>30, :y=>75}
-        # @poly<<{:x=>23, :y=>80}
-        # @poly<<{:x=>0, :y=>56}
-        # @poly<<{:x=>13, :y=>9}
-        # @poly<<{:x=>27, :y=>4}
         @poly0<<@poly0.first.clone;   
         @poly=@poly0.clone   
-        @poly.each{|p| p[:x]=p[:x]-26; p[:y]=p[:y]-20;}
-        @poly=@poly0.map{|p| {:x=>p[:x]+@object.x, :y=>p[:y]+@object.y}}
-        # puts 1
-        # puts @poly0
-        # puts 2
-        # puts @poly
+        @poly=@poly0.map{|p| {:x=>p[:x]+@object.x-@object.xCenter, :y=>p[:y]+@object.y-@object.yCenter}}
     end;
 
     def update
-        @poly=@poly0.map{|p| {:x=>p[:x]+@object.x, :y=>p[:y]+@object.y}}
-        #puts 3
-        #puts @poly
+        ang=Math::PI*@object.angle.fdiv(180)
+        xc,yc=@object.xCenter, @object.yCenter;
+
+        @poly1=@poly0.map{|p| {:x=>(p[:x]-xc)*Math.cos(ang)-(p[:y]-yc)*Math.sin(ang), :y=>(p[:x]-xc)*Math.sin(ang)+(p[:y]-yc)*Math.cos(ang)}}
+        @poly=@poly1.map{|p| {:x=>p[:x]+@object.x, :y=>p[:y]+@object.y}}
     end;
         
     def draw
