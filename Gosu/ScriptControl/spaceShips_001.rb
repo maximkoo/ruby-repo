@@ -2,14 +2,15 @@ require './component.rb'
 require './laserBlue01.rb'
 SHOOT_DELAY=300
 class SpaceShips_001<GameObject
-    attr_accessor :x,:y, :speed, :angle, :cr, :object_pool, :xCenter, :yCenter
+    attr_accessor :x,:y, :speed, :angle, :cr, :object_pool, :xCenter, :yCenter, :expired, :poly
     def initialize(object_pool, x,y, angle)
         super(object_pool) 
         @x,@y,@angle=x,y,angle
         @ph=SpaceShips_001_physics.new(self);
         @gr=SpaceShips_001_graphics.new(self);
         @pl=SpaceShips_001_polygon.new(self);        
-        puts @components  
+        puts @components 
+        @expired=false; 
     end;
 
     def destruct
@@ -23,7 +24,11 @@ class SpaceShips_001<GameObject
     def draw
         #puts "Components draw"
         components.each(&:draw)
-    end;     
+    end;   
+
+    def poly
+        @pl.poly
+    end;  
 end;
 
 class SpaceShips_001_physics<Component
@@ -77,7 +82,7 @@ class SpaceShips_001_physics<Component
     def update   
         #puts @cr
         @routine=RoutineHolder.new.routine(@obj_id,@cr)
-        @routine.call(self) 
+        @routine.call(self) if !@routine.nil?
         @object.x,@object.y,@object.angle=@x,@y,@angle
         #puts @object.angle%360
     end;   

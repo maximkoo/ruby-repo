@@ -30,9 +30,13 @@ class RoutineHolder
 		 	end;	
 		 end; 
 		@routines<<[a,b,c] 
+		a=Proc.new do |obj|
+			obj.shoot;
+		end;
+		@routines<<[a] 	
 	end;
 
 	def routine(obj_id, cr)
-		@routines[obj_id][cr]
+		@routines[obj_id][cr] if !@routines[obj_id].nil?
 	end;
 end;	
