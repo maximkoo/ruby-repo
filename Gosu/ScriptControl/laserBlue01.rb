@@ -1,8 +1,9 @@
 class LaserBlue01<GameObject
-  attr_accessor :x,:y, :speed, :angle, :object_pool,:expired, :xDraw, :yDraw
-  def initialize(object_pool, x,y, angle)
+  attr_accessor :x,:y, :speed, :angle, :object_pool,:expired, :xCenter, :yCenter, :source
+  def initialize(object_pool, x,y, angle, source)
     super(object_pool) 
 
+@source=source
     #@x,@y,@angle, @xDraw,@yDraw=x,y,angle,x,y
     @x,@y,@angle=x,y,angle
 
@@ -21,11 +22,14 @@ class LaserBlue01<GameObject
 
   def update
         components.each(&:update)
-        check_hit; #--<<--
-        #return if @expired
-        #if !@expired 
-          #@xDraw,@yDraw=@x,@y
-        #end;  
+        hit=check_hit
+        if !hit.nil?; #--<<--
+          puts :Explosion
+          #Explosion.new(@object_pool,hit[0][:x],hit[0][:y])
+          destruct;
+          xxx=hit[0][:another_object]
+          xxx.inflict_loss(self)
+        end;  
     end;
     
     def draw
@@ -36,32 +40,39 @@ class LaserBlue01<GameObject
         @pl.poly
     end;
 
+    def inflict_loss(another_object)
+        puts "#{self} is it by another object #{another_object}"
+        destruct;        
+    end;
+
+    def destruct
+        Explosion.new(@object_pool, @x,@y);
+        @expired=true;
+    end;
+
     private
     def check_hit
-    #puts :check_hit
-    #puts @object
-    @object_pool.nearby(self).each do |obj|
-      next if obj==self || obj.class==SpaceShips_001
-      puts "Object nearby detected: #{obj}"
-      #sleep(0.5)
-      #puts @object.poly
-      #puts ":::"
-      #puts obj.poly
-      if Utils.polygons_intersect?(self.poly, obj.poly)
-        puts "HIT DETECTED!!!!"
-        puts Utils.polygons_intersections(self.poly, obj.poly).to_s
-
-        @expired=true;
-      end;  
-    end
-  end;
+      res=nil;
+      @object_pool.nearby(self).each do |obj|
+        next if obj==self || obj==source #|| obj.class==SpaceShips_001
+        #puts "Object nearby detected: #{obj}"
+        if Utils.polygons_intersect?(self.poly, obj.poly)
+          puts "HIT DETECTED!!!!"
+          res=Utils.polygons_intersections(self.poly, obj.poly)
+          puts res.to_s
+           res.each {|r| r[:another_object]=obj} 
+          @expired=true;
+        end;  
+      end
+      return res
+    end;
 end;
 
 class LaserBlue01_physics<Component
   def initialize(obj)
     super(obj)
     @x,@y,@angle=@object.x,@object.y,@object.angle
-    @speed=10;
+    @speed=30;
     #puts @x,@y,@angle
   end;  
 
@@ -82,6 +93,8 @@ class LaserBlue01_graphics<Component
     super(obj)
     f=File.join("C:","Users","kopa","Documents","Ruby","Graphics","Space Shooter","PNG","Lasers","laserBlue01.png")
     @img=Gosu::Image.new(f);
+    @object.xCenter=@img.width.fdiv(2)
+    @object.yCenter=@img.height.fdiv(2)
   end;
   
   def update

@@ -12,5 +12,13 @@ class GameObject
 	
 	def draw
 
+	end;
+
+	def destruct
+
+	end;
+
+	def inflict_loss(another_object)
+
 	end;	
 end;	

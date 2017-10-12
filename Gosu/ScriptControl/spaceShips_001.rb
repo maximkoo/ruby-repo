@@ -2,8 +2,8 @@ require './component.rb'
 require './laserBlue01.rb'
 SHOOT_DELAY=300
 class SpaceShips_001<GameObject
-    attr_accessor :x,:y, :speed, :angle, :cr, :object_pool, :xCenter, :yCenter, :expired, :poly
-    def initialize(object_pool, x,y, angle)
+    attr_accessor :x,:y, :speed, :angle, :cr, :object_pool, :xCenter, :yCenter, :expired, :poly, :obj_id
+    def initialize(object_pool, x,y, angle, obj_id)
         super(object_pool) 
         @x,@y,@angle=x,y,angle
         @ph=SpaceShips_001_physics.new(self);
@@ -11,6 +11,8 @@ class SpaceShips_001<GameObject
         @pl=SpaceShips_001_polygon.new(self);        
         puts @components 
         @expired=false; 
+        @obj_id=obj_id
+        #@another_object=nil # array?
     end;
 
     def destruct
@@ -19,6 +21,14 @@ class SpaceShips_001<GameObject
 
     def update
          components.each(&:update)
+         hit=check_hit
+        if !hit.nil?; #--<<--
+          puts :Collision
+          #Explosion.new(@object_pool,hit[0][:x],hit[0][:y])
+          destruct;
+          xxx=hit[0][:another_object]
+          xxx.inflict_loss(self)
+        end; 
     end;
     
     def draw
@@ -28,7 +38,35 @@ class SpaceShips_001<GameObject
 
     def poly
         @pl.poly
-    end;  
+    end; 
+
+    def inflict_loss(another_object)
+        puts "#{self} is it by another object #{another_object}"
+        destruct;        
+    end;
+        
+    def destruct
+        Explosion.new(@object_pool, @x,@y);
+        @expired=true;
+    end; 
+
+    private
+    def check_hit
+      res=nil;
+      @object_pool.nearby(self).each do |obj|
+        next if obj==self #|| obj.class==SpaceShips_001
+        #puts "Object nearby detected: #{obj}"
+        if Utils.polygons_intersect?(self.poly, obj.poly)
+          puts "HIT DETECTED!!!!"
+          res=Utils.polygons_intersections(self.poly, obj.poly)
+          puts res.to_s
+          res.each {|r| r[:another_object]=obj}          
+          @expired=true;
+          #@another_object=obj
+        end;  
+      end
+      return res
+    end; 
 end;
 
 class SpaceShips_001_physics<Component
@@ -38,7 +76,7 @@ class SpaceShips_001_physics<Component
         @x,@y,@angle=@object.x,@object.y,@object.angle
         @speed=10;
         @cr=0
-        @obj_id=1
+        #@obj_id=0
     end;
 
     def move
@@ -70,7 +108,7 @@ class SpaceShips_001_physics<Component
         now=Gosu.milliseconds
        # puts now-@last_update||=0
         return if (now-@last_update||=0)<SHOOT_DELAY
-        LaserBlue01.new(@object.object_pool, @x,@y,@angle)
+        LaserBlue01.new(@object.object_pool, @x,@y,@angle, @object)
         #puts "PEW!"
         @last_update=now
     end;    
@@ -81,7 +119,7 @@ class SpaceShips_001_physics<Component
 
     def update   
         #puts @cr
-        @routine=RoutineHolder.new.routine(@obj_id,@cr)
+        @routine=RoutineHolder.new.routine(@object.obj_id,@cr)
         @routine.call(self) if !@routine.nil?
         @object.x,@object.y,@object.angle=@x,@y,@angle
         #puts @object.angle%360
@@ -95,6 +133,11 @@ class SpaceShips_001_physics<Component
         #puts :rewind
         @cr=0;
     end;    
+
+    def destruct
+        puts "DESTRUCT!!!!11"
+        @object.destruct;
+    end;      
 end;        
 
 class SpaceShips_001_graphics<Component
