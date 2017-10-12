@@ -38,7 +38,7 @@ class SpaceShips_001_physics<Component
         @x,@y,@angle=@object.x,@object.y,@object.angle
         @speed=10;
         @cr=0
-        @obj_id=0
+        @obj_id=1
     end;
 
     def move

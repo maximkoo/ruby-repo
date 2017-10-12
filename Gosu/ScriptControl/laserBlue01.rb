@@ -1,20 +1,31 @@
 class LaserBlue01<GameObject
-  attr_accessor :x,:y, :speed, :angle, :object_pool,:expired
+  attr_accessor :x,:y, :speed, :angle, :object_pool,:expired, :xDraw, :yDraw
   def initialize(object_pool, x,y, angle)
     super(object_pool) 
 
-    @x,@y,@angle=x,y,angle     
+    #@x,@y,@angle, @xDraw,@yDraw=x,y,angle,x,y
+    @x,@y,@angle=x,y,angle
+
+    dx=54*Math::sin(@angle*Math::PI.fdiv(180))
+    dy=54*Math::cos(@angle*Math::PI.fdiv(180))
+    @x=@x+dx;
+    @y=@y-dy;
 
     @ph=LaserBlue01_physics.new(self);
-    @pl=LaserBlue01_polygon.new(self,x,y);
-    @gr=LaserBlue01_graphics.new(self,x,y,angle);
+    @pl=LaserBlue01_polygon.new(self,@x,@y);
+    @gr=LaserBlue01_graphics.new(self,@x,@y,angle);
     
     #puts @components  
     @expired=false;
   end
 
   def update
-         components.each(&:update)
+        components.each(&:update)
+        check_hit; #--<<--
+        #return if @expired
+        #if !@expired 
+          #@xDraw,@yDraw=@x,@y
+        #end;  
     end;
     
     def draw
@@ -24,13 +35,33 @@ class LaserBlue01<GameObject
     def poly
         @pl.poly
     end;
+
+    private
+    def check_hit
+    #puts :check_hit
+    #puts @object
+    @object_pool.nearby(self).each do |obj|
+      next if obj==self || obj.class==SpaceShips_001
+      puts "Object nearby detected: #{obj}"
+      #sleep(0.5)
+      #puts @object.poly
+      #puts ":::"
+      #puts obj.poly
+      if Utils.polygons_intersect?(self.poly, obj.poly)
+        puts "HIT DETECTED!!!!"
+        puts Utils.polygons_intersections(self.poly, obj.poly).to_s
+
+        @expired=true;
+      end;  
+    end
+  end;
 end;
 
 class LaserBlue01_physics<Component
   def initialize(obj)
     super(obj)
     @x,@y,@angle=@object.x,@object.y,@object.angle
-    @speed=30;
+    @speed=10;
     #puts @x,@y,@angle
   end;  
 
@@ -39,35 +70,11 @@ class LaserBlue01_physics<Component
     dx=@speed*Math::sin(@angle*Math::PI.fdiv(180))
     dy=@speed*Math::cos(@angle*Math::PI.fdiv(180))
     @x=@x+dx;
-    @y=@y-dy;
-
-    check_hit; #--<<--
-    return if @object.expired
+    @y=@y-dy;    
 
     @object.x,@object.y=@x,@y  
-
     
-  end
-
-  private
-  def check_hit
-    #puts :check_hit
-    #puts @object
-    @object.object_pool.nearby(@object).each do |obj|
-      next if obj==@object || obj.class==SpaceShips_001
-      puts "Object nearby detected: #{obj}"
-      #sleep(0.5)
-      #puts @object.poly
-      #puts ":::"
-      #puts obj.poly
-      if Utils.polygons_intersect?(@object.poly, obj.poly)
-        puts "HIT DETECTED!!!!"
-        puts Utils.polygons_intersections(@object.poly, obj.poly).to_s
-
-        @object.expired=true;
-      end;  
-    end
-  end;  
+  end    
 end;
 
 class LaserBlue01_graphics<Component
@@ -82,9 +89,10 @@ class LaserBlue01_graphics<Component
 
   def draw
     #puts @object.x,@object.y,GRAPHICS_LAYER,@object.angle
-    if !@object.expired
-        @img.draw_rot(@object.x,@object.y,GRAPHICS_LAYER,@object.angle) if DRAW_GRAPHICS
-    end;    
+   # if !@object.expired
+        @img.draw_rot(@object.x,@object.y,GRAPHICS_LAYER,@object.angle,0.5,0.1) if DRAW_GRAPHICS
+        #@img.draw_rot(@object.xDraw,@object.yDraw,GRAPHICS_LAYER,@object.angle,0.5,0.1) if DRAW_GRAPHICS
+   # end;    
   end;  
 end;  
 

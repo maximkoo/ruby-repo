@@ -10,7 +10,7 @@ require './routine_holder.rb'
 	GRAPHICS_LAYER=20
 
 	DRAW_POLYGONS=true
-	DRAW_GRAPHICS=false
+	DRAW_GRAPHICS=true
 
 	NEARBY_DISTANCE=100;
 
@@ -35,7 +35,7 @@ class GameWindow<Gosu::Window
 		@objectPool=ObjectPool.new		
 
 		### Run the game ###
-		@s1=SpaceShips_001.new(@objectPool, 200,539,80)
+		@s1=SpaceShips_001.new(@objectPool, 200,539,65)
 		@m1=Meteor.new(@objectPool, 500,400,0)
 		puts " ---"
 		puts @objectPool.objects
