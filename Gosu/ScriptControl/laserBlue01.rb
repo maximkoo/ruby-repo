@@ -41,7 +41,8 @@ end;
 class LaserBlue01_graphics<Component
   def initialize(obj,x,y,angle)
     super(obj)
-    f=File.join("C:","Users","kopa","Documents","Ruby","Graphics","Space Shooter","PNG","Lasers","laserBlue01.png")
+    #f=File.join("C:","Users","kopa","Documents","Ruby","Graphics","Space Shooter","PNG","Lasers","laserBlue01.png")
+    f='./laserBlue01.png'
     @img=Gosu::Image.new(f);
   end;
   
