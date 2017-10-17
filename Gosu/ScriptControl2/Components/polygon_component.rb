@@ -7,14 +7,14 @@ class PolygonComponent<Component
         @poly0<<@poly0.first.clone;   
         @poly=@poly0.clone  
 
-        @poly=@poly0.map{|p| {:x=>p[:x]+@object.x-@object.xCenter, :y=>p[:y]+@object.y-@object.yCenter}}
+        @poly=@poly0.map{|p| {:x=>p[:x]*SCALER+@object.x-@object.xCenter*SCALER, :y=>p[:y]*SCALER+@object.y-@object.yCenter*SCALER}}
     end;
 
     def update
         ang=Math::PI*@object.angle.fdiv(180)
         xc,yc=@object.xCenter, @object.yCenter;
 
-        @poly1=@poly0.map{|p| {:x=>(p[:x]-xc)*Math.cos(ang)-(p[:y]-yc)*Math.sin(ang), :y=>(p[:x]-xc)*Math.sin(ang)+(p[:y]-yc)*Math.cos(ang)}}
+        @poly1=@poly0.map{|p| {:x=>(p[:x]-xc)*SCALER*Math.cos(ang)-(p[:y]-yc)*SCALER*Math.sin(ang), :y=>(p[:x]-xc)*SCALER*Math.sin(ang)+(p[:y]-yc)*SCALER*Math.cos(ang)}}
         @poly=@poly1.map{|p| {:x=>p[:x]+@object.x, :y=>p[:y]+@object.y}}
     end;
         

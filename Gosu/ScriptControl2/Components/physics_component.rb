@@ -17,7 +17,6 @@ class PhysicsComponent<Component
 
     def stop
         @speed=0
-
     end;
         
     def rotate

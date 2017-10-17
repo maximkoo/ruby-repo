@@ -12,7 +12,7 @@ require './objects/enemy_red1.rb'
 #require './space_station_hat.rb'
 
 #CONSTANTS
-	FRAME_DELAY=10
+	FRAME_DELAY=16
 
 	POLYGON_LAYER=10
 	IDLE_OBJECTS_LAYER=15
@@ -22,6 +22,8 @@ require './objects/enemy_red1.rb'
 	DRAW_GRAPHICS=true
 
 	NEARBY_DISTANCE=100;
+
+	SCALER=0.5
 
 class GameWindow<Gosu::Window
 	include ImageFiles
