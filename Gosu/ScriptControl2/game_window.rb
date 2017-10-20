@@ -3,6 +3,9 @@ require './game_object.rb'
 require './object_pool.rb'
 require './image_files.rb'
 require './objects/enemy_red1.rb'
+require './objects/enemy_red2.rb'
+require './objects/enemy_red3.rb'
+require './objects/meteor_brown_big1.rb'
 #require './utils.rb'
 #require './game_object.rb'
 #require './spaceShips_001.rb'
@@ -18,7 +21,7 @@ require './objects/enemy_red1.rb'
 	IDLE_OBJECTS_LAYER=15
 	GRAPHICS_LAYER=20
 
-	DRAW_POLYGONS=false
+	DRAW_POLYGONS=true
 	DRAW_GRAPHICS=true
 
 	NEARBY_DISTANCE=100;
@@ -30,15 +33,26 @@ class GameWindow<Gosu::Window
 	SCREEN_WIDTH=Gosu.screen_width;
 	SCREEN_HEIGHT=Gosu.screen_height;
 	def initialize
-		super(SCREEN_WIDTH/2,SCREEN_HEIGHT-100)
+		#super(SCREEN_WIDTH/2,SCREEN_HEIGHT-100)
+		super(600,600)
 		@objectPool=ObjectPool.new		
 
 		# Explosion animation
 		#$explanim=Gosu::Image.load_tiles('./explosionframes1.png', 1024/8,384/3);    
 
 		### Run the game ###
-		EnemyRed1.new(@objectPool, 100,100,180, 0)
+		 EnemyRed1.new(@objectPool, 200,500,235, 1)
+		# EnemyRed1.new(@objectPool, 300,500,270, 1)
 
+		# EnemyRed2.new(@objectPool, 550,50,210, :shoot_move)
+
+		 EnemyRed2.new(@objectPool, 550,550,320, 1)
+
+		EnemyRed2.new(@objectPool, 625,100,270, :wave_down)
+		EnemyRed2.new(@objectPool, 700,100,270, :wave_down)
+		EnemyRed2.new(@objectPool, 775,100,270, :wave_down)
+
+		 MeteorBrownBig1.new(@objectPool, 100,500,0)
 		#@s1=SpaceShips_001.new(@objectPool, 100,100,180, 0)
 		# @s2=SpaceShips_001.new(@objectPool, 300,550,0, 10)
 
