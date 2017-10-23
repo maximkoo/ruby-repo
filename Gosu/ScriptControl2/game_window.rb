@@ -6,6 +6,7 @@ require './objects/enemy_red1.rb'
 require './objects/enemy_red2.rb'
 require './objects/enemy_red3.rb'
 require './objects/meteor_brown_big1.rb'
+require './objects/boss1.rb'
 #require './utils.rb'
 #require './game_object.rb'
 #require './spaceShips_001.rb'
@@ -20,8 +21,9 @@ require './objects/meteor_brown_big1.rb'
 	POLYGON_LAYER=10
 	IDLE_OBJECTS_LAYER=15
 	GRAPHICS_LAYER=20
+	EXPLOSION_LAYER=50
 
-	DRAW_POLYGONS=true
+	DRAW_POLYGONS=false
 	DRAW_GRAPHICS=true
 
 	NEARBY_DISTANCE=100;
@@ -41,18 +43,20 @@ class GameWindow<Gosu::Window
 		#$explanim=Gosu::Image.load_tiles('./explosionframes1.png', 1024/8,384/3);    
 
 		### Run the game ###
-		 EnemyRed1.new(@objectPool, 200,500,235, 1)
+		#EnemyRed1.new(@objectPool, 350,500,270, :shoot_only)
 		# EnemyRed1.new(@objectPool, 300,500,270, 1)
 
 		# EnemyRed2.new(@objectPool, 550,50,210, :shoot_move)
 
-		 EnemyRed2.new(@objectPool, 550,550,320, 1)
+		EnemyRed2.new(@objectPool, 550,550,335, :shoot_only)
 
 		EnemyRed2.new(@objectPool, 625,100,270, :wave_down)
 		EnemyRed2.new(@objectPool, 700,100,270, :wave_down)
 		EnemyRed2.new(@objectPool, 775,100,270, :wave_down)
 
-		 MeteorBrownBig1.new(@objectPool, 100,500,0)
+		MeteorBrownBig1.new(@objectPool, 100,500,0)
+
+		Boss1.new(@objectPool, 200,400, 0, :rotate_left)
 		#@s1=SpaceShips_001.new(@objectPool, 100,100,180, 0)
 		# @s2=SpaceShips_001.new(@objectPool, 300,550,0, 10)
 
@@ -63,6 +67,7 @@ class GameWindow<Gosu::Window
 		# #@m1=Meteor.new(@objectPool, 500,350,0)
 		# @m2=Meteor.new(@objectPool, 100,570,0)
 		# @sh1=SpaceStationHat.new(@objectPool,500,150,-15)
+
 
 		puts "*** OBJECT POOL CONTENTS ***"
 		puts @objectPool.objects

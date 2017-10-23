@@ -19,4 +19,7 @@ module ImageFiles
 	$laser_blue01=Gosu::Image.new('./PNG/Lasers/laserBlue01.png');
 
 	$meteor_brown_big1=Gosu::Image.new('./PNG/Meteors/MeteorBrown_big1.png');
+
+	f=File.join("C:","Users","kopa","Documents","Ruby","Graphics","kenney_spaceShooterExtension","PNG","Sprites","Station","spaceStation_024.png")
+	$boss1=Gosu::Image.new(f)
 end;

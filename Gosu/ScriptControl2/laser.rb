@@ -30,12 +30,7 @@ class Laser<GameObject
         components.each(&:update)   
 
         if !@hits.nil?
-          puts :Explosion
-          hits[0][:another_object].inflict_loss(DAMAGE,self);
-          if !hits[0][:another_object].expired
-            Explosion.new(@object_pool,@hits[0][:x],@hits[0][:y],:small)
-          end;  
-          
+          destruct;          
         end;  
         # hit=check_hit
         # if !hit.nil?; #--<<--
@@ -50,6 +45,15 @@ class Laser<GameObject
     def draw
         components.each(&:draw)
     end; 
+
+    def destruct
+      #puts :Explosion
+          hits[0][:another_object].inflict_loss(DAMAGE,self);
+          if !hits[0][:another_object].expired
+            Explosion.new(@object_pool,@hits[0][:x],@hits[0][:y],:small)
+            #puts @hits[0][:x],@hits[0][:y]
+          end; 
+    end;  
 
     # private
     # def check_hit

@@ -5,11 +5,13 @@ class Enemy<GameObject
 	attr_reader :object_pool, :obj_id, :img, :ph
     attr_accessor :x,:y,:angle, :cr, :xCenter,:yCenter
     attr_accessor :health, :mileage
+    attr_accessor :hits, :source # для Collider
     def initialize(object_pool, x,y, angle, obj_id)
         super(object_pool) 
         @x,@y,@angle=x,y,angle
 
         @health=10;
+        @hits=[]
 
         ## Начальные значения ##
        # @expired=false; 
@@ -20,10 +22,13 @@ class Enemy<GameObject
         @ph=PhysicsComponent.new(self);
         @gr=GraphicsComponent.new(self);
         @pl=PolygonComponent.new(self);
+        @co=ColliderComponent.new(self)
     end;
 
     def update
-         components.each(&:update)        
+         components.each(&:update)  
+
+         destruct if !@hits.nil?      
     end;
 
     def draw

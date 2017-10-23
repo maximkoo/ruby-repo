@@ -10,6 +10,9 @@ class ColliderComponent<Component
         next if obj==@object || obj==@object.source
          #puts "Object nearby detected: #{obj}"
          #puts "Object=#{@object}, obj=#{obj}"
+         #puts obj.poly
+         #puts "laser"
+         #puts @object.poly
         if Utils.polygons_intersect?(@object.poly, obj.poly)
           #puts "HIT DETECTED!!!!"
           res=Utils.polygons_intersections(@object.poly, obj.poly)
