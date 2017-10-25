@@ -21,7 +21,7 @@ require './objects/meteor_brown_big1.rb'
 	IDLE_OBJECTS_LAYER=15
 	GRAPHICS_LAYER=20
 
-	DRAW_POLYGONS=true
+	DRAW_POLYGONS=false
 	DRAW_GRAPHICS=true
 
 	NEARBY_DISTANCE=100;
@@ -46,7 +46,7 @@ class GameWindow<Gosu::Window
 
 		# EnemyRed2.new(@objectPool, 550,50,210, :shoot_move)
 
-		 EnemyRed2.new(@objectPool, 550,550,320, 1)
+		 EnemyRed3.new(@objectPool, 550,550,320, 1)
 
 		EnemyRed2.new(@objectPool, 625,100,270, :wave_down)
 		EnemyRed2.new(@objectPool, 700,100,270, :wave_down)

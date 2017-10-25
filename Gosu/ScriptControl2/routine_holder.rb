@@ -76,7 +76,7 @@ class RoutineHolder
 		end;
 	end;
 	c=Proc.new do |obj|
-		if obj.mileage<400
+		if obj.mileage<500
 			obj.move;
 			obj.shoot;
 		else
