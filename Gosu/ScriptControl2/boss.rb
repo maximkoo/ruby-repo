@@ -10,8 +10,6 @@ class Boss<GameObject
         super(object_pool) 
         @x,@y,@angle=x,y,angle
 
-        @health=10;
-
         ## Начальные значения ##
         @cr=0;
         @obj_id=obj_id
@@ -21,8 +19,17 @@ class Boss<GameObject
         @gr=GraphicsComponent.new(self);
         @pl=PolygonComponent.new(self);
 
-        @parts=[]
+        @parts=[]        
     end;
+
+    def inflict_loss(damage, another_object)
+    	@health-=damage;
+    	puts health
+    	if @health<=0
+    		@expired=true;    	    	
+    		destruct;
+    	end;
+    end;	
 
     def update # update each part
     	components.each(&:update) 
@@ -31,8 +38,4 @@ class Boss<GameObject
     def draw # draw each part rotated around a common center
     	 components.each(&:draw)
     end;
-
-    def destruct
-
-    end;	
 end;    

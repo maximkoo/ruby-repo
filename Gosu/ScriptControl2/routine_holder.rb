@@ -93,6 +93,23 @@ class RoutineHolder
 		obj.move;		
 	end;
 	@routines[:wave_down]=[a,b,c,d,e]	
+
+	f=Proc.new do |obj|
+		if obj.x>380
+			#puts obj.mileage
+			obj.move;
+		else
+			obj.next
+		end;
+	end;	
+	g=Proc.new do |obj|
+		obj.rotate_left
+		obj.move
+		if (obj.angle%360).between?(0,180)
+			obj.shoot;
+		end;
+	end;
+	@routines[:round_shoot]=[f,g]
 end;
 
 	def routine(obj_id, cr)

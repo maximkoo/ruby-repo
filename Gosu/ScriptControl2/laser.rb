@@ -53,7 +53,12 @@ class Laser<GameObject
             Explosion.new(@object_pool,@hits[0][:x],@hits[0][:y],:small)
             #puts @hits[0][:x],@hits[0][:y]
           end; 
+          @expired=true;
     end;  
+
+    def default_routine
+        @ph.move;
+    end;    
 
     # private
     # def check_hit

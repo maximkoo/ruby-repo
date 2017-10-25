@@ -23,4 +23,8 @@ class GameObject
 	def inflict_loss(damage, another_object)
 
 	end;	
+
+	def default_routine
+
+	end;	
 end;

@@ -1,6 +1,6 @@
 class EnemyRed3<Enemy
 	SPEED=5;
-    ANGSPEED=5;
+    ANGSPEED=2;
     SHOOT_DELAY=300
 	def initialize(object_pool, x,y, angle, obj_id)
         @img=$enemy_red3;

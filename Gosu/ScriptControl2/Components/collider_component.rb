@@ -18,7 +18,7 @@ class ColliderComponent<Component
           res=Utils.polygons_intersections(@object.poly, obj.poly)
           #puts res.to_s
            res.each {|r| r[:another_object]=obj} 
-          @object.expired=true;
+          #@object.expired=true;
         end;  
       end
       @object.hits=res

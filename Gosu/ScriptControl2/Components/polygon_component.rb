@@ -15,7 +15,7 @@ class PolygonComponent<Component
         end;  
 
         if @object.class==Boss1
-            puts "Boss1 #{@poly}"
+            #puts "Boss1 #{@poly}"
         end; 
         @object.poly=@poly;# ???
     end;
