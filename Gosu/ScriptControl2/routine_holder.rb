@@ -63,9 +63,9 @@ class RoutineHolder
 	end;
 	b=Proc.new do |obj|
 		#puts obj.angle
-		if obj.angle>225
+		if obj.angle<135
 			#puts "left"
-			obj.rotate_left;
+			obj.rotate_right;
 			obj.move;
 			#obj.shoot;
 		else 
@@ -81,8 +81,8 @@ class RoutineHolder
 		end;		
 	end;	
 	d=Proc.new do |obj|
-		if obj.angle<315
-			obj.rotate_right;
+		if obj.angle>45
+			obj.rotate_left;
 			obj.move;
 			#obj.shoot;
 		else 

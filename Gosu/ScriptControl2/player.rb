@@ -27,12 +27,12 @@ class Player<GameObject
         @poly<<{x:60,y:26}
         @poly<<{x:86,y:38}
         @poly<<{x:98,y:32}
-        @poly<<{x:96,y:62}
+        @poly<<{x:96,y:60}
         @poly<<{x:64,y:64}
         @poly<<{x:58,y:74}
         @poly<<{x:42,y:74}
         @poly<<{x:36,y:64}
-        @poly<<{x:2,y:62}
+        @poly<<{x:2,y:60}
         @poly<<{x:0,y:32}
         @poly<<{x:14,y:38}
         @poly<<{x:38,y:26}
@@ -84,6 +84,7 @@ class Player<GameObject
     	if $g.button_down?(Gosu::KbDown)
     		@ph.move_back;
     	end;
+    	#@y=$window_height-30 if @y>$window_height-30
     end;
 
     def inflict_loss(damage, another_object)
