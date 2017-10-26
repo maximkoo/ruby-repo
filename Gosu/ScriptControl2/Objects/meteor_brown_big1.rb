@@ -19,11 +19,4 @@ class MeteorBrownBig1<Idle
 
         super(object_pool, x,y, angle)
 	end;
-
-	def shoot #типа переопределенный
-        now=Gosu.milliseconds
-        return if (now-@last_update||=0)<SHOOT_DELAY
-        LaserBlue01.new(@object_pool, @x,@y,@angle, self)
-        @last_update=now
-    end;
 end;	

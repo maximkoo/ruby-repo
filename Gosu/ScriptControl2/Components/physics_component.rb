@@ -14,7 +14,16 @@ class PhysicsComponent<Component
         @y=@y-@object.class::SPEED*Math::cos(@angle*Math::PI.fdiv(180)); 
         #puts @object.x, @object.y
         @mileage+=@object.class::SPEED
-    end;   
+    end; 
+
+    def move_back
+        #@object.x=@object.x+@object.speed*Math::sin(@object.angle*Math::PI.fdiv(180));
+        @x=@x-@object.class::SPEED*Math::sin(@angle*Math::PI.fdiv(180));
+        #@object.y=@object.y-@object.speed*Math::cos(@object.angle*Math::PI.fdiv(180)); 
+        @y=@y+@object.class::SPEED*Math::cos(@angle*Math::PI.fdiv(180)); 
+        #puts @object.x, @object.y
+        @mileage+=@object.class::SPEED
+    end;       
 
     def stop
         @speed=0
@@ -46,10 +55,36 @@ class PhysicsComponent<Component
 	 def destruct
         @object.destruct;
     end; 
+    
+    def strafe_left
 
-    # def update
-    # 	@object.x,@object.y,@object.angle=@x,@y,@angle
-    # end;	
+    end;
+    
+    def strafe_right
+
+    end;
+
+    def strafe_tilt_left
+        @angle=360-@object.class::TILT
+        @x-=@object.class::SPEED
+    end;
+
+    def strafe_tilt_right
+        @angle=@object.class::TILT
+        @x+=@object.class::SPEED
+    end;        
+
+    def float
+
+    end;   
+
+    def look_up
+        @angle=0;
+    end; 
+
+    def look_down
+        @angle=180;
+    end;    
 
     # контроллер выполнения скриптов
     def update   
@@ -58,7 +93,8 @@ class PhysicsComponent<Component
         if !@routine.nil?
             @routine.call(self)
         else
-            move;
+            #move;
+            @object.default_routine;
         end;    
         @object.x,@object.y,@object.angle,@object.mileage=@x,@y,@angle,@mileage
     end;   

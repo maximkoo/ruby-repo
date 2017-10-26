@@ -12,6 +12,7 @@ class Explosion<GameObject
       @animation=$explosion_animation_big
     else
       @animation=$explosion_animation_small
+      #puts "Explosion small #{x} #{y}"
     end;  
   end;
 
@@ -27,6 +28,8 @@ class Explosion<GameObject
   	def draw
 		return if @cfn==@animation.size;
 		img=@animation[@cfn % @animation.size];
-		img.draw(@x-img.width/2, @y-img.height/2, 50);
+		#img.draw(@x-img.width/2, @y-img.height/2, 50);
+    #img.draw_rot(@x-img.width/2, @y-img.height/2, EXPLOSION_LAYER, rand(180));
+    img.draw_rot(@x, @y, EXPLOSION_LAYER, rand(180));
     end;
 end;    

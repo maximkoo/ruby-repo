@@ -14,10 +14,10 @@ class PolygonComponent<Component
             @poly=@poly0.map{|p| {:x=>p[:x]*SCALER+@object.x-@object.xCenter*SCALER, :y=>p[:y]*SCALER+@object.y-@object.yCenter*SCALER}}
         end;  
 
-        if @object.class==MeteorBrownBig1
-            #puts "Meteor #{@poly}"
+        if @object.class==Boss1
+            #puts "Boss1 #{@poly}"
         end; 
-        @object.poly=@poly;
+        @object.poly=@poly;# ???
     end;
 
     def update

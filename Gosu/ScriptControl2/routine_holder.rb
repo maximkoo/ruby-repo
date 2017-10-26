@@ -33,13 +33,10 @@ class RoutineHolder
 		 end; 
 		#@routines<<[a,b,c]
 		@routines[0]=[a,b,c] 
-		a=Proc.new do |obj|
-			obj.shoot;			
-			#obj.rotate_left
-			#obj.destruct
-		end;
-		#@routines<<[a]
-		@routines[1]=[a]
+
+		@routines[:rotate_left]=[Proc.new{|obj| obj.rotate_left}]
+
+		@routines[:shoot_only]=[Proc.new{|obj| obj.shoot}]	
 
 		a=Proc.new do |obj|
 			 obj.shoot if (obj.angle%360).between?(-10, 10)
@@ -96,7 +93,25 @@ class RoutineHolder
 		obj.move;		
 	end;
 	@routines[:wave_down]=[a,b,c,d,e]	
-end;		
+
+	f=Proc.new do |obj|
+		if obj.x>380
+			#puts obj.mileage
+			obj.move;
+		else
+			obj.next
+		end;
+	end;	
+	g=Proc.new do |obj|
+		obj.rotate_left
+		obj.move
+		if (obj.angle%360).between?(0,180)
+			obj.shoot;
+		end;
+	end;
+	@routines[:round_shoot]=[f,g]
+end;
+
 	def routine(obj_id, cr)
 		@routines[obj_id][cr] if !@routines[obj_id].nil?
 	end;

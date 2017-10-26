@@ -7,7 +7,7 @@ require_relative './laser_blue01.rb'
 class EnemyRed1<Enemy
     SPEED=5;
     ANGSPEED=10;
-    SHOOT_DELAY=1000
+    SHOOT_DELAY=3000
     def initialize(object_pool, x,y, angle, obj_id)
         @img=$enemy_red1;
 
