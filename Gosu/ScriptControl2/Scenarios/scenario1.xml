@@ -1,0 +1,7 @@
+<scenario>
+		<object id="round_shoot" x="500" y="100" angle="270" type="EnemyRed3"></object>
+		<object id="round_shoot" x="600" y="100" angle="270" type="EnemyRed3"></object>
+		<object id="round_shoot" x="700" y="100" angle="270" type="EnemyRed3"></object>
+		<object id="" x="100" y="500" angle="0" type="MeteorBrownBig1"></object>
+		<object id="rotate_left" x="100" y="100" angle="0" type="Boss1"></object>	
+</scenario>

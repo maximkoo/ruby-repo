@@ -24,7 +24,7 @@ class Boss<GameObject
 
     def inflict_loss(damage, another_object)
     	@health-=damage;
-    	puts health
+    	#puts health
     	if @health<=0
     		@expired=true;    	    	
     		destruct;

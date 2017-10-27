@@ -16,6 +16,7 @@ require './objects/boss1.rb'
 #require './routine_holder.rb'
 #require './explosion.rb'
 #require './space_station_hat.rb'
+require './Scenario.rb'
 
 #CONSTANTS
 	FRAME_DELAY=16
@@ -30,7 +31,7 @@ require './objects/boss1.rb'
 
 	EXPLOSION_LAYER=50
 
-	DRAW_POLYGONS=true
+	DRAW_POLYGONS=false
 	DRAW_GRAPHICS=true
 
 	NEARBY_DISTANCE=70;
@@ -50,6 +51,19 @@ class GameWindow<Gosu::Window
 		$passed=0;
 		Background.new(@objectPool)
 
+		sc=Scenario.new;
+		puts sc.scenario1
+		sc.scenario1.each do |obj|
+			if !obj[:id].nil?
+				#puts "obj_type=#{obj[:type]}"
+		#		puts obj
+				a=Object.const_get(obj[:type]).new(@objectPool, obj[:x], obj[:y], obj[:angle], obj[:id]);
+			#else		
+			#	a=Object.const_get(obj[:type]).new(@objectPool, obj[:x], obj[:y], obj[:angle]);
+			end;
+		end;	
+
+
 		### Run the game ###
 		# EnemyRed1.new(@objectPool, 350,400,270, :shoot_only)
 		# EnemyRed1.new(@objectPool, 300,400,270, 1)
@@ -64,15 +78,15 @@ class GameWindow<Gosu::Window
 	 #    EnemyRed2.new(@objectPool, -50,0,90, :wave_down)
 		# EnemyRed2.new(@objectPool, -100,0,90, :wave_down)
 
-		MeteorBrownBig1.new(@objectPool, 380,250,0)
+		# MeteorBrownBig1.new(@objectPool, 380,250,0)
 
-		EnemyRed3.new(@objectPool, 625,100,270, :round_shoot)
-		EnemyRed3.new(@objectPool, 700,100,270, :round_shoot)
-		EnemyRed3.new(@objectPool, 775,100,270, :round_shoot)
-		EnemyRed3.new(@objectPool, 850,100,270, :round_shoot)
-		EnemyRed3.new(@objectPool, 925,100,270, :round_shoot)
+		# EnemyRed3.new(@objectPool, 625,100,270, :round_shoot)
+		# EnemyRed3.new(@objectPool, 700,100,270, :round_shoot)
+		# EnemyRed3.new(@objectPool, 775,100,270, :round_shoot)
+		# EnemyRed3.new(@objectPool, 850,100,270, :round_shoot)
+		# EnemyRed3.new(@objectPool, 925,100,270, :round_shoot)
 
-		Boss1.new(@objectPool, 100,400, 0, :rotate_left)
+		# Boss1.new(@objectPool, 100,400, 0, :rotate_left)
 		#@s1=SpaceShips_001.new(@objectPool, 100,100,180, 0)
 		# @s2=SpaceShips_001.new(@objectPool, 300,550,0, 10)
 

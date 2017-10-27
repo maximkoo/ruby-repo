@@ -13,7 +13,7 @@ class Background<GameObject
 				@tiles<<{x:xi*@img.width, y:yi*@img.height, angle:90*rand(4).round}
 			end;	
 		end;	
-		puts @tiles;
+		#puts @tiles;
 	end;
 
 	def update		
