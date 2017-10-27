@@ -9,7 +9,7 @@ class MeteorBrownBig1<Idle
         @yCenter=@img.height.fdiv(2)
 
 		@poly=[]
-        @poly<<{x:17, y:2}
+        @poly<<{x:17, y:3}
         @poly<<{x:74, y:2}
         @poly<<{x:99, y:39}
         @poly<<{x:82, y:74}

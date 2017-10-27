@@ -11,7 +11,8 @@ class Idle<GameObject
 	end;
 
 	def update
-        components.each(&:update)        
+        components.each(&:update)     
+        @y+=GAME_SPEED   
     end;
 
     def draw

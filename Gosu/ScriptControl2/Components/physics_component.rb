@@ -57,11 +57,11 @@ class PhysicsComponent<Component
     end; 
     
     def strafe_left
-
+        @x-=@object.class::SPEED
     end;
     
     def strafe_right
-
+         @x+=@object.class::SPEED
     end;
 
     def strafe_tilt_left
@@ -75,7 +75,7 @@ class PhysicsComponent<Component
     end;        
 
     def float
-
+        @y-=GAME_SPEED;
     end;   
 
     def look_up
@@ -95,6 +95,11 @@ class PhysicsComponent<Component
         else
             #move;
             @object.default_routine;
+        end;    
+        @y+=GAME_SPEED;
+        if @object.class==Player && @y>=$window_height-30
+                #puts "TROLOLOLO"
+                @y=$window_height-30
         end;    
         @object.x,@object.y,@object.angle,@object.mileage=@x,@y,@angle,@mileage
     end;   

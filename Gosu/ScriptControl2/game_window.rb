@@ -30,10 +30,10 @@ require './objects/boss1.rb'
 
 	EXPLOSION_LAYER=50
 
-	DRAW_POLYGONS=false
+	DRAW_POLYGONS=true
 	DRAW_GRAPHICS=true
 
-	NEARBY_DISTANCE=100;
+	NEARBY_DISTANCE=70;
 
 	SCALER=0.5
 
@@ -59,9 +59,10 @@ class GameWindow<Gosu::Window
    	 	EnemyRed3.new(@objectPool, 550,550,320, 1)
 	
 		#EnemyRed2.new(@objectPool, 550,450,335, :shoot_only)
-		# EnemyRed3.new(@objectPool, 625,100,270, :wave_down)
-		# EnemyRed3.new(@objectPool, 700,100,270, :wave_down)
-		# EnemyRed3.new(@objectPool, 775,100,270, :wave_down)
+
+		# EnemyRed2.new(@objectPool, 0,0,90, :wave_down)
+	 #    EnemyRed2.new(@objectPool, -50,0,90, :wave_down)
+		# EnemyRed2.new(@objectPool, -100,0,90, :wave_down)
 
 		MeteorBrownBig1.new(@objectPool, 380,250,0)
 
@@ -104,7 +105,8 @@ class GameWindow<Gosu::Window
     	@objectPool.objects.map(&:update);
 
     	@objectPool.objects.each do |a| ## Пока что так
-    		if a.x<-50 || a.x>SCREEN_WIDTH+50 || a.y<-50 ||  a.y>SCREEN_HEIGHT+50
+    		#if a.x<-50 || a.x>SCREEN_WIDTH+50 || a.y<-50 ||  a.y>SCREEN_HEIGHT+50
+    		if a.x<-150 || a.x>SCREEN_WIDTH || a.y<-50 ||  a.y>$window_height+50
     			a.expired=true
     			#puts "#{a} is expired"
     		end;	
