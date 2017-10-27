@@ -25,7 +25,7 @@ module ImageFiles
 	$meteor_brown_big1=Gosu::Image.new('./PNG/Meteors/MeteorBrown_big1.png');
 
 	#f=File.join("C:","Users","kopa","Documents","Ruby","Graphics","kenney_spaceShooterExtension","PNG","Sprites","Station","spaceStation_024.png")
-	f=File.join("C:","Users","kopa","Documents","Ruby","Graphics","kenney_spaceShooterExtension","PNG","Sprites X2","Station","spaceStation_026.png")
-	$boss1=Gosu::Image.new(f)
+	#f=File.join("C:","Users","kopa","Documents","Ruby","Graphics","kenney_spaceShooterExtension","PNG","Sprites X2","Station","spaceStation_026.png")
+	$boss1=Gosu::Image.new('./PNG/Boss/SpaceStation_026.png')
 	$boss1_crash=Gosu::Image.load_tiles('./PNG/Boss/4Stations2.png', 2208/4,800);   
 end;
