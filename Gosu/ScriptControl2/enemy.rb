@@ -28,7 +28,8 @@ class Enemy<GameObject
     def update
          components.each(&:update)  
 
-         destruct if !@hits.nil?      
+         destruct if !@hits.nil?  
+         expired=true if @y<-200 || @y>$window_height+100 || @x<-300 || @x>$window_width+300
     end;
 
     def draw
@@ -36,11 +37,8 @@ class Enemy<GameObject
         components.each(&:draw)
     end; 
 
-     def shoot
-    #     now=Gosu.milliseconds
-    #     return if (now-@last_update||=0)<SHOOT_DELAY
-    #     LaserBlue01.new(@object_pool, @x,@y,@angle, self)
-    #     @last_update=now
+    def shoot
+
     end;
 
     def inflict_loss(damage, another_object)

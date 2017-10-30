@@ -32,14 +32,8 @@ class Laser<GameObject
         if !@hits.nil?
           destruct;          
         end;  
-        # hit=check_hit
-        # if !hit.nil?; #--<<--
-        #   puts :Explosion
-        #   Explosion.new(@object_pool,hit[0][:x],hit[0][:y])
-        #   destruct;
-        #   #xxx=hit[0][:another_object]
-        #   #xxx.inflict_loss(self)
-        # end;      
+
+        @expired=true if (@y<-50) || (@y>$window_height+50) || (@x<-50) || (@x>$window_width+50) 
     end;
 
     def draw

@@ -74,8 +74,8 @@ class RoutineHolder
 	end;
 	c=Proc.new do |obj|
 		if obj.mileage<400
-			obj.move;
-			obj.shoot;
+			  obj.move;
+			  obj.shoot;
 		else
 			obj.next;
 		end;		
@@ -95,7 +95,9 @@ class RoutineHolder
 	@routines[:wave_down]=[a,b,c,d,e]	
 
 	f=Proc.new do |obj|
-		if obj.x>380
+		if obj.y<100
+			obj.stop;
+		elsif obj.x>380
 			#puts obj.mileage
 			obj.move;
 		else
@@ -110,6 +112,16 @@ class RoutineHolder
 		end;
 	end;
 	@routines[:round_shoot]=[f,g]
+
+	af=Proc.new do |obj|
+		if obj.y<200
+			obj.move
+		else
+			obj.float;
+			obj.shoot;		
+		end;
+	end;	
+	@routines[:appear_and_float]=[af]
 end;
 
 	def routine(obj_id, cr)

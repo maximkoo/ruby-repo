@@ -49,54 +49,15 @@ class GameWindow<Gosu::Window
 		super($window_width,$window_height)
 		@objectPool=ObjectPool.new		
 		$passed=0;
+
+		@object_array=[] #inactive objects
+
 		Background.new(@objectPool)
 
-		sc=Scenario.new;
-		puts sc.scenario1
-		sc.scenario1.each do |obj|
-			if !obj[:id].nil?
-				#puts "obj_type=#{obj[:type]}"
-		#		puts obj
-				a=Object.const_get(obj[:type]).new(@objectPool, obj[:x], obj[:y], obj[:angle], obj[:id]);
-			#else		
-			#	a=Object.const_get(obj[:type]).new(@objectPool, obj[:x], obj[:y], obj[:angle]);
-			end;
-		end;	
-
-
-		### Run the game ###
-		# EnemyRed1.new(@objectPool, 350,400,270, :shoot_only)
-		# EnemyRed1.new(@objectPool, 300,400,270, 1)
-
-		# EnemyRed2.new(@objectPool, 550,50,210, :shoot_move)
-
+		@sc=Scenario.new;
+		puts @sc.scenario1;
+		scan_object_array(@sc);
 		
-		#EnemyRed2.new(@objectPool, 550,450,335, :shoot_only)
-
-		# EnemyRed2.new(@objectPool, 0,0,90, :wave_down)
-	 #    EnemyRed2.new(@objectPool, -50,0,90, :wave_down)
-		# EnemyRed2.new(@objectPool, -100,0,90, :wave_down)
-
-		# MeteorBrownBig1.new(@objectPool, 380,250,0)
-
-		# EnemyRed3.new(@objectPool, 625,100,270, :round_shoot)
-		# EnemyRed3.new(@objectPool, 700,100,270, :round_shoot)
-		# EnemyRed3.new(@objectPool, 775,100,270, :round_shoot)
-		# EnemyRed3.new(@objectPool, 850,100,270, :round_shoot)
-		# EnemyRed3.new(@objectPool, 925,100,270, :round_shoot)
-
-		# Boss1.new(@objectPool, 100,400, 0, :rotate_left)
-		#@s1=SpaceShips_001.new(@objectPool, 100,100,180, 0)
-		# @s2=SpaceShips_001.new(@objectPool, 300,550,0, 10)
-
-		# @x1=SpaceShips_001.new(@objectPool, 320,300,0, 25)
-		# @x2=SpaceShips_001.new(@objectPool, 320,250,0, 250)
-		# @x3=SpaceShips_001.new(@objectPool, 320,200,0, 250)
-		# @x4=SpaceShips_001.new(@objectPool, 320,150,0, 250)
-		# #@m1=Meteor.new(@objectPool, 500,350,0)
-		# @m2=Meteor.new(@objectPool, 100,570,0)
-		# @sh1=SpaceStationHat.new(@objectPool,500,150,-15)
-
 		@player=Player.new(@objectPool, 320,550,0)
 		puts "*** OBJECT POOL CONTENTS ***"
 		puts @objectPool.objects
@@ -117,22 +78,43 @@ class GameWindow<Gosu::Window
     	return if (now-@last_update||=now) < FRAME_DELAY 
     	@objectPool.objects.map(&:update);
 
-    	@objectPool.objects.each do |a| ## Пока что так
-    		#if a.x<-50 || a.x>SCREEN_WIDTH+50 || a.y<-50 ||  a.y>SCREEN_HEIGHT+50
-    		if a.x<-150 || a.x>SCREEN_WIDTH || a.y<-50 ||  a.y>$window_height+50
-    			a.expired=true
-    			#puts "#{a} is expired"
-    		end;	
-    	end;	
+    	# @objectPool.objects.each do |a| ## Пока что так
+    	# 	if a.x<-150 || a.x>SCREEN_WIDTH || a.y<-50 ||  a.y>$window_height+50
+    	# 		a.expired=true
+    	# 		puts "#{a} is expired"
+    	# 	end;	
+    	#end;	
 
+    	#@objectPool.objects.reject!{|a| puts "To be rejected: #{a}" if a.expired==true; a.expired==true}
     	@objectPool.objects.reject!{|a| a.expired==true}
-    	@last_update=now
+
     	#puts @objectPool.objects.size;
+    	previous_passed=$passed;
+    	$passed+=GAME_SPEED ###---<<<!!!!
+    	if $passed%20<previous_passed%20
+    		scan_object_array(@sc);
+    	end;	
+    	@last_update=now;
     end;
 
     def draw
     	@objectPool.objects.map(&:draw)
     	#@s1.draw
+    end;	
+
+    def scan_object_array(sc)
+		#puts "$passed=#{$passed}"
+		sc.scenario1.each do |obj|	
+			if (obj[:y]+$passed>0) && (obj[:active]==false)
+				puts "obj_type=#{obj[:type]}"
+		#		puts obj
+				a=Object.const_get(obj[:type]).new(@objectPool, obj[:x], obj[:y]+$passed, obj[:angle], obj[:id]);
+				obj[:active]=true;
+			
+				puts "*** OBJECT POOL CONTENTS ***"
+				puts @objectPool.objects
+			end;	
+		end;		
     end;	
 end; 
 

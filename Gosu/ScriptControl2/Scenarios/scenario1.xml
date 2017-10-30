@@ -1,7 +1,13 @@
 <scenario>
-		<object id="round_shoot" x="500" y="100" angle="270" type="EnemyRed3"></object>
-		<object id="round_shoot" x="600" y="100" angle="270" type="EnemyRed3"></object>
-		<object id="round_shoot" x="700" y="100" angle="270" type="EnemyRed3"></object>
-		<object id="" x="100" y="500" angle="0" type="MeteorBrownBig1"></object>
-		<object id="rotate_left" x="100" y="100" angle="0" type="Boss1"></object>	
+		<object id="round_shoot" x="650" y="-100" angle="270" type="EnemyRed3"></object>
+		<object id="round_shoot" x="750" y="-100" angle="270" type="EnemyRed3"></object>
+		<object id="round_shoot" x="850" y="-100" angle="270" type="EnemyRed3"></object>
+		<object id="" x="80" y="300" angle="0" type="MeteorBrownBig1"></object>
+		<object id="rotate_left" x="80" y="150" angle="-45" type="Boss1"></object>	
+		<object id="wave_down" x="-100" y="-300" angle="90" type="EnemyRed2"></object>
+		<object id="wave_down" x="-150" y="-300" angle="90" type="EnemyRed2"></object>
+		<object id="shoot_move" x="650" y="-350" angle="220" type="EnemyRed1"></object>
+		<object id="shoot_move" x="720" y="-350" angle="220" type="EnemyRed1"></object>
+
+		<object id="appear_and_float" x="300" y="-450" angle="180" type="EnemyRed1"></object>
 </scenario>
