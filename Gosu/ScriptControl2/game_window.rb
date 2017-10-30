@@ -1,4 +1,4 @@
-require 'gosu'
+﻿require 'gosu'
 require './game_object.rb'
 require './object_pool.rb'
 require './image_files.rb'
@@ -70,7 +70,7 @@ class GameWindow<Gosu::Window
 
 		# EnemyRed2.new(@objectPool, 550,50,210, :shoot_move)
 
-   	 	EnemyRed3.new(@objectPool, 550,550,320, 1)
+   	 	#EnemyRed3.new(@objectPool, 550,550,320, :shoot_move)
 	
 		#EnemyRed2.new(@objectPool, 550,450,335, :shoot_only)
 
