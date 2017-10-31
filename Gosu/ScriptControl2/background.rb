@@ -17,7 +17,7 @@ class Background<GameObject
 	end;
 
 	def update		
-		$passed+=GAME_SPEED ###---<<<!!!!		
+		#$passed+=GAME_SPEED ###---<<<!!!!		
 		@tiles.each do |t|
 			t[:y]+=GAME_SPEED;
 		end;	

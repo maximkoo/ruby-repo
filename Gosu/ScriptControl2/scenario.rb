@@ -15,6 +15,7 @@ class Scenario
 			s[:y]=obj.xpath('@y').text.to_i
 			s[:angle]=obj.xpath('@angle').text.to_i
 			s[:type]=obj.xpath('@type').text
+			s[:active]=false;
 			#puts s	
 			@scenario1<<s.clone;		
 		end;

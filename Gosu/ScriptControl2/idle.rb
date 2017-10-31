@@ -12,7 +12,8 @@ class Idle<GameObject
 
 	def update
         components.each(&:update)     
-        @y+=GAME_SPEED   
+        @y+=GAME_SPEED  
+        @expired=true if @y<-100 || @y>$window_height+100 || @x<-50 || (@x>$window_width+50)          
     end;
 
     def draw
