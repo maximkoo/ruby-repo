@@ -76,6 +76,7 @@ class PhysicsComponent<Component
 
     def float
         @y-=GAME_SPEED;
+        @mileage+=GAME_SPEED
     end;   
 
     def look_up
@@ -84,7 +85,15 @@ class PhysicsComponent<Component
 
     def look_down
         @angle=180;
-    end;    
+    end; 
+
+    def rotate_left_slow
+        @angle-=@object.class::ANGSPEED/10
+    end;   
+
+    def rotate_right_slow
+        @angle+=@object.class::ANGSPEED/10
+    end;
 
     # контроллер выполнения скриптов
     def update   

@@ -1,6 +1,7 @@
-require './Components/physics_component.rb'
-require './Components/graphics_component.rb'
-require './Components/polygon_component.rb'
+# require './Components/physics_component.rb'
+# require './Components/graphics_component.rb'
+# require './Components/polygon_component.rb'
+# require './Components/collider_component.rb'
 class Player<GameObject
 	SHOOT_DELAY=100;
 	SPEED=5 #left right up down
@@ -9,12 +10,14 @@ class Player<GameObject
     attr_accessor :x,:y,:angle, :cr, :xCenter,:yCenter
     attr_accessor :health, :mileage
     attr_accessor :hits, :source # для Collider
+    attr_accessor :energy
     def initialize(object_pool, x,y, angle) 
     	super(object_pool)        
         @x,@y,@angle=x,y,angle
 
         @health=10;
         @hits=[]
+        @energy=100;
 
         @img=$player_ship;
 
@@ -41,7 +44,7 @@ class Player<GameObject
         @gr=GraphicsComponent.new(self);
         @pl=PolygonComponent.new(self);
         @co=ColliderComponent.new(self)
-
+        @en=EnergyBar.new(self);
     end;
 
     def update
@@ -49,6 +52,7 @@ class Player<GameObject
         # destruct if !@hits.nil?   
         key_control;  
         destruct if !@hits.nil?  
+        @energy+=0.5 if @energy+1<=100#!
     end;
 
     def draw
@@ -58,8 +62,9 @@ class Player<GameObject
 
     def shoot
         now=Gosu.milliseconds
-        return if (now-@last_update||=0)<SHOOT_DELAY
+        return if (now-@last_update||=0)<SHOOT_DELAY || @energy<=0
         LaserBlue01.new(@object_pool, @x,@y,@angle, self)
+        @energy-=10;       
         @last_update=now
     end;  
 

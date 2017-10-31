@@ -4,21 +4,29 @@ require './object_pool.rb'
 require './image_files.rb'
 require './background.rb'
 require './player.rb'
+require './laser.rb'
+require './objects/laser_blue01.rb'
+require './objects/laser_red01.rb'
+
+require './enemy.rb'
 require './objects/enemy_red1.rb'
 require './objects/enemy_red2.rb'
 require './objects/enemy_red3.rb'
+
+require './idle.rb'
 require './objects/meteor_brown_big1.rb'
 require './objects/boss1.rb'
-#require './utils.rb'
-#require './game_object.rb'
-#require './spaceShips_001.rb'
-#require './meteor.rb'
-#require './routine_holder.rb'
-#require './explosion.rb'
-#require './space_station_hat.rb'
+require './objects/explosion_big.rb'
+require './objects/satellite_yellow.rb'
+
+require './components/physics_component.rb'
+require './components/graphics_component.rb'
+require './components/polygon_component.rb'
+require './components/collider_component.rb'
+
+require './interface/energy_bar.rb';
 require './Scenario.rb'
 
-#CONSTANTS
 	FRAME_DELAY=16
 
 	GAME_SPEED=0.5
@@ -26,8 +34,10 @@ require './Scenario.rb'
 	BACKGROUND_LAYER=0
 	POLYGON_LAYER=10
 	IDLE_OBJECTS_LAYER=15
+	LASER_LAYER=19
 	GRAPHICS_LAYER=20
 	PLAYER_LAYER=25
+	INTERFACE_LAYER=50;
 
 	EXPLOSION_LAYER=50
 
@@ -46,7 +56,7 @@ class GameWindow<Gosu::Window
 		#super(SCREEN_WIDTH/2,SCREEN_HEIGHT-100)
 		$window_width=600
 		$window_height=600;
-		super($window_width,$window_height)
+		super($window_width,$window_height, true)
 		@objectPool=ObjectPool.new		
 		$passed=0;
 
@@ -59,6 +69,7 @@ class GameWindow<Gosu::Window
 		scan_object_array(@sc);
 		
 		@player=Player.new(@objectPool, 320,550,0)
+		
 		puts "*** OBJECT POOL CONTENTS ***"
 		puts @objectPool.objects
 	end;
@@ -106,13 +117,13 @@ class GameWindow<Gosu::Window
 		#puts "$passed=#{$passed}"
 		sc.scenario1.each do |obj|	
 			if (obj[:y]+$passed>0) && (obj[:active]==false)
-				puts "obj_type=#{obj[:type]}"
+				#puts "obj_type=#{obj[:type]}"
 		#		puts obj
 				a=Object.const_get(obj[:type]).new(@objectPool, obj[:x], obj[:y]+$passed, obj[:angle], obj[:id]);
 				obj[:active]=true;
 			
-				puts "*** OBJECT POOL CONTENTS ***"
-				puts @objectPool.objects
+				#puts "*** OBJECT POOL CONTENTS ***"
+				#puts @objectPool.objects
 			end;	
 		end;		
     end;	

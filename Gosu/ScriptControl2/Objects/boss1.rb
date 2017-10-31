@@ -11,7 +11,7 @@ class Boss1<Boss
         @xCenter=@img.width.fdiv(2)
         @yCenter=@img.height.fdiv(2)
 
-        @health=50;
+        @health=150;
 
         @poly=[]
         @poly<<{x:116,y:0}

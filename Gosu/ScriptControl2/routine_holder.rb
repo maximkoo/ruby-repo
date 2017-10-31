@@ -98,7 +98,6 @@ class RoutineHolder
 		if obj.y<100
 			obj.stop;
 		elsif obj.x>380
-			#puts obj.mileage
 			obj.move;
 		else
 			obj.next
@@ -110,18 +109,100 @@ class RoutineHolder
 		if (obj.angle%360).between?(0,180)
 			obj.shoot;
 		end;
+		if obj.angle<-270
+			obj.next;
+		end;	
 	end;
-	@routines[:round_shoot]=[f,g]
+	g1=Proc.new do |obj|
+		obj.move;
+	end;	
+	@routines[:round_shoot]=[f,g, g1]
+
+	f=Proc.new do |obj|
+		if obj.y<100
+			obj.stop;
+		elsif obj.x<300
+			obj.move;
+		else
+			obj.next
+		end;
+	end;	
+	g=Proc.new do |obj|
+		obj.rotate_right
+		obj.move
+		if (obj.angle%360).between?(0,180)
+			obj.shoot;
+		end;
+		if obj.angle>=270+360
+			obj.next;
+		end;	
+	end;
+	g1=Proc.new do |obj|
+		obj.move;
+	end;	
+	@routines[:round_shoot_left]=[f,g, g1]
 
 	af=Proc.new do |obj|
 		if obj.y<200
 			obj.move
-		else
+		elsif obj.mileage>260
+			obj.move
+		else	
 			obj.float;
 			obj.shoot;		
 		end;
 	end;	
 	@routines[:appear_and_float]=[af]
+
+	s1=Proc.new do |obj|
+		if obj.y<200
+			obj.move
+		elsif obj.angle<270
+			obj.float
+			obj.rotate_right_slow
+		else
+			obj.next;
+		end;
+	end;	
+	s2=Proc.new do |obj|
+		if obj.angle>-90
+			obj.float;
+			obj.rotate_left
+		else
+			obj.move
+		end;		
+	end;	
+	@routines[:satellite]=[s1,s2]
+
+	ttt=Proc.new do |obj|
+		if obj.y<100
+			obj.stop
+		elsif obj.x<300
+			obj.move;
+		else 
+			obj.look_down;
+			obj.stop;
+			obj.next;
+		end;
+		#puts obj.x, obj.y	
+	end;	
+	tttt=Proc.new do |obj|
+			obj.strafe_right;
+			obj.shoot;
+		end;	
+	@routines[:strafe_shoot]=[ttt,tttt]	
+
+	q=Proc.new do |obj|
+		if obj.y<300
+			obj.move
+		else	
+			obj.float if obj.mileage<350;
+			obj.move if obj.mileage>=350;
+			obj.shoot;			
+		end;
+	end;
+
+	@routines[:float_shoot]=[q]	
 end;
 
 	def routine(obj_id, cr)

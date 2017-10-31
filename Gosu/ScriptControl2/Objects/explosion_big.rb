@@ -1,3 +1,4 @@
+require './game_object.rb'
 class Explosion<GameObject
 	FRAME_DELAY=10
   attr_accessor :x,:y, :object_pool,:expired
