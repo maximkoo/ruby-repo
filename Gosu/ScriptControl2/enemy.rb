@@ -1,6 +1,3 @@
-require './Components/physics_component.rb'
-require './Components/graphics_component.rb'
-require './Components/polygon_component.rb'
 class Enemy<GameObject
 	attr_reader :object_pool, :obj_id, :img, :ph
     attr_accessor :x,:y,:angle, :cr, :xCenter,:yCenter

@@ -1,3 +1,6 @@
+require './Components/physics_component.rb'
+require './Components/graphics_component.rb'
+require './Components/polygon_component.rb'
 class GameObject
 	attr_accessor :components, :expired, :poly, :mileage, :active
 	def initialize(object_pool)

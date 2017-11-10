@@ -1,9 +1,8 @@
 require './utils.rb'
-require './Components/physics_component.rb'
-require './Components/graphics_component.rb'
-require './Components/polygon_component.rb'
-require './Components/collider_component.rb'
-require './Objects/Explosion_big.rb'
+# require './Components/physics_component.rb'
+# require './Components/graphics_component.rb'
+# require './Components/polygon_component.rb'
+# require './Components/collider_component.rb'
 class Laser<GameObject
     attr_reader :object_pool, :obj_id, :img, :ph
     attr_accessor :x,:y,:angle, :cr, :xCenter,:yCenter
@@ -53,24 +52,5 @@ class Laser<GameObject
     def default_routine
         @ph.move;
     end;    
-
-    # private
-    # def check_hit
-    #   res=nil;
-    #   @object_pool.nearby(self).each do |obj|
-    #     next if obj==self || obj==@source
-    #     # puts "Object nearby detected: #{obj}"
-    #     # puts "p1=#{self.poly}"
-    #     # puts "p2=#{obj.poly}"
-    #     if Utils.polygons_intersect?(self.poly, obj.poly)
-    #       puts "HIT DETECTED!!!!"
-    #       res=Utils.polygons_intersections(self.poly, obj.poly)
-    #       #puts res.to_s
-    #        res.each {|r| r[:another_object]=obj} 
-    #       @expired=true;
-    #     end;  
-    #   end
-    #   return res
-    # end;
 end;    
 

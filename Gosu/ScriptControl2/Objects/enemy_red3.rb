@@ -27,7 +27,7 @@ class EnemyRed3<Enemy
     def shoot
         now=Gosu.milliseconds
         return if (now-@last_update||=0)<SHOOT_DELAY
-        LaserBlue01.new(@object_pool, @x,@y,@angle, self)
+        LaserRed01.new(@object_pool, @x,@y,@angle, self)
         @last_update=now
     end;    
 end; 

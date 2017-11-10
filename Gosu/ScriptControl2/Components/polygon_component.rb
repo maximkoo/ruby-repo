@@ -7,7 +7,7 @@ class PolygonComponent<Component
         @poly0<<@poly0.first.clone;   
         @poly=@poly0.clone  
 
-        if @object.class==LaserBlue01
+        if @object.class.ancestors.include?(Laser)
             @poly=@poly0.map{|p| {:x=>p[:x]+@object.x, :y=>p[:y]+@object.y}}
             #puts "Start: poly=#{@poly}"
         else    
@@ -26,7 +26,7 @@ class PolygonComponent<Component
         
         @polyOld=@poly; #Нужно только для лазеров
         
-        if @object.class==LaserBlue01
+        if @object.class.ancestors.include?(Laser)
             #puts xc
             #puts (@poly0[0][:x]-xc)*Math.cos(ang)
             xc=yc=0
