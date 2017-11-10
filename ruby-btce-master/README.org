@@ -1,0 +1,217 @@
+* =Btce= Module
+
+This is a library in Ruby to easily acces the data provided by the [[http://btc-e.com][btc-e.com]] API.
+It was originally being used on [[http://btc-charts.com][BTC-Charts.com]], among other places.
+It is available under a BSD-style license.
+
+Show us some love! [[bitcoin:1Lq87gJFDYT5MbCa1rA4LLzttYE9Fw3oQw][1Lq87gJFDYT5MbCa1rA4LLzttYE9Fw3oQw]]
+
+** Installation
+
+The library is available as a rubygem.
+
+#+BEGIN_SRC sh
+gem install btce
+#+END_SRC
+
+** Basic Usage
+
+Populate the file =btce-api-key.yml= along the same lines as the example.
+
+The only thing that 99% of the people using the library will want to do with it:
+
+#+BEGIN_SRC ruby
+require 'btce'
+ticker = Btce::Ticker.new "btc_usd"
+#+END_SRC
+
+This should return something resembling:
+
+#+BEGIN_SRC ruby
+#<Btce::Ticker:0x00000000d5d9a0 @operation="ticker",
+                                @pair="btc_usd",
+                                @json={"ticker"=>{"high"=>127,
+                                                  "low"=>87.301,
+                                                  "avg"=>107.1505,
+                                                  "vol"=>4240695.81634,
+                                                  "vol_cur"=>39298.55663,
+                                                  "last"=>115,
+                                                  "buy"=>115,
+                                                  "sell"=>114.499,
+                                                  "server_time"=>1366406293}}>
+#+END_SRC
+
+You can then acces the fields with the predefined methods of the =Ticker= class.
+
+** =API= Class
+
+This is the parent class for both the =PublicAPI= class and the =TradeAPI= class.
+
+*** =BTCE_DOMAIN=
+
+This is the domain of the server, defaulting to the string =btc-e.com=.
+
+*** =CURRENCIES=
+
+This is a list of the short strings for all of the currencies currently supported on [[http://btc-e.com][btc-e.com]].
+
+*** =CURRENCY_PAIRS=
+
+This is a list of all of the supported currency pairs on [[http://btc-e.com][btc-e.com]].
+
+*** =MAX_DIGITS=
+
+This indicates how many digits past the decimal place are commonly displayed to humans for a given currency pair.
+
+*** Class Methods
+
+**** =get_https=
+
+**** =get_json=
+
+** =PublicAPI= Class
+
+*** =OPERATIONS=
+
+*** Class Methods
+
+**** =get_pair_operation_json=
+
+**** =get_pair_fee_json=
+
+**** =get_pair_ticker_json=
+
+**** =get_pair_trades_json=
+
+**** =get_pair_depth_json=
+
+**** get_<PAIR>_fee_json
+
+**** get_<PAIR>_ticker_json
+
+**** get_<PAIR>_trades_json
+
+**** get_<PAIR>_depth_json
+
+
+** =PublicOperation= Class
+
+** =Fee= Class
+
+*** Instance Methods
+
+**** =trade=
+
+** =Ticker= Class
+
+*** Instance Methods
+
+**** =high=
+
+**** =low=
+
+**** =avg=, =average=
+
+**** =vol=, =volume=
+
+**** =vol_cur=
+
+**** =last=
+
+**** =buy=
+
+**** =sell=
+
+**** =server_time=
+
+** =Trade= Class
+
+*** Instance Methods
+
+**** =date=
+
+**** =price=
+
+**** =amount=
+
+**** =tid=
+
+**** =price_currency=
+
+**** =item=
+
+**** =trade_type=
+
+** =Trades= Class
+
+** =Depth= Class
+** =TradeAPI= Class
+
+This class wraps the Trade API calls for BTCE. Parameters are passed to the method as a hashmap. More information on parameters can be found on the API docs here https://btc-e.com/api/documentation
+
+*** Basic Usage
+
+#+BEGIN_SRC ruby
+require 'btce'
+info = Btce::TradeAPI.new_from_keyfile.get_info
+#+END_SRC
+
+This should return something resembling:
+
+#+BEGIN_SRC ruby
+{"success" => 1,
+ "return" => {"funds" => {"usd" => 2.57460659,
+                          "btc" => 0.00012226,
+                          "ltc" => 3.00815559,
+                          "nmc" => 0,
+                          "rur" => 8.0116908,
+                          "eur" => 0,
+                          "nvc" => 0,
+                          "trc" => 0,
+                          "ppc" => 0,
+                          "ftc" => 0,
+                          "xpm" => 0},
+              "rights" => {"info" => 1,
+                           "trade" => 0,
+                           "withdraw" => 0},
+              "transaction_count" => 120,
+              "open_orders" => 1,
+              "server_time"=>1385947487}}
+#+END_SRC
+
+*** Class Methods
+
+**** =new_from_keyfile=
+
+*** Instance Methods
+
+**** =sign=
+This method is used to sign the request with the user's private API key from btc-e.com.
+**** =trade_api_call=
+This is the generic method call to the Trade API. It takes a method from the Trade API, and extra information that is needed for the specific method.
+**** =get_info=
+Returns the user's balance, API privileges associated with the current key, number of transactions and open orders, as well as server time
+**** =trade_history=
+Returns the user's trade history
+**** =trans_history=
+Returns the user's transaction history		 
+**** =trade=
+Initiates a trade on the user's account
+**** =order_list=
+Returns a list of active orders		 
+**** =cancel_order=
+Cancels the user's order
+
+** Commonly Encountered Errors
+
+*** Querying the endpoint more than once a second.
+
+You can only query BTC-e's endpoint at most once a second currently.
+If you see something similar to the following error, that is probably what you are encountering.
+
+
+#+BEGIN_SRC
+Same nonce is sent for every request.
+
+{"success"=>0, "error"=>"invalid nonce parameter; on key:1409032186, you sent:1409032186, you should send:1409032187"}
+#+END_SRC

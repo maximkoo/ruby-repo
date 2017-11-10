@@ -29,7 +29,9 @@ class Laser<GameObject
         components.each(&:update)   
 
         if !@hits.nil?
-          destruct;          
+          if  (@source.class==Player) || (hits[0][:another_object].class==Player) ||(FRIENDLY_FIRE && hits[0][:another_object].class!=Player)
+            destruct; 
+          end;         
         end;  
 
         @expired=true if (@y<-50) || (@y>$window_height+50) || (@x<-50) || (@x>$window_width+50) 
@@ -41,7 +43,13 @@ class Laser<GameObject
 
     def destruct
       #puts :Explosion
+      #puts "@source.class=#{@source.class}"
+      #puts "hits[0][:another_object]=#{hits[0][:another_object]}"
+
+
+      
           hits[0][:another_object].inflict_loss(DAMAGE,self);
+          
           if !hits[0][:another_object].expired
             Explosion.new(@object_pool,@hits[0][:x],@hits[0][:y],:small)
             #puts @hits[0][:x],@hits[0][:y]

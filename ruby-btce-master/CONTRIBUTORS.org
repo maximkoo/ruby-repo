@@ -1,0 +1,74 @@
+* Contributors
+
+Thanks to everyone who has helped out with this project.  If we have forgotten
+to add you to this list, please email me at [[mailto:cgore@cgore.com][cgore@cgore.com]].
+
++ Auston Bunsen
+
+  [[https://github.com/abunsen][github.com/abunsen]]
+
++ Christoph Bünte
+
+  [[http://www.christophbuente.de][www.christophbuente.de]]
+
+  [[https://github.com/christoph-buente][github.com/christoph-buente]]
+
+  [[mailto:info@christophbuente.de][info@christophbuente.de]]
+
++ Davide Di Cillo
+
+  [[https://github.com/davidedicillo][github.com/davidedicillo]]
+
+  [[http://davidedicillo.com][davidedicillo.com]]
+
++ Edward Funger
+
+  [[https://github.com/teddythetwig][github.com/teddythetwig]]
+
+  [[mailto:teddythetwig@gmail.com][teddythetwig@gmail.com]]
+
++ Christopher Mark Gore
+
+  [[http://www.cgore.com][cgore.com]]
+
+  [[https://github.com/cgore][github.com/cgore]]
+
+  [[mailto:cgore@cgore.com][cgore@cgore.com]]
+
++ Stephan Kaag
+
+  [[http://www.bettyblocks.com][www.bettyblocks.com]]
+
+  [[https://github.com/stephankaag][github.com/stephankaag]]
+
++ Sami Laine
+
+  [[https://github.com/samilaine][github.com/samilaine]]
+
++ Selvam Palanimalai
+
+  [[https://github.com/selvam1991][github.com/selvam1991]]
+
++ Kevin Pheasey
+
+  [[https://github.com/kpheasey][github.com/kpheasey]]
+
++ Jamie Quint
+
+  [[http://jamiequint.com][jamiequint.com]]
+
+  [[https://github.com/jamiequint][github.com/jamiequint]]
+
+  [[mailto:jamiequint@gmail.com][jamiequint@gmail.com]]
+
++ Panupan Sriautharawong
+
+  [[https://github.com/panupan][github.com/panupan]]
+
++ Michaël Witrant
+
+  [[http://michael.witrant.com/][michael.witrant.com]]
+
+  [[https://github.com/sigmike][github.com/sigmike]]
+
+  [[mailto:mike@lepton.fr][mike@lepton.fr]]
