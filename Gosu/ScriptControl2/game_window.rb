@@ -48,6 +48,8 @@ require './Scenario.rb'
 
 	SCALER=0.5
 
+	FRIENDLY_FIRE=false
+
 class GameWindow<Gosu::Window
 	include ImageFiles
 	SCREEN_WIDTH=Gosu.screen_width;
