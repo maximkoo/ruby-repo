@@ -62,8 +62,8 @@ module Btce
           end
         end
 #puts "https://#{API::BTCE_DOMAIN}/api/3/#{operation}/#{pair}#{params}"
-#        get_json url: "https://#{API::BTCE_DOMAIN}/api/3/#{operation}/#{pair}#{params}"
-get_json({url: "https://www.wex.nz/api/3/ticker/btc_usd"})
+        get_json url: "https://#{API::BTCE_DOMAIN}/api/3/#{operation}/#{pair}#{params}"
+#get_json({url: "https://www.wex.nz/api/3/ticker/btc_usd"})
       end
 
       OPERATIONS.each do |operation|
