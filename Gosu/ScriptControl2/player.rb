@@ -2,6 +2,7 @@
 # require './Components/graphics_component.rb'
 # require './Components/polygon_component.rb'
 # require './Components/collider_component.rb'
+require './interface/info.rb'
 class Player<GameObject
 	SHOOT_DELAY=100;
 	SPEED=5 #left right up down
@@ -11,6 +12,7 @@ class Player<GameObject
     attr_accessor :health, :mileage
     attr_accessor :hits, :source # для Collider
     attr_accessor :energy
+    attr_accessor :score
     def initialize(object_pool, x,y, angle) 
     	super(object_pool)        
         @x,@y,@angle=x,y,angle
@@ -18,6 +20,7 @@ class Player<GameObject
         @health=10;
         @hits=[]
         @energy=100;
+        @score=0;
 
         @img=$player_ship;
 
@@ -45,6 +48,8 @@ class Player<GameObject
         @pl=PolygonComponent.new(self);
         @co=ColliderComponent.new(self)
         @en=EnergyBar.new(self);
+        #@pr=ScreenPrinter.new(self);
+        #@info=Info.new(self);
     end;
 
     def update
@@ -58,6 +63,7 @@ class Player<GameObject
     def draw
         #puts "Components draw"
         components.each(&:draw)
+        #ScreenPrinter.screenPrint("TROLOLO",100,100)
     end;
 
     def shoot

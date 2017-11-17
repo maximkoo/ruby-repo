@@ -28,5 +28,6 @@
 		<object id="appear_and_float" x="350" y="-550" angle="175" type="EnemyRed1"></object>
 
 		<!-- <object id="strafe_shoot" x="-50" y="-550" angle="90" type="EnemyRed1"></object> -->
+		<object id="boss_float_rotate" x="300" y="-750" angle="-45" type="Boss1"></object>
 		
 </scenario>

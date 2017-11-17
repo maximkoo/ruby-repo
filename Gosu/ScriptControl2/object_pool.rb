@@ -14,6 +14,7 @@ class ObjectPool
 			res=res && obj.class!=Background
 			res=res && obj.class!=EnergyBar
 			res=res && !obj.class.ancestors.include?(Laser)
+			res=res && obj.class!=Info
 			res=res && (Utils.distance_between(object.x, object.y, obj.x, obj.y)<NEARBY_DISTANCE || obj.class.ancestors.include?(Boss))
 			res
 		end;	

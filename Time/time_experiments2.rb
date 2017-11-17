@@ -70,7 +70,7 @@ class Timeline
 		y0=y00/2;
 		i=0
 		candles.each do |c|
-			puts x0-i*25, y00-y0-(c.high-@midline)*@scale, x0-20-i*25, y00-y0-(c.low-@midline)*@scale
+			#puts x0-i*25, y00-y0-(c.high-@midline)*@scale, x0-20-i*25, y00-y0-(c.low-@midline)*@scale
 			TkcRectangle.new(@cnv, x0-i*25, y00-y0-(c.high-@midline)*@scale, x0-20-i*25, y00-y0-(c.low-@midline)*@scale)
 			#TkcRectangle.new(@cnv,100,100,200,200)
 			i+=1;

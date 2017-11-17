@@ -3,12 +3,14 @@ class Enemy<GameObject
     attr_accessor :x,:y,:angle, :cr, :xCenter,:yCenter
     attr_accessor :health, :mileage
     attr_accessor :hits, :source # для Collider
+    attr_accessor :score
     def initialize(object_pool, x,y, angle, obj_id)
         super(object_pool) 
         @x,@y,@angle=x,y,angle
 
         @health=10;
         @hits=[]
+        @score=10;
 
         ## Начальные значения ##
        # @expired=false; 
@@ -40,8 +42,18 @@ class Enemy<GameObject
 
     def inflict_loss(damage, another_object)
         @health-=damage;
-        puts "#{self.class} health=#{@health}"
+        #puts "#{self.class} health=#{@health}"
         destruct if @health<=0
+
+#puts another_object.class.ancestors.to_s
+#puts another_object.source.class
+        if another_object.class.ancestors.include?(Laser)
+            if another_object.source.class==Player
+                #puts another_object.source;
+                #puts another_object.source.score;
+                another_object.source.score+=@score;
+            end;    
+        end;    
     end;    
 
     def destruct

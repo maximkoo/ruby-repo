@@ -154,6 +154,16 @@ class RoutineHolder
 	end;	
 	@routines[:appear_and_float]=[af]
 
+	af=Proc.new do |obj|
+		if obj.y<200
+			obj.rotate_left
+		else
+			obj.float;
+			obj.rotate_left
+		end;
+	end;	
+	@routines[:boss_float_rotate]=[af]
+
 	s1=Proc.new do |obj|
 		if obj.y<200
 			obj.move

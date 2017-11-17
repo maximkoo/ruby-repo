@@ -27,6 +27,10 @@ require './components/collider_component.rb'
 require './interface/energy_bar.rb';
 require './Scenario.rb'
 
+require './Font/font_repo.rb'
+require './interface/screen_printer.rb'
+require './interface/info.rb'
+
 	FRAME_DELAY=16
 
 	GAME_SPEED=0.5
@@ -37,7 +41,7 @@ require './Scenario.rb'
 	LASER_LAYER=19
 	GRAPHICS_LAYER=20
 	PLAYER_LAYER=25
-	INTERFACE_LAYER=50;
+	INTERFACE_LAYER=100;
 
 	EXPLOSION_LAYER=50
 
@@ -71,6 +75,7 @@ class GameWindow<Gosu::Window
 		scan_object_array(@sc);
 		
 		@player=Player.new(@objectPool, 320,550,0)
+		@info=Info.new(@objectPool, @player)
 		
 		puts "*** OBJECT POOL CONTENTS ***"
 		puts @objectPool.objects
@@ -91,13 +96,6 @@ class GameWindow<Gosu::Window
     	return if (now-@last_update||=now) < FRAME_DELAY 
     	@objectPool.objects.map(&:update);
 
-    	# @objectPool.objects.each do |a| ## Пока что так
-    	# 	if a.x<-150 || a.x>SCREEN_WIDTH || a.y<-50 ||  a.y>$window_height+50
-    	# 		a.expired=true
-    	# 		puts "#{a} is expired"
-    	# 	end;	
-    	#end;	
-
     	#@objectPool.objects.reject!{|a| puts "To be rejected: #{a}" if a.expired==true; a.expired==true}
     	@objectPool.objects.reject!{|a| a.expired==true}
 
@@ -113,6 +111,7 @@ class GameWindow<Gosu::Window
     def draw
     	@objectPool.objects.map(&:draw)
     	#@s1.draw
+    	#screenPrint("SPACE X WARRIOR",100,100)	
     end;	
 
     def scan_object_array(sc)
@@ -128,7 +127,7 @@ class GameWindow<Gosu::Window
 				#puts @objectPool.objects
 			end;	
 		end;		
-    end;	
+    end;    	
 end; 
 
 $g=GameWindow.new
