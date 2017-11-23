@@ -20,6 +20,8 @@ class Order
 		type='buy';
 		percent_buy=0.995
 		percent_sell=1.005
+		# percent_buy=0.99
+		# percent_sell=1.01
 		price=stock.first["price"]*percent_buy
 		#price=1090
 		puts "Initial price=#{price}"
@@ -35,10 +37,10 @@ class Order
 			# end;
 
 			if type=="buy"	
-				if x["price"]<=price #&& x["type"]=="bid"
+				if x["price"]<=price && x["type"]=="bid"
 					puts "Bought at #{Time.at(x['timestamp'])}, price=#{x['price']}, timestamp=#{x["timestamp"]}"
 					price=x["price"]
-					crypto=dollars.fdiv(x["price"])
+					crypto=dollars.fdiv(x["price"])*0.998
 					dollars=0;
 					type='sell'
 					price=price*percent_sell;
@@ -46,14 +48,14 @@ class Order
 
 				end;	
 			else
-				if x["price"]>=price #&& x["type"]=="ask"
+				if x["price"]>=price && x["type"]=="ask"
 					puts "Sold at #{Time.at(x['timestamp'])}, price=#{x['price']}, timestamp=#{x["timestamp"]}"
 					price=x["price"]
-					dollars=crypto*x["price"]
+					dollars=crypto*x["price"]*0.998
 					crypto=0;
 					type='buy'
 					price=price*percent_buy
-					puts "   new price to buy: #{price}"
+					puts "   new price to buy: #{price}, budget: #{dollars}"
 				end;
 			end;		
 		end;
