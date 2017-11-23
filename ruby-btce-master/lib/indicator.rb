@@ -2,10 +2,12 @@ require 'indicators'
 require 'btce'
 my_data = Indicators::Data.new([1, 2, 3, 4, 5,10])
 puts my_data.calc(:type => :sma, :params => 2).output
+puts
+puts my_data.calc(:type => :ema, :params => 2).output
 
-
-my_data = Indicators::Data.new([1, 2, 3, 4, 5,1])
-puts my_data.calc(:type => :rsi, :params => 5).output
+my_data = Indicators::Data.new([1, 2, 3, 4, 5,6,7,8,9,9,9,9,9,9])
+print "RSI: "
+puts my_data.calc(:type => :rsi, :params => 14).output
 
 #hist=Btce::TradeAPI.new_from_keyfile.trade_history("since"=>1509707437-100, "pair"=>"nvc_usd")
 #puts hist
