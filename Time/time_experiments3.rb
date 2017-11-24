@@ -65,7 +65,7 @@ class Order
 end;	
 
 g=StockData.new
-h=g.getData('bch_usd',0);
+h=g.getData('zec_usd',0);
 #puts h;
 a1=h.map{|x| x["timestamp"]}.min
 a2=h.map{|x| x["timestamp"]}.max
