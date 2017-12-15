@@ -20,8 +20,10 @@ class Order
 		type='buy';
 		percent_buy=0.995
 		percent_sell=1.005
-		# percent_buy=0.99
-		# percent_sell=1.01
+		# percent_buy=0.9975
+		# percent_sell=1.0025
+		# percent_buy=0.98
+		# percent_sell=1.02
 		price=stock.first["price"]*percent_buy
 		#price=1090
 		puts "Initial price=#{price}"
@@ -65,7 +67,7 @@ class Order
 end;	
 
 g=StockData.new
-h=g.getData('zec_usd',0);
+h=g.getData('nvc_usd',0);
 #puts h;
 a1=h.map{|x| x["timestamp"]}.min
 a2=h.map{|x| x["timestamp"]}.max
