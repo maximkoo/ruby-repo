@@ -76,7 +76,7 @@ class Dispatcher
 		 	end;	
 		 	ctime=Time.now
 		 	@order.age+=ctime-@last_update;
-		 	puts "Order age is #{@order.age} seconds"
+		 	puts "Order age is #{@order.age.round(0)} seconds"
 		 	@last_update=ctime;		 	
 	 	end;	
 	end;	

@@ -2,7 +2,7 @@ require 'btce'
 class StockData
 	def getData(pair, inter)
 		mmm="get_#{pair}_trades_json";
-		hist=Btce::PublicAPI.send(mmm, {limit:3000});
+		hist=Btce::PublicAPI.send(mmm, {limit:6000});
 		hist1=hist[pair]
 		#if inter>0
 		#	hist2=hist1.group_by{|x| x["timestamp"]/inter}
@@ -65,11 +65,12 @@ class Order
 end;	
 
 g=StockData.new
-h=g.getData('nvc_usd',0);
+#h=g.getData('nvc_usd',0);
 #h=g.getData('nmc_usd',0);
 #h=g.getData('ppc_usd',0);
 #h=g.getData('btc_usd',0);
 #h=g.getData('eth_usd',0);
+h=g.getData('ltc_usd',0);
 #puts h;
 a1=h.map{|x| x["timestamp"]}.min
 a2=h.map{|x| x["timestamp"]}.max
