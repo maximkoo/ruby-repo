@@ -18,53 +18,46 @@ class CopyRaw
 	def m1
 		#DirectoryCopier.new(@from, @to)
 	end;	
+
+	def self.getFolderNameByDate(f)
+		x=File.new(f).ctime;
+		puts x
+		puts x.strftime("%Y-%m-%d");
+		x.strftime("%Y-%m-%d");
+	end;	
 end;
 
 class DirectoryCopier
-	@a=0
-	def self.a=(x)
-		@a=x
-	end;	
-	def self.a
-		@a
-	end;
-		
 	def initialize(from, to)
 		@from,@to=from, to
+		@currentTo=@to
 		processFiles
-		self.class.a+=1
-		#puts "Inlet dirs: #{self.class.a}"
 	end;	
 	
 	def processFiles
 		begin
-			#FileUtils.cd(@from)
-			# Dir.entries(@from).each do |f|
-   # 				puts f
-   # 			end;	
 			puts "... entering directory #{@from}"			
    			Dir.entries(@from).each do |f|
    				next if ['.','..'].include?(f)
 
-   				if File.file?(@from+"\\"+f)
-   					if File.exists?(@to+"\\"+f)
-						puts "File #{@to+"\\"+f} exists!"
-   					else
-   						FileUtils.copy(@from+"\\"+f,@to+"\\"+f)
-   						puts "File #{@to+"\\"+f} copied!"
+   				if File.file?(@from+"\\"+f) 
+   					dateFolder=CopyRaw.getFolderNameByDate(@from+"\\"+f)
+   					if !Dir.exist?(@to+"\\"+dateFolder)
+   						FileUtils.mkdir(@to+"\\"+dateFolder)
    					end;	
+
+   					@currentTo=@to+"\\"+dateFolder 
    					
+   					if File.exists?(@currentTo+"\\"+f)
+						puts "File #{@currentTo+"\\"+f} exists!"
+   					else
+   						FileUtils.copy(@from+"\\"+f,@currentTo+"\\"+f, :preserve=>true)
+   						puts "File #{@currentTo+"\\"+f} copied!"
+   					end;   					
    				end;
+
    				if File.directory?(@from+"\\"+f)
-   					if File.exists?(@to+"\\"+f)
-   						puts "Directory #{@to+"\\"+f} exists!"
-   					else	
-   						FileUtils.mkdir(@to+"\\"+f)
-   						puts "Directory #{@to+"\\"+f} created!"
-   					end;	
-   					#FileUtils.cd(@to+"\\"+f) do
-   						DirectoryCopier.new(@from+"\\"+f, @to+"\\"+f)
-   					#end;	
+   						DirectoryCopier.new(@from+"\\"+f, @to)
    				end;   					
    			end;
    		rescue Errno::EACCES

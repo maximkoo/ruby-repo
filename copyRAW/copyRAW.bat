@@ -1,1 +1,1 @@
-ruby.exe copyRaw.rb
+ruby.exe tst2.rb
