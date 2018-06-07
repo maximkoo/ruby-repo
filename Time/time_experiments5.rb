@@ -57,7 +57,7 @@ class Dispatcher
 		 	
 		 	if @order.complete? 
 		 		#puts "#{Time.now} Order #{@order.id} complete!"
-		 		$last_order_price=@price;
+		 		@last_order_price=@price; #$
 
 		 		if @state=="buy"
 		 			@state="sell"	
