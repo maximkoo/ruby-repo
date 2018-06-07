@@ -1,7 +1,6 @@
 require 'inifile'
 class CopyRaw
 	def initialize
-
 		ini = IniFile.load('path.ini')
 		ini.each_section do |section|
   			puts "from path is #{ini[section]['from']}"
@@ -9,6 +8,7 @@ class CopyRaw
 		end
 		@from=ini["paths"]["from"]
 		@to=ini["paths"]["to"]
+		@currentTo=@to;
 		m1;
 	end;
 
@@ -16,6 +16,12 @@ class CopyRaw
 		begin
    			Dir.entries(@from).each do |f|
    				puts f if  f!='.' and f!='..' and f!='Octopress'
+   				if File.file?(@from+f)
+
+   				end;
+   				if File.directory?(@from+f)
+
+   				end;
    			end;
 		rescue Errno::EACCES
     		@log.puts("Access denied to: #{@path}");
