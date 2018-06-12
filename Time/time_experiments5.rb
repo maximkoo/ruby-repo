@@ -3,7 +3,7 @@ require 'btce'
 STOCK_FEE=0.2
 PERCENT_BUY=0.5
 PERCENT_SELL=0.5
-PAIR='nmc_usd';
+PAIR='nvc_usd';
 AMOUNT=0.2
 
 class Dispatcher
