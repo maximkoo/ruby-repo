@@ -57,7 +57,7 @@ class Dispatcher
 		 	
 		 	if @order.complete? 
 		 		#puts "#{Time.now} Order #{@order.id} complete!"
-		 		$last_order_price=@price;
+		 		@last_order_price=@price; #$
 
 		 		if @state=="buy"
 		 			@state="sell"	
@@ -76,7 +76,7 @@ class Dispatcher
 		 	end;	
 		 	ctime=Time.now
 		 	@order.age+=ctime-@last_update;
-		 	puts "Order age is #{@order.age} seconds"
+		 	puts "Order age is #{@order.age.round(0)} seconds"
 		 	@last_update=ctime;		 	
 	 	end;	
 	end;	
