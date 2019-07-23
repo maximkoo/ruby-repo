@@ -22,7 +22,7 @@ class Collider
 		dy=moving.y-moving.prevY;
 		# if dx==0 return;
 
-		hdg=dy.fdiv dx;
+		hdg=dy.fdiv dx if dx!=0;	
 		puts "hdg=#{hdg}"
 
 		x=moving.prevX;
@@ -35,26 +35,49 @@ class Collider
 		puts c2;
 
 		puts ":::::: HDG=#{hdg} ::::::"
-		if hdg.abs<=1 
-			while !intersectCoords(c1, c2)
-				prevX=x; prevY=y;
-				puts "prevX=#{prevX}, prevY=#{prevY}"
-				x=x+sgn(dx).round;
-				y=y+hdg.round;
-				c1={x1:x.round, x2:x.round+moving.w, y1:y.round, y2:y.round+moving.h};
-			end;
-		else 
-			while !intersectCoords(c1, c2)
-				prevX=x; prevY=y;
-				puts "prevX=#{prevX}, prevY=#{prevY}"
+
+		while !intersectCoords(c1, c2)
+			prevX=x; prevY=y;
+			puts "prevX=#{prevX}, prevY=#{prevY}"
+			if dx==0
+				y=y+sgn(dy);
+			elsif hdg.abs<=1
+				x=x+sgn(dx);
+				y=y+hdg;
+			else	
 				y=y+sgn(dy);
 				x=x+1.fdiv(hdg);
-				c1={x1:x.round, x2:x.round+moving.w, y1:y.round, y2:y.round+moving.h};
+			end;	
+			c1={x1:x.round, x2:x.round+moving.w, y1:y.round, y2:y.round+moving.h};	
+		end;		
 
-				exit if prevY>1000
-			end;
-		end;
-			# c1={x1:x.round, x2:x.round+moving.w, y1:y.round, y2:y.round+moving.h};
+		# if dx==0
+		# 	while !intersectCoords(c1, c2)
+		# 		prevX=x; prevY=y;
+		# 		puts "prevX=#{prevX}, prevY=#{prevY}"
+		# 		y=y+sgn(dy);
+		# 		#x=x
+		# 		c1={x1:x.round, x2:x.round+moving.w, y1:y.round, y2:y.round+moving.h};
+		# 	end;
+		# elsif hdg.abs<=1 
+		# 	while !intersectCoords(c1, c2)
+		# 		prevX=x; prevY=y;
+		# 		puts "prevX=#{prevX}, prevY=#{prevY}"
+		# 		x=x+sgn(dx);
+		# 		y=y+hdg;
+		# 		c1={x1:x.round, x2:x.round+moving.w, y1:y.round, y2:y.round+moving.h};
+		# 	end;
+		# else 
+		# 	while !intersectCoords(c1, c2)
+		# 		prevX=x; prevY=y;
+		# 		puts "prevX=#{prevX}, prevY=#{prevY}"
+		# 		y=y+sgn(dy);
+		# 		x=x+1.fdiv(hdg);
+		# 		c1={x1:x.round, x2:x.round+moving.w, y1:y.round, y2:y.round+moving.h};
+
+		# 		exit if prevY>1000
+		# 	end;
+		# end;
 			
 			puts "Last safe values: prevX=#{prevX.round}, prevY=#{prevY.round}";
 			puts "Contact values: x=#{x.round}, y=#{y.round}"

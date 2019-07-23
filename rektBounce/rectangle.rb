@@ -1,5 +1,5 @@
 class Rectangle
-	attr_accessor :x,:y,:w,:h,:c, :prevX, :prevY
+	attr_accessor :x,:y,:w,:h,:c, :prevX, :prevY, :speedX, :speedY
 	def initialize(x,y,w,h,c)
 		@x,@y,@w,@h,@c=x,y,w,h,c
 	end;

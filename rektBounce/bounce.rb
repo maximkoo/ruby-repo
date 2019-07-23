@@ -8,10 +8,10 @@ class Bounce < Gosu::Window
       super(640, 400, false);
 
       @still=Rectangle.new(300,200,100,100, Gosu::Color::RED);
-      @moving=Rectangle.new(300,100,23,23,Gosu::Color::WHITE);
+      @moving=Rectangle.new(300,35n0,23,23,Gosu::Color::WHITE);
       @obj=[@moving,@still];
 
-      @xS=2; @yS=6;
+      @xS=1; @yS=-6;
       @go=true;
 
     end
