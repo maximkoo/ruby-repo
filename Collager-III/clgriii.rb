@@ -67,6 +67,8 @@ class Collager
 			when 2 then ManyVert.new
 			when 3 then ManyVert.new
 			when 4 then ManyVert.new
+			when 5 then ManyVert.new
+			when 6 then ManyVert.new
 			#when 20 then ManyVert.new{|t| t.brdX=1; t.brdY=0}
 			#when 30 then nil; #Makes no sense
 			when 40 then Square.new;

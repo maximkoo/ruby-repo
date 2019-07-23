@@ -1,0 +1,1 @@
+{% img center /images/2018/collage_20180927_173501.jpg %}

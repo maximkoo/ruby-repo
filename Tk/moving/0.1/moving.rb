@@ -11,13 +11,15 @@ class Moving
 		@fourCubes=[]
 
 		@@shapeTypes=[TShape,Stick,SLeft,SRight,CornerLeft,CornerRight,Cube];
+		@cnv=cnv;
+		@coords=[]
 	end;	
 
-	def self.getShape
-		r=@@shapeTypes[rand(7)].new;
+	def getShape
+		r=@@shapeTypes[rand(7)].new(@cnv);
 		r.fourCoordsInCubes.each do
-			coords<<[[(c.first*@step)+@x0*@step, (c.last*@step)+@y0*@step],[@step+(c.first*@step)+@x0*@step, @step+(c.last*@step)+@y0*@step]]
-			r.fourCubes<<@figure<<TkcRectangle.new(cnv, coords.last, :fill=>"white")
+			@coords<<[[(c.first*@step)+@x0*@step, (c.last*@step)+@y0*@step],[@step+(c.first*@step)+@x0*@step, @step+(c.last*@step)+@y0*@step]]
+			r.fourCubes<<@figure<<TkcRectangle.new(cnv, @coords.last, :fill=>"white")
 		end;
 	end;	
 
