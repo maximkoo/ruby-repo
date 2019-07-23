@@ -2,6 +2,11 @@ require 'tk'
 require './moving.rb'
 require './shapes.rb'
 require './arrayExtention.rb'
+module TkItemConfigOptkeys
+  def itemconfig_hash_kv(id, keys, enc_mode = [], conf = [])
+    hash_kv(__conv_item_keyonly_opts(id, keys), enc_mode, conf)
+  end
+end
 
 class Array
 	include ArrayExtention
@@ -36,7 +41,8 @@ class GameField
 	end;
 
 	def makeRound
-		@r=Moving.new
+		#@r=Moving.new
+		@r=Moving.new(@cnv1)
 		@r.getShape
 		puts @r.class
 	end;
