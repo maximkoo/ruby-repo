@@ -21,7 +21,7 @@ class Dijkstra1
 		e2=Edge.new(2,p1,p3, 14);
 		e3=Edge.new(3,p1,p4, 12);
 		e4=Edge.new(4,p2,p3, 6);
-		e5=Edge.new(5,p3,p4, 1);
+		e5=Edge.new(5,p3,p4, 1, true);
 		e6=Edge.new(6,p2,p5, 7);
 		e7=Edge.new(7,p3,p7, 4);
 		e8=Edge.new(8,p3,p6, 9);
@@ -87,7 +87,7 @@ class Dijkstra1
 	end;	
 
 	def setRates(src)		
-		@edges.select{|e| e.hasVertex(src)}.sort{|a,b| a.weight<=>b.weight}.each do |e|
+		@edges.select{|e| e.hasVertexDirected(src)}.sort{|a,b| a.weight<=>b.weight}.each do |e|
 			dest=e.endVertex(src);
 			# puts v.id, v.status;
 			if (dest.rate>e.weight+src.rate && dest.status==VISITED)|| dest.status==UNVISITED;
@@ -137,17 +137,22 @@ class Vertex
 end;
 
 class Edge
-	attr_accessor :id,:v1,:v2,:x1,:x2,:y1,:y2,:weight
-	def initialize(id, v1,v2, weight)
+	attr_accessor :id,:v1,:v2,:x1,:x2,:y1,:y2,:weight,:directed
+	def initialize(id, v1,v2, weight, directed=false)
 		@id, @v1,@v2, @weight=id, v1,v2, weight 
+		@directed=directed
 	end;
 
 	def hasVertex(p)
 		return (v1==p || v2==p)
 	end;
 
+	def hasVertexDirected(p) 
+		return (!directed&&(v1==p || v2==p)) || (directed&&v1==p)
+	end;
+
 	def endVertex(p) #returns the other end of an edge, not p
-		return [@v1,@v2].select{|v| v!=p}.first
+		return [v1,v2].select{|v| v!=p}.first
 	end;	
 end;		
 

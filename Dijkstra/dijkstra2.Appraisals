@@ -21,7 +21,7 @@ class Dijkstra1
 		e2=Edge.new(2,p1,p3, 14);
 		e3=Edge.new(3,p1,p4, 12);
 		e4=Edge.new(4,p2,p3, 6);
-		e5=Edge.new(5,p3,p4, 1);
+		e5=Edge.new(5,p4,p3, 1, true);
 		e6=Edge.new(6,p2,p5, 7);
 		e7=Edge.new(7,p3,p7, 4);
 		e8=Edge.new(8,p3,p6, 9);
@@ -128,7 +128,7 @@ end;
 
 class Vertex
 	attr_accessor :id, :x,:y, :from, :rate, :status
-	def initialize(id, x,y)
+	def initialize(id, x,y, directed=false)
 		@id, @x,@y=id, x,y;
 		@from=nil;
 		@rate=0;
