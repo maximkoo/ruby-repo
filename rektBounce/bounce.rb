@@ -11,7 +11,7 @@ class Bounce < Gosu::Window
       @moving=Rectangle.new(300,350,23,23,Gosu::Color::WHITE);
       @obj=[@moving,@still];
 
-      @xS=1; @yS=-6;
+      @moving.xS=1; @moving.yS=-6;
       @go=true;
 
     end
@@ -25,7 +25,7 @@ class Bounce < Gosu::Window
     	now=Gosu.milliseconds
     	return if (now-@last_update||=now) < FRAME_DELAY 
     	return if !@go
-    	@moving.move(@xS, @yS);
+    	@moving.move();
 
     	if Collider.intersect?(@moving,@still);
     		# @xS=0; @yS=0;
@@ -37,10 +37,10 @@ class Bounce < Gosu::Window
     		@moving.y=contact[:contactY];
     		# @go=false
     		if contact[:contactType]=~/horizontal/
-    			@yS=-@yS
+    			@moving.yS=-@moving.yS
     		end;
     		if contact[:contactType]=~/vertical/
-    			@xS=-@xS
+    			@moving.xS=-@moving.xS
     		end;
 
     	end;	
