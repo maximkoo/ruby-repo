@@ -101,8 +101,8 @@ font0={
 # end;
 font={}	
 font0.each do |k,v|
- 	#h=Gosu::Image.new("c:\\Users\\max\\Ruby\\Graphics\\platformerGraphics_gui_text\\Individual\\"<<v);
- 	h=Gosu::Image.new("c:\\Users\\kopa\\Documents\\Ruby\\Graphics\\platformerGraphics_gui_text\\Individual\\"<<v);
+ 	h=Gosu::Image.new("c:\\Users\\max\\Ruby\\Graphics\\platformerGraphics_gui_text\\Individual\\"<<v);
+ 	#h=Gosu::Image.new("c:\\Users\\kopa\\Documents\\Ruby\\Graphics\\platformerGraphics_gui_text\\Individual\\"<<v);
 	font[k]=h	
 end;
 FONT=font;	

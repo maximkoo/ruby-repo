@@ -20,5 +20,3 @@ puts a.to_s;
 
 puts a.map!(&:qq).to_s;
 
-
-puts "Хороши там янки и Марс. А тута".reverse;
