@@ -3,6 +3,7 @@ require 'gosu'
 require 'gosu_tiled'
 require './player.rb'
 require './collider.rb'
+require './animator.rb'
 require './rectangle.rb'
 
   MAP_FILE = File.join(File.dirname(__FILE__), 'ArtPackMap70.json')
@@ -10,23 +11,27 @@ require './rectangle.rb'
 
 class C1<Gosu::Window
   def initialize
-    #super(3840, 3840, false)
-    #super(896,576)
     super 980,980, false
     @map = Gosu::Tiled.load_json(self, MAP_FILE)
+    json=JSON.parse(File.read(MAP_FILE));
     #super @map.width, @map.height, false
     @x = @y = 0
-    puts @map.width, @map.height;
-    $collider=Collider.new;
-    @player=Player.new(100,323);
-     end
+    #$collider=Collider.new;
+    $collider=Collider.new(json);
+    @player=Player.new(100,200);
+
+    #@q=@map.tilesets.get(172);
+    #$animator=Animator.new(json);
+
+  end
   
   def draw
     @map.draw(@x,@y)
     @player.draw;
+    #@q.draw(10,10,10);
   end
   
-   def needs_cursor?
+  def needs_cursor?
     true
   end
 

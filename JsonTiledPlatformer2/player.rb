@@ -1,33 +1,25 @@
-require './moving.rb'
-require './rectangle.rb'
 require './player_state.rb'
-require './control_point.rb'
-class Player
-	#attr_accessor :x,:y,:w,:h,:c, :prevX, :prevY, :xS, :yS
-
-	def initialize(x,y)
-		@x,@y=x,y		
-		#@xS=35;
-		#@yS=35;
-		###
-		@walker=PlayerWalker.new(self,x,y);
-		@faller=PlayerFaller.new(self,x,y);
-		@state=@faller;
+require './detector.rb'
+class Player<MovableGameObject
+	def initialize(master,x,y)
+		super(master,x,y)		
+		@walking=PlayerWalking.new(self,x,y);
+		@falling=PlayerFalling.new(self,x,y);
+		@state=@falling;
 		@w,@h=@state.img.width,@state.img.height;
 	end;
-
 
 	def draw
 		@state.draw;
 	end;
 
 	def toState(old_state,new_state)
+		#old_state - PlayerState
+		#new_state - String
 		case new_state			
-			when "walk" then ns=@walker
-			when "fall" then ns=@faller
+			when "walk" then ns=@walking
+			when "fall" then ns=@falling
 		end;
-		#ns.x=old_state.x;
-		#ns.y=old_state.y;
 		ns.enter(old_state.x,old_state.y);		
 		@state=ns;
 	end;
@@ -37,32 +29,35 @@ class Player
 	end;	
 end;	
 
-class PlayerWalker<PlayerState#<Rectangle	
-	def initialize(origin, x,y)
-		super(origin,x,y)
+class PlayerWalking<PlayerState
+	def initialize(master, x,y)
+		super(master,x,y)
 		@player_anim=Gosu::Image.load_tiles('..\/Graphics\/Platformer Art Complete Pack\/Base pack\/Player\/p2_walk\/Player2.png', 770/11,94); 
 		@current_frame=0;
-		#@img=@player_anim[@current_frame];	
-		#@x,@y=x,y
-		#@origin=origin;
-		#@w,@h=@img.width,@img.height;
 		@w,@h=@player_anim[@current_frame].width,@player_anim[@current_frame].height;
 		@xS=5; @yS=0;
-		@controlPoints=[]
-		@controlPoints<<ControlPoint.new(self, 0,0)
-		@controlPoints<<ControlPoint.new(self, 0,0)
-		resetControlPoints(x,y)
+		# @controlPoints=[]
+		# @controlPoints<<ControlPoint.new(self, 0,0)
+		# @controlPoints<<ControlPoint.new(self, 0,0)
+		# resetControlPoints(x,y)
+
 	end;
 
 	def enter(x,y)
 		@x,@y=x,y
-		resetControlPoints(x,y)
+		# resetControlPoints(x,y)
+		##########
+		detector=Detector.new(self,x,y);
+		detector.detect;
+		puts "Control Points"
+		puts detector.controlPoints.to_s
+		##########
 	end;
 
-	def resetControlPoints(x,y)
-		@controlPoints[0].x,@controlPoints[0].y=x-1,y+@h+1
-		@controlPoints[1].x,@controlPoints[1].y=x+@w+1,y+@h+1
-	end;	
+	# def resetControlPoints(x,y)
+	# 	@controlPoints[0].x,@controlPoints[0].y=x-1,y+@h+1
+	# 	@controlPoints[1].x,@controlPoints[1].y=x+@w+1,y+@h+1
+	# end;	
 
 	def draw
 		#@img.draw(@x,@y,10);
@@ -72,12 +67,14 @@ class PlayerWalker<PlayerState#<Rectangle
 	def update
 		move;
 		#@controlPoints.each {|c| c.move};
-		@components.each {|c| c.update}
+		#@components.each {|c| c.update}
 		@current_frame=(@current_frame+1) % @player_anim.size
-		if @controlPoints.select{|c| $collider.pointInObstacle?(c.x,c.y)==true}.size==0		
-			puts "No ground"
-			@origin.toState(self,"fall");
-		end;	
+		#if !$collider.pointInObstacle?(x,y,x,y+94+1)	
+		#if !$collider.pointInObstacle?(@controlPoint.x,@controlPoint.y)
+		# if @controlPoints.select{|c| $collider.pointInObstacle?(c.x,c.y)==true}.size==0		
+		# 	puts "No ground"
+		# 	@origin.toState(self,"fall");
+		# end;	
 	end;	
 
 	def img
@@ -86,10 +83,10 @@ class PlayerWalker<PlayerState#<Rectangle
 	end;
 end;	
 
-class PlayerFaller<PlayerState#<Rectangle
+class PlayerFalling<PlayerState
 	#include Moving
-	def initialize(origin,x,y)
-		super(origin,x,y)
+	def initialize(master,x,y)
+		super(master,x,y)
 		@img=Gosu::Image.new('..\/Graphics\/Platformer Art Complete Pack\/Base pack\/Player\/p2_hurt.png')
 		#@x,@y=x,y
 		#@origin=origin;
@@ -112,7 +109,7 @@ class PlayerFaller<PlayerState#<Rectangle
             contact=$collider.contact(self);
             @x=contact[:contactX];
             @y=contact[:contactY];
-  			@origin.toState(self,"walk");
+  			@master.toState(self,"walk");
   		end;
 	end;	
 
