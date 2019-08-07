@@ -63,7 +63,7 @@ class PlayerWalker<Rectangle
 
 		@current_frame=(@current_frame+1) % @player_anim.size
 		if !$collider.collide?(@control_points.first);
-			#puts @control_points.first.x,@control_points.first.y
+			#  puts @control_points.first.x,@control_points.first.y
 			puts "No ground"
 			@origin.toState(self,"fall");
 		end;	
