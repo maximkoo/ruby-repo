@@ -128,7 +128,7 @@ class Collider
 		#while !intersectHashes(c1, c2)
 		while !intersectCoords?(x, y, x+moving.w, y+moving.h, still.x1, still.y1, still.x2, still.y2)
 			prevX=x; prevY=y;
-			# puts "prevX=#{prevX}, prevY=#{prevY}"
+			 puts "prevX=#{prevX}, prevY=#{prevY}"
 			if dx==0
 				y=y+sgn(dy);
 			elsif hdg.abs<=1
@@ -147,6 +147,7 @@ class Collider
 				when y.round==still.y2 then "lower horizontal"
 			end;			
 			#puts "Contact detected on #{side} side";
+			
 			return {safeX:prevX.round, 
 				safeY:prevY.round, 
 				contactX:x.round, 
