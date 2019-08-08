@@ -1,6 +1,6 @@
 require './rectangle.rb'
 class MovableGameObject<Rectangle
-	attr_accessor :objects,:x,:y,:xS,:yS, :prevX, :prevY
+	attr_accessor :master, :objects,:x,:y,:xS,:yS, :prevX, :prevY
 	def initialize(master, x,y)		
 		#puts master
 		#puts master.objects.class
