@@ -5,7 +5,7 @@ require './images.rb'
 require './movable_game_object.rb'
 require './player.rb'
 require './player_state.rb'
-require './collider.rb'
+#require './collider.rb'
 #require './animator.rb'
 require './rectangle.rb'
  
@@ -17,8 +17,8 @@ class C1<Gosu::Window
     @map = Gosu::Tiled.load_json(self, MAP_FILE)
     json=JSON.parse(File.read(MAP_FILE));
     @objectPool=ObjectPool.new(json);
-    $collider=Collider.new(json);
-    @player=Player.new(@objectPool, 50,100);
+    #$collider=Collider.new(json);
+    @player=Player.new(@objectPool, 750,80);
   end
   
   def draw

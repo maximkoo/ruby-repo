@@ -1,5 +1,6 @@
 require './movable_game_object.rb'
 class PlayerState<MovableGameObject
+	attr_accessor :face
 	def initialize(master,x,y)
 		super(master,x,y)
 	end;

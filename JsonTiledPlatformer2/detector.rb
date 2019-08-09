@@ -51,8 +51,8 @@ class WalkingDetector<Detector
 		#reset(@x,@y);
 		move;
 		super
-		puts @controlPoints[6]
-		puts @controlPoints[8]
+		#puts @controlPoints[6]
+		#puts @controlPoints[8]
 		 if !@controlPoints[6]["type"].include?(OBSTACLE) && !@controlPoints[8]["type"].include?(OBSTACLE)
 		 	@master.master.toState(@master,"fall");
 		 end;	
