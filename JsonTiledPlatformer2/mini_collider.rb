@@ -1,4 +1,4 @@
-class MiniCollider
+class MiniCollider<MovableGameObject
 	def initialize(master,x,y)
 		super(master,x,y)
 	end;
@@ -16,9 +16,9 @@ class MiniCollider
 	end
 
 	def collide?(moving)		
-		@master.master.obstacles.each do |still|
+		@master.master.master.obstacles.each do |still|
 			if intersect?(moving, still)
-				#@still=still
+				@still=still
 				return true;
 			end;	
 		end;	
@@ -83,7 +83,12 @@ class FallingCollider<MiniCollider
 	end;
 
 	def update
-
+		if collide?(@master)
+			contact=contact(@master);
+            @master.x=contact[:safeX];
+            @master.y=contact[:safeY];
+  			@master.master.toState(@master,"walk");
+		end;	
 	end;
 
 	def draw
@@ -97,7 +102,13 @@ class WalkingCollider<MiniCollider
 	end;
 
 	def update
-
+		if collide?(@master)
+			contact=contact(@master);
+            @master.x=contact[:safeX];
+            @master.y=contact[:safeY];
+  			#@master.master.toState(@master,"stop");
+  			@master.reverse;
+		end;	
 	end;
 
 	def draw
