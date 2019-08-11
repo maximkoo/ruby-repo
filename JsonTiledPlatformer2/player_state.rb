@@ -12,4 +12,8 @@ class PlayerState<MovableGameObject
 	def leave(x,y)
 
 	end;
+
+	def keyControl
+
+	end;
 end;	

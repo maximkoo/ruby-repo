@@ -7,6 +7,7 @@ class Player<MovableGameObject
 		@walking=PlayerWalking.new(self,x,y);
 		@falling=PlayerFalling.new(self,x,y);
 		@standing=PlayerStanding.new(self,x,y);
+		@jumping=PlayerJumping.new(self,x,y);
 		@state=@falling;
 		@w,@h=@state.img.width,@state.img.height;
 		@state.face="right";
@@ -23,9 +24,15 @@ class Player<MovableGameObject
 			when "walk" then ns=@walking
 			when "fall" then ns=@falling
 			when "stop" then ns=@standing
+			when "jump" then ns=@jumping
 		end;
+		ns.xS=old_state.xS;
+		ns.yS=old_state.yS;
 		ns.enter(old_state.x,old_state.y);	
 		ns.face=old_state.face;	
+		
+		#puts old_state.xS,old_state.yS;
+		#puts 
 		@state=ns;
 	end;
 
@@ -40,12 +47,14 @@ class PlayerStanding<PlayerState
 		@img=Gosu::Image.new('..\/Graphics\/Platformer Art Complete Pack\/Base pack\/Player\/p2_front.png')
 		@xS=0; @yS=0;
 		@w,@h=@img.width,@img.height;
-		@detector=WalkingDetector.new(self,x,y);
+		#@detector=WalkingDetector.new(self,x,y);
 	end;
 
 	def enter(x,y)
+		puts "Standing!"
 		@x,@y=x,y
-		@detector.reset(x,y)
+		@xS=0; @yS=0;
+		#@detector.reset(x,y)
 	end;
 
 	def draw
@@ -53,12 +62,31 @@ class PlayerStanding<PlayerState
 	end;
 
 	def update
-
+		keyControl;
 	end; 	
 
 	def img
 		@img;
-	end;	
+	end;
+
+	def keyControl
+		if $g.button_down?(Gosu::KbLeft)
+    		#@ph.strafe_tilt_left;
+    		@xS=-5
+    		@master.toState(self,"walk")
+    	elsif $g.button_down?(Gosu::KbRight)
+    		#@ph.strafe_tilt_right;
+    		@xS=5
+    		@master.toState(self,"walk")
+    	elsif $g.button_down?(Gosu::KbSpace)  || $g.button_down?(Gosu::KbUp)
+	   		#@yS=-20
+    		@master.toState(self,"jump")
+    	else
+    		#@ph.look_up;	
+    		#@xS=0;
+    		#@master.toState(@master,"stop");
+    	end;
+    end;
 end;		
 
 class PlayerWalking<PlayerState
@@ -70,13 +98,16 @@ class PlayerWalking<PlayerState
 		@current_frame=0;
 		#@w,@h=@player_anim[@current_frame].width,@player_anim[@current_frame].height;
 		@w,@h=img.width,img.height;
-		@xS=-5; @yS=0;
+		@xS=0; @yS=0;
 		@collider=WalkingCollider.new(self,x,y)
 		@detector=WalkingDetector.new(self,x,y);
 	end;
 
 	def enter(x,y)
+		puts "Walking!"
+		puts @collider.collide?(self)
 		@x,@y=x,y
+		@yS=0;
 		@detector.reset(x,y)
 	end;
 
@@ -91,6 +122,7 @@ class PlayerWalking<PlayerState
 		@current_frame=(@current_frame+1) % @player_anim[0].size;		
 		@collider.update;
 		@detector.update;
+		keyControl;
 		@xS>=0? @face="right" : @face="left";
 	end;	
 
@@ -106,7 +138,25 @@ class PlayerWalking<PlayerState
 
 	def reverse
 		@xS=-@xS
-	end;	
+	end;
+
+	def keyControl
+		if $g.button_down?(Gosu::KbLeft)
+    		#@ph.strafe_tilt_left;
+    		@xS=-5
+    	elsif $g.button_down?(Gosu::KbRight)
+    		#@ph.strafe_tilt_right;
+    		@xS=5    	
+    	else
+    		#@ph.look_up;	
+    		@xS=0;
+    		@master.toState(self,"stop");
+    	end;
+    	 if $g.button_down?(Gosu::KbSpace) || $g.button_down?(Gosu::KbUp)
+	   	  	#@yS=-20
+    	  	@master.toState(self,"jump")	
+    	 end;	
+    end;		
 end;	
 
 class PlayerFalling<PlayerState
@@ -115,12 +165,14 @@ class PlayerFalling<PlayerState
 		@img=[]
 		@img[0]=Gosu::Image.new('..\/Graphics\/Platformer Art Complete Pack\/Base pack\/Player\/p2_hurt.png')
 		@img[1]=Gosu::Image.new('..\/Graphics\/Platformer Art Complete Pack\/Base pack\/Player\/p2_hurt_left.png')
-		@xS=0; @yS=5;
+		@xS=0; @yS=10;
 		@w,@h=img.width,img.height;
 		@collider=FallingCollider.new(self,x,y)
 	end;
 
 	def enter(x,y)
+		puts "Falling!"
+		@xS=0; @yS=10;
 		@x,@y=x,y
 	end;
 
@@ -128,6 +180,49 @@ class PlayerFalling<PlayerState
 		img.draw(@x,@y,10);
 	end;	
 	
+	def update
+		move;
+		@collider.update;
+	end;	
+
+	def img
+		#@img
+		#case when @xS>=0
+		case when @face=="right" 
+			@img[0]
+		else
+			@img[1]	
+		end;		
+	end;
+end;	
+
+class PlayerJumping<PlayerState
+	def initialize(master,x,y)
+		super(master,x,y)
+		@img=  []
+		@img[0]=Gosu::Image.new('..\/Graphics\/Platformer Art Complete Pack\/Base pack\/Player\/p2_jump.png')
+		@img[1]=Gosu::Image.new('..\/Graphics\/Platformer Art Complete Pack\/Base pack\/Player\/p2_jump_left.png')
+		@xS=0; @yS=-JUMPING_SPEED;
+		@w,@h=img.width,img.height;
+		@collider=JumpingCollider.new(self,x,y)
+		@detector=JumpingDetector.new(self,x,y);
+	end;
+
+	def enter(x,y)
+		puts "Jumping!"
+		@x,@y=x,y
+		@yS=-JUMPING_SPEED;
+	end;
+
+	def draw
+		img.draw(@x,@y,10);
+	end;	
+	
+	def move
+		super
+		@yS+=JUMPING_DECELERATION
+	end;	
+
 	def update
 		move;
 		@collider.update;

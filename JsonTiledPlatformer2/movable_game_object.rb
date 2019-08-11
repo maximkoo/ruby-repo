@@ -8,6 +8,7 @@ class MovableGameObject<Rectangle
 		@master=master;
 		@objects=[]
 		@x,@y=x,y
+		@prevX,@prevY=x,y
 		@xS,@yS=0,0
 	end;
 

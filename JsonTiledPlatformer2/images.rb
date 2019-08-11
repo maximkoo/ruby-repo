@@ -1,3 +1,6 @@
 MAP_FILE = File.join(File.dirname(__FILE__), 'ArtPackMap70.json');
 OBSTACLE="Obstacle"
 LADDER="Ladder"
+WALKING_SPEED=5
+JUMPING_SPEED=20
+JUMPING_DECELERATION=2

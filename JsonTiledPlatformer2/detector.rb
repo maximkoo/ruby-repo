@@ -62,3 +62,30 @@ class WalkingDetector<Detector
 
 	#end;	
 end;	
+
+class JumpingDetector<Detector
+	def initialize(master,x,y)
+		super(master,x,y)
+		@xS=master.xS;
+		@yS=master.yS;
+	end;	
+
+	def update
+		@x,@y=@master.x,@master.y
+		@xS=master.xS;
+		@yS=master.yS;
+		#puts @x,@y
+		#reset(@x,@y);
+		move;
+		super
+		#puts @controlPoints[6]
+		#puts @controlPoints[8]
+		 if !@controlPoints[6]["type"].include?(OBSTACLE) && !@controlPoints[8]["type"].include?(OBSTACLE)
+		 	@master.master.toState(@master,"fall");
+		 end;	
+	end;
+	
+	#def draw
+
+	#end;	
+end;

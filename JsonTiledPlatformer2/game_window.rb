@@ -79,4 +79,5 @@ class ObjectPool
 
 end;  
 
-C1.new.show
+$g=C1.new
+$g.show
