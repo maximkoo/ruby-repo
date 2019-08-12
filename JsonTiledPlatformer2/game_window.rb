@@ -76,7 +76,6 @@ class ObjectPool
     res
   end;
 
-
 end;  
 
 $g=C1.new

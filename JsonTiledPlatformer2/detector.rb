@@ -36,6 +36,34 @@ class Detector<MovableGameObject
 	end;	
 end;		
 
+class StandingDetector<Detector
+	def initialize(master,x,y)
+		super(master,x,y)
+		@xS=master.xS;
+		@yS=master.yS;
+	end;	
+
+	def update
+		@x,@y=@master.x,@master.y
+		@xS=master.xS;
+		@yS=master.yS;
+		#puts @x,@y
+		#reset(@x,@y);
+		move;
+		super
+		#puts @controlPoints[6]
+		#puts @controlPoints[8]
+		# STANDING TO FALLING
+		if !@controlPoints[6]["type"].include?(OBSTACLE) && !@controlPoints[8]["type"].include?(OBSTACLE)
+			@master.master.toState(@master,"fall");
+		end;	
+	end;
+	
+	#def draw
+
+	#end;	
+end;	
+
 class WalkingDetector<Detector
 	def initialize(master,x,y)
 		super(master,x,y)
@@ -83,6 +111,38 @@ class JumpingDetector<Detector
 		 if !@controlPoints[6]["type"].include?(OBSTACLE) && !@controlPoints[8]["type"].include?(OBSTACLE)
 		 	@master.master.toState(@master,"fall");
 		 end;	
+	end;
+	
+	#def draw
+
+	#end;	
+end;
+
+class ClimbingDetector<Detector
+	def initialize(master,x,y)
+		super(master,x,y)
+		@xS=master.xS;
+		@yS=master.yS;
+		#@controlPoints[7]={:x=>x+@w/2,:y=>y+@h}; ##--<< not sure
+	end;	
+
+	def update
+		@x,@y=@master.x,@master.y
+		@xS=master.xS;
+		@yS=master.yS;
+		#puts @x,@y
+		#reset(@x,@y);
+		move;
+		super
+		puts @controlPoints[4]
+		#puts @controlPoints[7]
+		if !@controlPoints[4]["type"].include?(LADDER) && !@controlPoints[7]["type"].include?(LADDER)
+		 	@master.master.toState(@master,"stop");
+		end;	
+
+		if @controlPoints[6]["type"].include?(OBSTACLE) && @controlPoints[8]["type"].include?(OBSTACLE)&& !@controlPoints[7]["type"].include?(LADDER)
+		 	@master.master.toState(@master,"stop");
+		 end;
 	end;
 	
 	#def draw

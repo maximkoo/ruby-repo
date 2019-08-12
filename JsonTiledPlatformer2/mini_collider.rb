@@ -79,8 +79,8 @@ class MiniCollider<MovableGameObject
 			when (y.round+moving.h)==still.y1 then "upper horizontal"
 			when y.round==still.y2 then "lower horizontal"
 		end;			
-		puts  x.round, still.x1, still.x2
-		puts  y.round, still.y1, still.y2
+		#puts  x.round, still.x1, still.x2
+		#puts  y.round, still.y1, still.y2
 		puts side;
 	begin
 		v= {safeX:prevXX.round, 
@@ -111,8 +111,8 @@ class FallingCollider<MiniCollider
             @master.x=contact[:safeX];
             @master.y=contact[:safeY];
 
-  			@master.master.toState(@master,"walk");
-  			#@master.master.toState(@master,"stop");
+  			#@master.master.toState(@master,"walk");
+  			@master.master.toState(@master,"stop");
 		end;	
 	end;
 
@@ -148,15 +148,14 @@ class JumpingCollider<MiniCollider
 
 	def update
 		if collide?(@master)
-			puts "Collide x=#{@master.x} y=#{master.y}"
-puts "Collide prevx=#{@master.prevX} prevy=#{master.prevY}"
+			# puts "Collide x=#{@master.x} y=#{master.y}"
+			# puts "Collide prevx=#{@master.prevX} prevy=#{master.prevY}"
 
 			contact=contact(@master);
             @master.x=contact[:safeX];
             @master.y=contact[:safeY];
   			
              if contact[:contactType]=~/vertical/
-             	puts "!!!!!!"
   				 @master.xS=0;
              end;
             if contact[:contactType]=="upper horizontal"
@@ -171,3 +170,18 @@ puts "Collide prevx=#{@master.prevX} prevy=#{master.prevY}"
 		#Здесь ничего не написано
 	end;
 end;	
+
+class ClimbingCollider<MiniCollider
+	def initialize(master,x,y)
+		super(master,x,y)
+	end;
+
+	def update
+
+	end;
+	
+	def draw
+
+	end;
+end;
+
