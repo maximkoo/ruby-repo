@@ -1,9 +1,6 @@
 class MiniCollider<MovableGameObject
 	def initialize(master,x,y)
-		super(master,x,y)
-		puts "========="
-		puts intersectCoords?(843,745,913,839,910,770,980,840)
-		puts "========="		
+		super(master,x,y)		
 	end;
 
 	def update
@@ -29,17 +26,17 @@ class MiniCollider<MovableGameObject
 	end;	
 
 	def intersect?(moving, still)
-			(moving.x1.between?(still.x1,still.x2) && moving.y1.between?(still.y1,still.y2)) ||
-			(moving.x1.between?(still.x1,still.x2) && moving.y2.between?(still.y1,still.y2)) ||
-			(moving.x2.between?(still.x1,still.x2) && moving.y1.between?(still.y1,still.y2)) ||
-			(moving.x2.between?(still.x1,still.x2) && moving.y2.between?(still.y1,still.y2))
+			(moving.x1.between?(still.x1,still.x2-1) && moving.y1.between?(still.y1,still.y2-1)) ||
+			(moving.x1.between?(still.x1,still.x2-1) && moving.y2.between?(still.y1,still.y2-1)) ||
+			(moving.x2.between?(still.x1,still.x2-1) && moving.y1.between?(still.y1,still.y2-1)) ||
+			(moving.x2.between?(still.x1,still.x2-1) && moving.y2.between?(still.y1,still.y2-1))
 	end;
 
 	def intersectCoords?(x1,y1,x2,y2,x3,y3,x4,y4)
-			(x1.round.between?(x3,x4) && y1.round.between?(y3,y4)) ||
-			(x1.round.between?(x3,x4) && y2.round.between?(y3,y4)) ||
-			(x2.round.between?(x3,x4) && y1.round.between?(y3,y4)) ||
-			(x2.round.between?(x3,x4) && y2.round.between?(y3,y4))
+			(x1.round.between?(x3,x4-1) && y1.round.between?(y3,y4-1)) ||
+			(x1.round.between?(x3,x4-1) && y2.round.between?(y3,y4-1)) ||
+			(x2.round.between?(x3,x4-1) && y1.round.between?(y3,y4-1)) ||
+			(x2.round.between?(x3,x4-1) && y2.round.between?(y3,y4-1))
 	end;
 
 	def contact(moving)
@@ -79,8 +76,8 @@ class MiniCollider<MovableGameObject
 			when (y.round+moving.h)==still.y1 then "upper horizontal"
 			when y.round==still.y2 then "lower horizontal"
 		end;			
-		#puts  x.round, still.x1, still.x2
-		#puts  y.round, still.y1, still.y2
+		puts  "x.round=#{x.round}, still.x1=#{still.x1}, still.x2=#{still.x2}"
+		puts  "y.round=#{y.round}, still.y1=#{still.y1}, still.y2=#{still.y2}"
 		puts side;
 	begin
 		v= {safeX:prevXX.round, 
@@ -177,7 +174,19 @@ class ClimbingCollider<MiniCollider
 	end;
 
 	def update
+		if collide?(@master)
+			# puts "Collide x=#{@master.x} y=#{master.y}"
+			# puts "Collide prevx=#{@master.prevX} prevy=#{master.prevY}"
 
+			contact=contact(@master);
+            #@master.x=contact[:safeX];
+            #@master.y=contact[:safeY];
+
+            if contact[:contactType]=="upper horizontal"
+            	@master.yS=0;
+  				@master.master.toState(@master,"stop");
+  			end;
+  		end;	
 	end;
 	
 	def draw

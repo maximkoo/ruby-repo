@@ -85,7 +85,13 @@ class PlayerStanding<PlayerState
 	   		#@yS=-20
     		@master.toState(self,"jump")
     	elsif $g.button_down?(Gosu::KbUp) && @detector.controlPoints[4]["type"].include?(LADDER)
-    		@master.toState(self,"climb")		
+    		@master.toState(self,"climb")
+    	elsif $g.button_down?(Gosu::KbDown) && @detector.controlPoints[7]["type"].include?(LADDER)
+    		puts @detector.controlPoints[7]
+    		@master.toState(self,"climb")	
+
+    	elsif $g.button_down?(Gosu::KbUp)
+    		@master.toState(self,"jump")
     	else
     		#@ph.look_up;	
     		#@xS=0;
@@ -262,9 +268,25 @@ class PlayerClimbing<PlayerState
 		puts "Climbing!"
 		@x,@y=x,y
 		@yS=-CLIMBING_SPEED;
-		@x=@x/TILE_SIZE * TILE_SIZE
+		centerOnTileX(@x,@y)
 		@detector.reset(@x,@y);
 	end;
+
+	def centerOnTileX(x,y)	
+		#puts "x=#{@x}"
+		#puts "@x+@w/2=#{@x+@w/2}"
+		#puts "(@x+@w/2)/TILE_SIZE=#{(@x+@w)/TILE_SIZE}"  
+		@x=(@x+@w/2)/TILE_SIZE * TILE_SIZE
+	end;
+		
+	def centerOnTileY(x,y)	
+		
+	end;
+
+	def centerOnTileXY(x,y)	
+		centerOnTileX(x,y)
+		centerOnTileY(x,y)
+	end
 
 	def draw
 		img.draw(@x,@y,10);
