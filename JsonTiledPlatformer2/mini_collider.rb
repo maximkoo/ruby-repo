@@ -26,17 +26,17 @@ class MiniCollider<MovableGameObject
 	end;	
 
 	def intersect?(moving, still)
-			(moving.x1.between?(still.x1,still.x2-1) && moving.y1.between?(still.y1,still.y2-1)) ||
-			(moving.x1.between?(still.x1,still.x2-1) && moving.y2.between?(still.y1,still.y2-1)) ||
-			(moving.x2.between?(still.x1,still.x2-1) && moving.y1.between?(still.y1,still.y2-1)) ||
-			(moving.x2.between?(still.x1,still.x2-1) && moving.y2.between?(still.y1,still.y2-1))
+			(moving.x1.between?(still.x1,still.x2) && moving.y1.between?(still.y1,still.y2)) ||
+			(moving.x1.between?(still.x1,still.x2) && moving.y2.between?(still.y1,still.y2)) ||
+			(moving.x2.between?(still.x1,still.x2) && moving.y1.between?(still.y1,still.y2)) ||
+			(moving.x2.between?(still.x1,still.x2) && moving.y2.between?(still.y1,still.y2))
 	end;
 
 	def intersectCoords?(x1,y1,x2,y2,x3,y3,x4,y4)
-			(x1.round.between?(x3,x4-1) && y1.round.between?(y3,y4-1)) ||
-			(x1.round.between?(x3,x4-1) && y2.round.between?(y3,y4-1)) ||
-			(x2.round.between?(x3,x4-1) && y1.round.between?(y3,y4-1)) ||
-			(x2.round.between?(x3,x4-1) && y2.round.between?(y3,y4-1))
+			(x1.round.between?(x3,x4) && y1.round.between?(y3,y4)) ||
+			(x1.round.between?(x3,x4) && y2.round.between?(y3,y4)) ||
+			(x2.round.between?(x3,x4) && y1.round.between?(y3,y4)) ||
+			(x2.round.between?(x3,x4) && y2.round.between?(y3,y4))
 	end;
 
 	def contact(moving)
@@ -52,10 +52,12 @@ class MiniCollider<MovableGameObject
 		x=moving.prevX;
 		y=moving.prevY;
 		# puts "Collider.x=#{x}, y=#{y}"
-
+prevXX=moving.prevX; prevYY=moving.prevY;
 		while !intersectCoords?(x, y, x+moving.w, y+moving.h, still.x1, still.y1, still.x2, still.y2)
 			prevXX=x; prevYY=y;
-			# puts "prevXX=#{prevXX}, prevYY=#{prevYY}, still.x1=#{still.x1}, still.y1=#{still.y1}"
+			# ***
+			 # puts "prevXX=#{prevXX}, prevYY=#{prevYY}, x=#{x}, y=#{y},  x+moving.w=#{ x+moving.w}, y+moving.h=#{y+moving.h}, still.x1=#{still.x1}, still.y1=#{still.y1}, still.x2=#{still.x2}, still.y2=#{still.y2}"
+			# ***
 			if dx==0
 				y=y+sgn(dy);
 			elsif hdg.abs<=1
@@ -68,6 +70,7 @@ class MiniCollider<MovableGameObject
 			exit if prevYY<0
 			exit if prevYY>980
 			exit if prevXX<0
+			exit if prevXX>1000
 		end;		
 		
 		side=case
@@ -179,8 +182,8 @@ class ClimbingCollider<MiniCollider
 			# puts "Collide prevx=#{@master.prevX} prevy=#{master.prevY}"
 
 			contact=contact(@master);
-            #@master.x=contact[:safeX];
-            #@master.y=contact[:safeY];
+            @master.x=contact[:safeX];
+            @master.y=contact[:safeY];
 
             if contact[:contactType]=="upper horizontal"
             	@master.yS=0;
