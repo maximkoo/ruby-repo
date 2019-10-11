@@ -1,0 +1,37 @@
+https://stackoverflow.com/questions/241341/for-ruby-webrick-i-need-windows-to-recognize-shebang-notation
+
+
+
+A generic solution that works for both Ruby 1.8.6.pxxx and 1.9.1.p0 on Windows is the following:
+
+Edit the file: c:\ruby\lib\ruby\1.9.1\webrick\httpservlet\cgi_runner.rb
+
+Add the following lines at the top of the file:
+
+if "1.9.1" == RUBY_VERSION
+  require 'rbconfig'  #constants telling where Ruby runs from
+end
+
+Now, locate the last line where is says: exec ENV["SCRIPT_FILENAME"] Comment that line out and add the following code:
+
+# --- from here ---
+if "1.9.1" == RUBY_VERSION  #use RbConfig
+  Ruby = File::join(RbConfig::CONFIG['bindir'],
+                        RbConfig::CONFIG['ruby_install_name'])
+  Ruby << RbConfig::CONFIG['EXEEXT']
+else                        # use ::Config
+  Ruby = File::join(::Config::CONFIG['bindir'],
+                        ::Config::CONFIG['ruby_install_name'])
+  Ruby << ::Config::CONFIG['EXEEXT']
+end
+
+if /mswin|bccwin|mingw/ =~ RUBY_PLATFORM
+  exec "#{Ruby}", ENV["SCRIPT_FILENAME"]
+else
+  exec ENV["SCRIPT_FILENAME"]
+end
+# --- to here ---
+
+Save the file and restart the webrick server.
+
+Explanation: This code just builds a variable 'Ruby' with the full path to "ruby.exe", and (if you're running on Windows) it passes the additional parameter "c:\ruby\bin\ruby.exe" , to the Kernel.exec() method, so that your script can be executed.

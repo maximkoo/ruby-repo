@@ -8,6 +8,7 @@ class Player<MovableGameObject
 		@falling=PlayerFalling.new(self,x,y);
 		@standing=PlayerStanding.new(self,x,y);
 		@jumping=PlayerJumping.new(self,x,y);
+		@climbing=PlayerClimbing.new(self,x,y);
 		@state=@falling;
 		@w,@h=@state.img.width,@state.img.height;
 		@state.face="right";
@@ -25,6 +26,7 @@ class Player<MovableGameObject
 			when "fall" then ns=@falling
 			when "stop" then ns=@standing
 			when "jump" then ns=@jumping
+			when "climb" then ns=@climbing	
 		end;
 		ns.xS=old_state.xS;
 		ns.yS=old_state.yS;
@@ -47,14 +49,14 @@ class PlayerStanding<PlayerState
 		@img=Gosu::Image.new('..\/Graphics\/Platformer Art Complete Pack\/Base pack\/Player\/p2_front.png')
 		@xS=0; @yS=0;
 		@w,@h=@img.width,@img.height;
-		#@detector=WalkingDetector.new(self,x,y);
+		@detector=StandingDetector.new(self,x,y);
 	end;
 
 	def enter(x,y)
 		puts "Standing!"
 		@x,@y=x,y
 		@xS=0; @yS=0;
-		#@detector.reset(x,y)
+		@detector.reset(x,y)
 	end;
 
 	def draw
@@ -62,6 +64,7 @@ class PlayerStanding<PlayerState
 	end;
 
 	def update
+		@detector.update;
 		keyControl;
 	end; 	
 
@@ -78,8 +81,16 @@ class PlayerStanding<PlayerState
     		#@ph.strafe_tilt_right;
     		@xS=5
     		@master.toState(self,"walk")
-    	elsif $g.button_down?(Gosu::KbSpace)  || $g.button_down?(Gosu::KbUp)
+    	elsif $g.button_down?(Gosu::KbSpace) # || $g.button_down?(Gosu::KbUp)
 	   		#@yS=-20
+    		@master.toState(self,"jump")
+    	elsif $g.button_down?(Gosu::KbUp) && @detector.controlPoints[4]["type"].include?(LADDER)
+    		@master.toState(self,"climb")
+    	elsif $g.button_down?(Gosu::KbDown) && @detector.controlPoints[7]["type"].include?(LADDER)
+    		puts @detector.controlPoints[7]
+    		@master.toState(self,"climb")	
+
+    	elsif $g.button_down?(Gosu::KbUp)
     		@master.toState(self,"jump")
     	else
     		#@ph.look_up;	
@@ -237,4 +248,79 @@ class PlayerJumping<PlayerState
 			@img[1]	
 		end;		
 	end;
+end;
+
+
+class PlayerClimbing<PlayerState
+	def initialize(master,x,y)
+		super(master,x,y)
+		@img=  []
+		@img[0]=Gosu::Image.new('..\/Graphics\/Platformer Art Complete Pack\/Base pack\/Player\/alienBlue_Climb1_.png')
+		@img[1]=Gosu::Image.new('..\/Graphics\/Platformer Art Complete Pack\/Base pack\/Player\/alienBlue_Climb2_.png')
+		@xS=0; @yS=-CLIMBING_SPEED;
+		@w,@h=img.width,img.height;
+		@collider=ClimbingCollider.new(self,x,y)
+		@detector=ClimbingDetector.new(self,x,y);
+		@mileage=0;
+	end;
+
+	def enter(x,y)
+		puts "Climbing!"
+		@x,@y=x,y
+		@yS=-CLIMBING_SPEED;
+		centerOnTileX(@x,@y)
+		@detector.reset(@x,@y);
+	end;
+
+	def centerOnTileX(x,y)	
+		#puts "x=#{@x}"
+		#puts "@x+@w/2=#{@x+@w/2}"
+		#puts "(@x+@w/2)/TILE_SIZE=#{(@x+@w)/TILE_SIZE}"  
+		@x=(@x+@w/2)/TILE_SIZE * TILE_SIZE
+	end;
+		
+	def centerOnTileY(x,y)	
+		
+	end;
+
+	def centerOnTileXY(x,y)	
+		centerOnTileX(x,y)
+		centerOnTileY(x,y)
+	end
+
+	def draw
+		img.draw(@x,@y,10);
+	end;	
+	
+	def update
+		@mileage+=1 if @yS!=0;
+		@mileage=@mileage%10
+		keyControl;
+		move;
+		@collider.update;
+		@detector.update;
+		@face=="left" ? @face="right": @face="left" if @mileage==0
+	end;	
+
+	def img
+		#@img
+		#case when @xS>=0
+		case when @face=="right" 
+			@img[0]
+		else
+			@img[1]	
+		end;		
+	end;
+
+	def keyControl
+		if $g.button_down?(Gosu::KbUp)
+    		#@ph.strafe_tilt_left;
+    		@yS=-CLIMBING_SPEED
+    	elsif $g.button_down?(Gosu::KbDown)
+    		#@ph.strafe_tilt_left;
+    		@yS=CLIMBING_SPEED
+    	else
+    		@yS=0
+    	end;	
+	end;	
 end;

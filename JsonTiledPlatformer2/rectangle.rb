@@ -10,7 +10,7 @@ class Rectangle#<MovableGameObject
 	end;
 	
 	def x2
-		@x+@w;
+		@x+@w-1;
 	end;
 	
 	def y1
@@ -18,6 +18,6 @@ class Rectangle#<MovableGameObject
 	end;
 	
 	def y2
-		@y+@h
+		@y+@h-1
 	end;
 end;
