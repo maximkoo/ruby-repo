@@ -24,11 +24,11 @@ class GameWindow<Gosu::Window
         if id==Gosu::MsLeft
       		#puts "Mouse Clicked at #{mouse_x} : #{mouse_y}"    
       		#@cells<<Hash[x:mouse_x.to_i,y:mouse_y.to_i]
-      		@cells<<mouse_x.to_i
-      		@cells<<mouse_y.to_i
-      		puts "Sending!"
+      		@cells<<(mouse_x.to_i)/10*10
+      		@cells<<(mouse_y.to_i)/10*10
+      		#puts "Sending!"
       		sendMessage(@server);
-      		puts "Sending done!"
+      		#puts "Sending done!"
     	end;
     	if id==Gosu::KbEscape
     		#puts @cells
@@ -42,11 +42,8 @@ class GameWindow<Gosu::Window
     			puts "Listen"
 				b=server.gets.chomp
 				puts b
-				#Gosu.draw_rect(100,100,20,20,Gosu::Color::GREEN, 10);
-				#@cells2=[100,100]
 				@cells2=b.split(",")
 				@cells2.map!{|i|i.to_i}
-				puts "no listen"
 			end;
 		end
 		#t.join;

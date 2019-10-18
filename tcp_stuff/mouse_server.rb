@@ -25,7 +25,7 @@ class MouseServer
 	def receiveMessages(session)
 		#Thread.new do
 			puts "Now listening for #{session.object_id}"
-			session.puts("OK!")
+			#session.puts("OK!")
 			loop do
 				puts "listen"
 				message=session.gets.chomp;			
@@ -39,7 +39,8 @@ class MouseServer
 		@sessions.each do |sess|
 			if sess["session"]!=origin
 				puts "Sending to #{sess["session"].object_id}"
-				sess["session"].puts("#{origin.object_id} sends you: #{message}"); 
+				#sess["session"].puts("#{origin.object_id} sends you: #{message}");
+				sess["session"].puts(message); 
 			end;	
 		end;	
 	end;	
