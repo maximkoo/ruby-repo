@@ -21,4 +21,7 @@ puts x
 
 # puts x
 	
-puts [1,1,2,2].to_s	
+puts [1,1,2,2].to_s
+puts ([1,2,3,4,5]<<[6,7]).to_s
+aaa= "1,2,3".split(",")
+puts [0,0,0]+aaa

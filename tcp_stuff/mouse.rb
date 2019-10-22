@@ -26,8 +26,9 @@ class GameWindow<Gosu::Window
       		#@cells<<Hash[x:mouse_x.to_i,y:mouse_y.to_i]
       		@cells<<(mouse_x.to_i)/10*10
       		@cells<<(mouse_y.to_i)/10*10
-      		#puts "Sending!"
-      		sendMessage(@server);
+      		msg=[((mouse_x.to_i)/10*10).to_s,((mouse_y.to_i)/10*10).to_s].join(",")
+      		puts "Sending! #{msg}"
+      		sendMessage(@server, msg);
       		#puts "Sending done!"
     	end;
     	if id==Gosu::KbEscape
@@ -42,15 +43,17 @@ class GameWindow<Gosu::Window
     			puts "Listen"
 				b=server.gets.chomp
 				puts b
-				@cells2=b.split(",")
-				@cells2.map!{|i|i.to_i}
+				#@cells2=b.split(",")
+				#@cells2.map!{|i|i.to_i}
+
+				@cells2+=b.split(",").map!{|i|i.to_i}
 			end;
 		end
 		#t.join;
     end;	
 
-    def sendMessage(server)
-    	msg=@cells.join(",");
+    def sendMessage(server, msg)
+    	#msg=@cells.join(",");
     	server.puts(msg);
     end;	
 
