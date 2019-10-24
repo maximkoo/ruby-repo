@@ -60,7 +60,12 @@ class Dpg<Gosu::Window
     end;
 
     def get_new_target
-    	@target=Cell.new(rand(SCREEN_WIDTH),rand(SCREEN_HEIGHT),nil);
+    	x,y=0,0
+    	loop do
+    		x,y=rand(SCREEN_WIDTH),rand(SCREEN_HEIGHT)
+    		break if !is_head?(x,y)&&!is_in?(x,y)
+    	end;
+    	@target=Cell.new(x,y,nil);
     end;	
   	
 	def button_down(id)		
@@ -85,33 +90,55 @@ class Dpg<Gosu::Window
   	def move
   		#x,y=@head.x,@head.y
   		return if @stopped
-  		c=@head.clone  		
+  		c=@head.clone
+  		#c=head;  		
   		@head.x=@head.x+@xSpeed
   		@head.y=@head.y+@ySpeed
-  		c1=@head.nxt
-  		loop do 
-  			c2=c1.clone;
+  		#c1=@head.nxt
+  		c1=c.nxt
+  		# loop do 
+  		# 	c2=c1.clone;
+  		# 	c1.x,c1.y=c.x,c.y
+  		# 	break if c1.nxt.nil?
+  		# 	c=c2.clone;
+  		# 	c1=c2.nxt;
+  		# end;
+  		loop do
+  			c2=c1.clone
   			c1.x,c1.y=c.x,c.y
   			break if c1.nxt.nil?
-  			c=c2.clone;
-  			c1=c2.nxt;
-  		end;
-
-
+  			c=c2;
+  			c1=c1.nxt;
+  		end;	
   	end;	
 
   	def eat?
   		@head.x==@target.x && @head.y==@target.y
   	end;	
 
-  	def hit?
-  		return true if @head.x<0 || @head.y<0 || @head.x>SCREEN_WIDTH || @head.y>SCREEN_HEIGHT
+  	def is_head?(x,y)
+  		x==@head.x&&y==@head.y
+  	end;
+  	
+  	def is_in?(x,y)
   		c=@head.nxt
   			loop do
-  				return true if c.x==@head.x && c.y==@head.y
+  				return true if c.x==x && c.y==y
   				break if c.nxt.nil?
   				c=c.nxt;
-  			end;		
+  			end;
+  		false	
+  	end;	
+
+  	def hit?
+  		return true if @head.x<0 || @head.y<0 || @head.x>SCREEN_WIDTH || @head.y>SCREEN_HEIGHT
+  		# c=@head.nxt
+  		# 	loop do
+  		# 		return true if c.x==@head.x && c.y==@head.y
+  		# 		break if c.nxt.nil?
+  		# 		c=c.nxt;
+  		# 	end;
+  		is_in?(@head.x,@head.y)		
   	end;	
 
   	def draw
