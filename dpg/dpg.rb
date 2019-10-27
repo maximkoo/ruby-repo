@@ -131,7 +131,7 @@ class Dpg<Gosu::Window
   	end;	
 
   	def hit?
-  		return true if @head.x<0 || @head.y<0 || @head.x>SCREEN_WIDTH || @head.y>SCREEN_HEIGHT
+  		return true if @head.x<0 || @head.y<0 || @head.x>=SCREEN_WIDTH || @head.y>=SCREEN_HEIGHT
   		# c=@head.nxt
   		# 	loop do
   		# 		return true if c.x==@head.x && c.y==@head.y
@@ -154,7 +154,7 @@ class Dpg<Gosu::Window
   		if hit?
   			@xSpeed=0; @ySpeed=0; @stopped=true;
   			
-  			@font.draw("GAME OVER",100,100,20,2,2,Gosu::Color::WHITE)
+  			@font.draw_markup("GAME OVER",100,100,20,2,8,Gosu::Color::WHITE)
   		end;		
   	end;	
 end;
