@@ -1,0 +1,10 @@
+---
+layout: post
+title:  "Проверочный пост 1"
+date:   2019-11-01 16:25:07 +0300
+categories: attempts
+---
+Здесь **ничего** не *написано*. 
+
+![image](/assets/kitchen_corner.jpg)
+<img src="/assets/kitchen_corner.jpg">
