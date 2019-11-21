@@ -11,8 +11,10 @@ class C1<Gosu::Window
     
     #$m=@map
     json=JSON.parse(File.read(MAP_FILE));
-    $map_width=json["width"]
-    $map_height=json["height"]
+    #$map_width=json["width"]
+    #$map_height=json["height"]
+    $map_width=$map.width
+    $map_height=$map_height
 
     $viewport_x=0
     $viewport_y=0
@@ -40,7 +42,9 @@ class C1<Gosu::Window
               mo.name=obj["name"] 
               mo.type=obj["type"]  
               mo.xS=0
-              mo.yS=-2;        
+              mo.yS=-2;  
+              mo.layer=object_layer.data["name"]     
+              #puts mo.inspect
             end;  
         end;  
      end;
@@ -61,7 +65,7 @@ class C1<Gosu::Window
 	  return if (now-@last_update||=now) < FRAME_DELAY 
 	  #@objectPool.objects.map(&:update);
 	  #@player.update;
-    @map_objects.each do |obj|
+    @map_objects.select{|c| c.type=="Platform"}.each do |obj|
       obj.update;
     end;  
 	  @last_update=now;
@@ -72,7 +76,7 @@ class C1<Gosu::Window
       @viewport_offset_x-=TILE_SIZE/7 unless @viewport_offset_x<=0
     end;
     if button_down?(Gosu::KbRight)
-      @viewport_offset_x+=TILE_SIZE/7 unless @viewport_offset_x+$viewport_width>=$map_width*TILE_SIZE
+      @viewport_offset_x+=TILE_SIZE/7 unless @viewport_offset_x+$viewport_width>=$map_width
     end;
 
   if button_down?(Gosu::KB_D)

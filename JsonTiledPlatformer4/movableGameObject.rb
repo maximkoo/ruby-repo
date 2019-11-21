@@ -46,7 +46,7 @@ class Player<MovableGameObject
 end;
 
 class MapObject<MovableGameObject
-	attr_accessor :name,:type,:visible,:enabled
+	attr_accessor :name,:type,:visible,:enabled,:layer
 	def initialize(x,y)
 		super(x,y)
 		@q=Proc.new do |this|
