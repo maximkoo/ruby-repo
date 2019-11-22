@@ -1,7 +1,7 @@
 class MapObject<MovableGameObject
 	attr_accessor :name,:type,:visible,:enabled,:layer
-	def initialize(x,y)
-		super(x,y);
+	def initialize(master,x,y)
+		super(master,x,y);
 	end;
 
 	def move
@@ -11,7 +11,7 @@ class MapObject<MovableGameObject
 	end;	
 	
 	def update
-		return unless [VIRTUAL, PLATFORM].includes? @type 
+		return unless [VIRTUAL, PLATFORM].include? @type 
 		#@qq.call(self)
 	end;
 end;

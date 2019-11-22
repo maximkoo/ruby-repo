@@ -1,4 +1,3 @@
-require './movable_game_object.rb'
 class PlayerState<MovableGameObject
 	attr_accessor :face
 	def initialize(master,x,y)
@@ -16,4 +15,9 @@ class PlayerState<MovableGameObject
 	def keyControl
 
 	end;
+
+	def img
+
+	end;	
 end;	
+

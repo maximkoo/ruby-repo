@@ -5,6 +5,7 @@ require './Override/layer_override.rb'
 require './bin/movable_game_object.rb'
 require './bin/map_object.rb'
 require './bin/object_pool.rb'
+require './bin/player.rb'
 
 class GameWindow<Gosu::Window
   	def initialize
@@ -20,11 +21,29 @@ class GameWindow<Gosu::Window
 	    $viewport_height=980
 	    @viewport_offset_x=0
 	    @viewport_offset_y=0
+
+	    @objectPool=ObjectPool.new;
+	    #@player=Player.new(@objectPool, 750,80);
+	    @player=Player.new(@objectPool, 140,350);
   	end;
 
   	def draw
       $map.draw(@viewport_offset_x,@viewport_offset_y)
+
+      @player.draw;
   	end
+
+  	def needs_cursor?
+    	true
+  	end
+
+  	def update
+		now=Gosu.milliseconds
+		return if (now-@last_update||=now) < FRAME_DELAY 
+		@objectPool.objects.map(&:update);
+		#@player.update;
+		@last_update=now;
+	end;
 end;
 
 $g=GameWindow.new

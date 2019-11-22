@@ -1,16 +1,16 @@
 class ObjectPool
-    attr_accessor :map_objects, :objects
-    def initialize(json)
+    attr_accessor :objects
+    def initialize
         @objects=[]
-        @map_objects=[]
-        getMapObjects(json)
+        #@map_objects=[]
+        getMapObjects
     end;
 
     def getMapObjects
         $map.layers.object.each do |object_layer|
             object_layer.data["objects"].each do |obj|
-                puts obj.to_s
-                @map_objects<<MapObject.new(obj["x"],obj["y"]) do |mo|
+                #puts obj.to_s
+                @objects<<MapObject.new(self, obj["x"],obj["y"]) do |mo|
                     mo.w=obj["width"];
                     mo.h=obj["height"] 
                     mo.name=obj["name"] 
@@ -23,4 +23,29 @@ class ObjectPool
             end;  
         end;
     end;
+
+    # def objectsByPoint(x,y)
+    #     arr=@obstacles+@ladders;
+    #     res=[]
+    #     arr.each do |a| 
+    #         if (x.between?(a.x1,a.x2-1) && y.between?(a.y1,a.y2-1)) 
+    #             res<<a.rectangle_type;
+    #         end;  
+    #     end;  
+    #     res
+    # end;
+
+    def objectsByPoint(x,y)
+        res=[]
+        @objects.each do |obj|
+            if (x.between?(obj.x1,obj.x2-1) && y.between?(obj.y1,obj.y2-1)) 
+                #begin
+                    res<<obj.type if !obj.type.nil?;
+                #rescue NameError => e
+                #    puts obj.class
+                #end;    
+            end;    
+            res
+        end;
+    end;        
 end;    
