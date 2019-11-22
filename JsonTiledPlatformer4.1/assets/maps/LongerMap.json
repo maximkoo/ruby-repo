@@ -3,7 +3,7 @@
     {
      "export":
         {
-         "target":"."
+         "target":"..\/..\/..\/JsonTiledPlatformer4"
         }
     },
  "height":14,
@@ -371,7 +371,7 @@
         {
          "columns":28,
          "firstgid":1,
-         "image":"..\/Graphics\/Platformer Art Complete Pack\/Base pack\/Tiles\/BaseTiles.png",
+         "image":"..\/..\/..\/Graphics\/Platformer Art Complete Pack\/Base pack\/Tiles\/BaseTiles.png",
          "imageheight":420,
          "imagewidth":1960,
          "margin":0,
@@ -384,7 +384,7 @@
         {
          "columns":28,
          "firstgid":169,
-         "image":"..\/Graphics\/Platformer Art Complete Pack\/Base pack\/Items\/Items.png",
+         "image":"..\/..\/..\/Graphics\/Platformer Art Complete Pack\/Base pack\/Items\/Items.png",
          "imageheight":140,
          "imagewidth":1960,
          "margin":0,
@@ -397,7 +397,7 @@
         {
          "columns":12,
          "firstgid":225,
-         "image":"..\/Graphics\/Platformer Art Complete Pack\/Base pack\/Enemies70\/Enemies70.png",
+         "image":"..\/..\/..\/Graphics\/Platformer Art Complete Pack\/Base pack\/Enemies70\/Enemies70.png",
          "imageheight":350,
          "imagewidth":840,
          "margin":0,
@@ -410,7 +410,7 @@
         {
          "columns":14,
          "firstgid":285,
-         "image":"..\/Graphics\/Platformer Art Complete Pack\/Mushroom expansion\/Backgrounds\/bg_grasslands.png",
+         "image":"..\/..\/..\/Graphics\/Platformer Art Complete Pack\/Mushroom expansion\/Backgrounds\/bg_grasslands.png",
          "imageheight":512,
          "imagewidth":1024,
          "margin":0,
@@ -423,7 +423,7 @@
         {
          "columns":14,
          "firstgid":383,
-         "image":"..\/Graphics\/Platformer Art Complete Pack\/Request pack\/request.png",
+         "image":"..\/..\/..\/Graphics\/Platformer Art Complete Pack\/Request pack\/request.png",
          "imageheight":490,
          "imagewidth":980,
          "margin":0,
@@ -436,7 +436,7 @@
         {
          "columns":1,
          "firstgid":481,
-         "image":"Platforms\/PlatformSet.png",
+         "image":"..\/..\/..\/JsonTiledPlatformer4\/Platforms\/PlatformSet.png",
          "imageheight":350,
          "imagewidth":210,
          "margin":0,
