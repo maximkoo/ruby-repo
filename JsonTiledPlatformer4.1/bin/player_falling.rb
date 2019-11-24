@@ -13,6 +13,7 @@ class PlayerFalling<PlayerState
 	end;
 
 	def enter(x,y)
+		puts "Falling!"
 		@x,@y=x,y
 		@yS=10;
 		@detector.reset(x,y)

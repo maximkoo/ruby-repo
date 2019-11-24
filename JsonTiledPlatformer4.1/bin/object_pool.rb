@@ -45,7 +45,8 @@ class ObjectPool
                 #    puts obj.class
                 #end;    
             end;    
-            res
+            
         end;
+        res
     end;        
 end;    

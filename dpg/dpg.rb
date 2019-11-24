@@ -131,7 +131,7 @@ class Dpg<Gosu::Window
   	end;	
 
   	def hit?
-  		return true if @head.x<0 || @head.y<0 || @head.x>=SCREEN_WIDTH || @head.y>=SCREEN_HEIGHT
+  		return true if @head.x<0 || @head.y<0 || @head.x>=  SCREEN_WIDTH || @head.y>=SCREEN_HEIGHT
   		# c=@head.nxt
   		# 	loop do
   		# 		return true if c.x==@head.x && c.y==@head.y

@@ -24,7 +24,7 @@ class GameWindow<Gosu::Window
 
 	    @objectPool=ObjectPool.new;
 	    #@player=Player.new(@objectPool, 750,80);
-	    @player=Player.new(@objectPool, 140,350);
+	    @player=Player.new(@objectPool, 280,70);
   	end;
 
   	def draw
@@ -37,7 +37,7 @@ class GameWindow<Gosu::Window
     	true
   	end
 
-  	def update
+  	def update  
 		now=Gosu.milliseconds
 		return if (now-@last_update||=now) < FRAME_DELAY 
 		@objectPool.objects.map(&:update);

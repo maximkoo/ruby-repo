@@ -35,15 +35,16 @@ class PlayerStanding<PlayerState
 	end;
 
 	def keyControl
-		# if $g.button_down?(Gosu::KbLeft)
-  #   		@xS=@xS
-  #   		@ys=@yS
-  #   		@master.toState(self,"...");
-  #   	elsif $g.button_down?(Gosu::KbRight)
-  #   		@xS=@xS
-  #   		@yS=@yS    	
-  #   		@master.toState(self,"...");
-  #   	else
+		if $g.button_down?(Gosu::KbLeft)
+    		@xS=@xS
+    		@ys=@yS
+    		@master.toState(self,"walk");
+    	elsif $g.button_down?(Gosu::KbRight)
+    		@xS=@xS
+    		@yS=@yS    	
+    		@master.toState(self,"walk");
+    	end;
+    	#else
   #   		@xS=@xS
   #   		@yS=@yS 
   #   		@master.toState(self,"...");
