@@ -4,7 +4,7 @@ require './bin/components/detector/detector.rb'
 require './bin/player_walking.rb'
 require './bin/player_falling.rb'
 require './bin/player_jumping.rb'
-#require './bin/player_climbing.rb'
+require './bin/player_climbing.rb'
 require './bin/player_standing.rb'
 
 class Player<MovableGameObject
@@ -23,7 +23,7 @@ class Player<MovableGameObject
 		@states["fall"]=PlayerFalling.new(self,x,y);
 		@states["stop"]=PlayerStanding.new(self,x,y);
 		@states["jump"]=PlayerJumping.new(self,x,y);
-		#@states["climb"]=PlayerClimbing.new(self,x,y);
+		@states["climb"]=PlayerClimbing.new(self,x,y);
 		#@states["ride"]=PlayerRiding.new(self,x,y);
 
 

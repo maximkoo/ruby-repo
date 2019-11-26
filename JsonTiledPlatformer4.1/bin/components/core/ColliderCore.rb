@@ -13,7 +13,7 @@ Contact=Struct.new( :movingId,
 class ColliderCore
 		ALL='All'
 		NONE='None'
-		LOG_LEVEL=ALL	
+		LOG_LEVEL=NONE	
 
 	def sgn(n)
   		n <=> 0

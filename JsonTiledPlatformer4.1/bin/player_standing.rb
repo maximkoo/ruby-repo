@@ -37,7 +37,7 @@ class PlayerStanding<PlayerState
 	end;
 
 	def keyControl
-		if $g.button_down?(Gosu::KbLeft)
+		if $g.button_down?(Gosu::KbLeft) 
     		@xS=@xS
     		@ys=@yS
     		@master.toState(self,"walk");
@@ -45,16 +45,24 @@ class PlayerStanding<PlayerState
     		@xS=@xS
     		@yS=@yS    	
     		@master.toState(self,"walk");
-    	end;
+    	elsif $g.button_down?(Gosu::KbUp) && @detector.controlPoints[5]["type"].include?(LADDER)
+    		@master.toState(self,"climb")
+    	elsif $g.button_down?(Gosu::KbDown) && @detector.controlPoints[8]["type"].include?(LADDER)
+    		#puts @detector.controlPoints[7]
+    		@master.toState(self,"climb")	
+    	#end;
     	#else
   #   		@xS=@xS
   #   		@yS=@yS 
   #   		@master.toState(self,"...");
   #   	end;
-      	if $g.button_down?(Gosu::KbSpace) || $g.button_down?(Gosu::KbUp)
+      	elsif $g.button_down?(Gosu::KbSpace) || $g.button_down?(Gosu::KbUp)
 		# 	@xS=@xS
   #   		@yS=@yS 
      	  	@master.toState(self,"jump")	
      	end;	
+
+
+
     end;		
 end;

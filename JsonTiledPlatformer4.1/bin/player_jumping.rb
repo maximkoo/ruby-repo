@@ -7,7 +7,7 @@ class PlayerJumping<PlayerState
 		@player_anim[0]=Gosu::Image.load_tiles(PLAYER_BLUE_JUMP_FILE, 140/2,94); 
 		@current_frame=0;
 		@w,@h=img.width,img.height;
-		@@xS=0; @yS=-JUMPING_SPEED;
+		@xS=0; @yS=-JUMPING_SPEED;
 		@collider=JumpingCollider.new(self,x,y)
 		#@detector=JumpingDetector.new(self,x,y);
 	end;

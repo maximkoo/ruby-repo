@@ -2,6 +2,7 @@ class PlayerState<MovableGameObject
 	attr_accessor :face
 	def initialize(master,x,y)
 		super(master,x,y)
+		@face="right"
 	end;
 
 	def enter(x,y)

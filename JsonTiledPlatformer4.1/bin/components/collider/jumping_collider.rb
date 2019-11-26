@@ -25,6 +25,7 @@ class JumpingCollider<ColliderCore
 				@master.x=factContact[:safeX];
 	            @master.y=factContact[:safeY];
 	  			@master.master.toState(@master,"stop");
+  				return
   			end;
 
   			factContacts=cons.select{|c| #c.stillClass="MapObject"|| 
@@ -40,6 +41,7 @@ class JumpingCollider<ColliderCore
 	            @master.y=factContact[:safeY];
 	  			#@master.master.toState(@master,"stop");
 	  			@master.yS=0;
+	  			return
   			end;
 
   			factContacts=cons.select{|c| #c.stillClass="MapObject"|| 
@@ -53,6 +55,7 @@ class JumpingCollider<ColliderCore
 				@master.x=factContact[:safeX];
 	            @master.y=factContact[:safeY];
 	  			@master.master.toState(@master,"fall");
+	  			return
   			end;
 
   			# надо также выбрать контакты с призами и всякого рода управляющими элементами

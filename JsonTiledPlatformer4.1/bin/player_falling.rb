@@ -31,7 +31,7 @@ class PlayerFalling<PlayerState
 		@collider.update;
 		@detector.update;
 		keyControl;
-		@xS>=0? @face="right" : @face="left";
+		#@xS>=0? @face="right" : @face="left";
 	end;	
 
 	def img
