@@ -1,6 +1,7 @@
 class ObjectPool
-    attr_accessor :objects
-    def initialize
+    attr_accessor :objects, :master
+    def initialize(master) # Game Window is the master
+        @master=master
         @objects=[]
         #@map_objects=[]
         getMapObjects
@@ -10,7 +11,12 @@ class ObjectPool
         $map.layers.object.each do |object_layer|
             object_layer.data["objects"].each do |obj|
                 #puts obj.to_s
-                @objects<<MapObject.new(self, obj["x"],obj["y"]) do |mo|
+                if obj["gid"]
+                    h=obj["y"]-obj["height"];
+                else
+                    h=obj["y"];
+                end;    
+                @objects<<MapObject.new(self, obj["x"],h) do |mo|
                     mo.w=obj["width"];
                     mo.h=obj["height"] 
                     mo.name=obj["name"] 
@@ -19,8 +25,8 @@ class ObjectPool
                     mo.yS=0;  
                     mo.layer=object_layer.data["name"]     
                     #puts mo.inspect
-                end;  
-            end;  
+                end;
+        end;  
         end;
     end;
 
@@ -34,6 +40,9 @@ class ObjectPool
     #     end;  
     #     res
     # end;
+    def update
+        @objects.map(&:update);
+    end;    
 
     def objectsByPoint(x,y)
         res=[]

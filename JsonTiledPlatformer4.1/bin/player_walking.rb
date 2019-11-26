@@ -14,16 +14,16 @@ class PlayerWalking<PlayerState
 	end;
 
 	def enter(x,y)
-		puts "Walking!"
+		puts "--- Walking! ---"
 		#puts @collider.collide?(self)
 		@x,@y=x,y
 		@yS=0;
 		@detector.reset(x,y)
 	end;
 
-	def draw
-		img.draw(@x,@y,10);
-	end;	
+	#def draw
+	#	img.draw(@x,@y,10);
+	#end;	
 
 	def update
 		move;

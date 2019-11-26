@@ -3,14 +3,15 @@ require './bin/components/core/ColliderCore.rb'
 require './bin/components/detector/detector.rb'
 require './bin/player_walking.rb'
 require './bin/player_falling.rb'
-#require './bin/player_jumping.rb'
+require './bin/player_jumping.rb'
 #require './bin/player_climbing.rb'
 require './bin/player_standing.rb'
 
 class Player<MovableGameObject
 	def initialize(master,x,y)
 		super(master,x,y)	
-		@type=PLAYER	
+		@type=PLAYER
+		set_viewport;	
 		# @walking=PlayerWalking.new(self,x,y);
 		# @falling=PlayerFalling.new(self,x,y);
 		# @standing=PlayerStanding.new(self,x,y);
@@ -21,7 +22,7 @@ class Player<MovableGameObject
 		@states["walk"]=PlayerWalking.new(self,x,y);
 		@states["fall"]=PlayerFalling.new(self,x,y);
 		@states["stop"]=PlayerStanding.new(self,x,y);
-		#@states["jump"]=PlayerJumping.new(self,x,y);
+		@states["jump"]=PlayerJumping.new(self,x,y);
 		#@states["climb"]=PlayerClimbing.new(self,x,y);
 		#@states["ride"]=PlayerRiding.new(self,x,y);
 
@@ -50,6 +51,8 @@ class Player<MovableGameObject
 
 		ns.xS=old_state.xS;
 		ns.yS=old_state.yS;
+		ns.xx=old_state.xx;
+		ns.yy=old_state.yy;
 		ns.enter(old_state.x,old_state.y);	
 		ns.face=old_state.face;	
 		
@@ -58,7 +61,7 @@ class Player<MovableGameObject
 		@state=ns;
 	end;
 
-	def update
+	def update		
 		@state.update;
 	end;	
 end;	

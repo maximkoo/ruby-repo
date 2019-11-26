@@ -8,6 +8,7 @@ require './bin/object_pool.rb'
 require './bin/player.rb'
 
 class GameWindow<Gosu::Window
+	attr_accessor :viewport_width, :viewport_height, :viewport_offset_x, :viewport_offset_y
   	def initialize
 	    super 980,980, false
 	    $map = Gosu::Tiled.load_json(self, MAP_FILE)
@@ -19,16 +20,16 @@ class GameWindow<Gosu::Window
 	    $viewport_y=0
 	    $viewport_width=980
 	    $viewport_height=980
-	    @viewport_offset_x=0
-	    @viewport_offset_y=0
+	    $viewport_offset_x=0
+	    $viewport_offset_y=0
 
-	    @objectPool=ObjectPool.new;
+	    @objectPool=ObjectPool.new(self);
 	    #@player=Player.new(@objectPool, 750,80);
 	    @player=Player.new(@objectPool, 280,70);
   	end;
 
   	def draw
-      $map.draw(@viewport_offset_x,@viewport_offset_y)
+      $map.draw($viewport_offset_x,$viewport_offset_y)
 
       @player.draw;
   	end
@@ -40,7 +41,8 @@ class GameWindow<Gosu::Window
   	def update  
 		now=Gosu.milliseconds
 		return if (now-@last_update||=now) < FRAME_DELAY 
-		@objectPool.objects.map(&:update);
+		#@objectPool.objects.map(&:update);
+		@objectPool.update;
 		#@player.update;
 		@last_update=now;
 	end;

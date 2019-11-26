@@ -11,6 +11,10 @@ Contact=Struct.new( :movingId,
 					:contactType);
 
 class ColliderCore
+		ALL='All'
+		NONE='None'
+		LOG_LEVEL=ALL	
+
 	def sgn(n)
   		n <=> 0
 	end
@@ -55,13 +59,13 @@ class ColliderCore
 				y=y+sgn(dy);
 				x=x+1.fdiv(hdg)*sgn(dx);				
 			end;	
-			puts 
-			puts "Collider reports: current x,y=#{x}, #{y}"
-			exit if x<0||y>980||y<0||x>1000
+			log() 
+			log "Collider reports: current x,y=#{x}, #{y}"
+			exit if x<0||y>1000||y<0||x>2000
 		
 			objs.reject{|c| c.class.name==moving.class.name || c.class.name==PLAYER_CLASS}.each do |still|		
 				if intersectCoords?(x, y, x+moving.w-1, y+moving.h-1, still.x1, still.y1, still.x2, still.y2)
-					puts "intersection detected on an #{still.class.name} #{still.type} #{still.name} with x,y=#{still.x},#{still.y}"
+					log "intersection detected on an #{still.class.name} #{still.type} #{still.name} with x1,y1=#{still.x1},#{still.y1} x2,y2=#{still.x2},#{still.y2}"
 					#print "Moving is: "
 					#puts moving.inspect
 					#print "Still is"
@@ -92,6 +96,14 @@ class ColliderCore
 		
 		contacts
 	end;	
+
+	def log(*messages)
+		if LOG_LEVEL==ALL
+			messages.each do |x|
+				puts x
+			end;	
+		end;		
+	end;		
 end;
 
 

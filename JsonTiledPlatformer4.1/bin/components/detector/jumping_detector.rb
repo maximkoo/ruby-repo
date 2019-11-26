@@ -6,8 +6,8 @@ class JumpingDetector<Detector
 	def update
 		super
 
-		 if !@controlPoints[6]["type"].include?(OBSTACLE) && !@controlPoints[8]["type"].include?(OBSTACLE)
-		 	@master.master.toState(@master,"fall"); ##<<<---????!!
-		 end;	
+		# if !@controlPoints[6]["type"].include?(OBSTACLE) && !@controlPoints[8]["type"].include?(OBSTACLE)
+		# 	@master.master.toState(@master,"fall"); ##<<<---????!!
+		# end;	
 	end;
 end;

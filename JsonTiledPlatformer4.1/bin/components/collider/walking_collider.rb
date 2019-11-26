@@ -10,13 +10,13 @@ class WalkingCollider<ColliderCore
 		if cons
 			# Для памяти: контактов может быть несколько, и их координты могут совпадать или не совпадать
 			# надо выбрать из них первый критический, приводящий к остановке и смене состояния
-			factContacts=cons.select{|c| c.stillClass==OBSTACLE || 
-				                         c.stillClass==VIRTUAL || 
-				                      	(c.stillClass==LADDER && c.contactType=='lower horizontal')};
+			factContacts=cons.select{|c| (c.stillType==OBSTACLE || c.stillType==VIRTUAL) && c.contactType=~/vertical/};
 			factContact=factContacts.first;	                        	
 			if factContact
-				@master.x=contact[:safeX];
-	            @master.y=contact[:safeY];
+				log "*** #{self.class} factContacts:"
+				log factContacts.to_s
+				@master.x=factContact[:safeX];
+	            @master.y=factContact[:safeY];
 	  			@master.master.toState(@master,"stop");
   			end;
   			# надо также выбрать контакты с призами и всякого рода управляющими элементами

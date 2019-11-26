@@ -19,5 +19,17 @@ class PlayerState<MovableGameObject
 	def img
 
 	end;	
+
+	def move
+		super
+		#puts @master.master.master.class
+		# if (@x>@master.master.master.viewport_width/2)
+		# 	@master.master.master.viewport_offset_x=@x-@master.master.master.viewport_width/2
+		# else
+		# 	@master.master.master.viewport_offset_x=0;
+		# end;	
+		# @xV=@x-@master.master.master.viewport_offset_x #Game Window
+		# @yV=@y
+	end;	
 end;	
 

@@ -13,15 +13,16 @@ class PlayerFalling<PlayerState
 	end;
 
 	def enter(x,y)
-		puts "Falling!"
+		puts "--- Falling! ---"
 		@x,@y=x,y
+		@xS=0;
 		@yS=10;
 		@detector.reset(x,y)
 	end;
 
-	def draw
-		img.draw(@x,@y,10);
-	end;	
+	#def draw
+	#	img.draw(@x,@y,10);
+	#end;	
 
 	def update
 		move;

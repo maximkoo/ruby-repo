@@ -10,7 +10,7 @@ class MapObject<MovableGameObject
 		#setY(@y+@yS)
 	end;	
 	
-	def update
+	def update		
 		return unless [VIRTUAL, PLATFORM].include? @type 
 		#@qq.call(self)
 	end;

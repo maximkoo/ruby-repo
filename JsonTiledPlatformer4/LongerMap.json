@@ -146,7 +146,7 @@
                  "id":46,
                  "name":"Ground8",
                  "rotation":0,
-                 "type":"",
+                 "type":"Obstacle",
                  "visible":true,
                  "width":210,
                  "x":1190,

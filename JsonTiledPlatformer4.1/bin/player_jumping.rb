@@ -1,3 +1,5 @@
+require './bin/components/collider/jumping_collider.rb'
+require './bin/components/detector/jumping_detector.rb'
 class PlayerJumping<PlayerState
 	def initialize(master, x,y)
 		super(master,x,y)
@@ -5,20 +7,25 @@ class PlayerJumping<PlayerState
 		@player_anim[0]=Gosu::Image.load_tiles(PLAYER_BLUE_JUMP_FILE, 140/2,94); 
 		@current_frame=0;
 		@w,@h=img.width,img.height;
-		@xS=0; @yS=0;
+		@@xS=0; @yS=-JUMPING_SPEED;
 		@collider=JumpingCollider.new(self,x,y)
 		#@detector=JumpingDetector.new(self,x,y);
 	end;
 
 	def enter(x,y)
-		puts "Jumping!"
+		puts "--- Jumping!---"
 		@x,@y=x,y
 		@yS=-JUMPING_SPEED;
 	end;
 
-	def draw
-		img.draw(@x,@y,10);
-	end;	
+	#def draw
+		#img.draw(@x,@y,10);
+	#end;	
+
+	def move
+		super
+		@yS+=JUMPING_DECELERATION
+	end;		
 
 	def update
 		move;

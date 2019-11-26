@@ -12,14 +12,16 @@ class PlayerStanding<PlayerState
 	end;
 
 	def enter(x,y)
+		puts "--- Standing! ---"
 		@x,@y=x,y
+		@xS=0;
 		@yS=0;
 		@detector.reset(x,y)
 	end;
 
-	def draw
-		img.draw(@x,@y,10);
-	end;	
+	#def draw
+	#	img.draw(@x,@y,10);
+	#end;	
 
 	def update
 		move;
@@ -49,10 +51,10 @@ class PlayerStanding<PlayerState
   #   		@yS=@yS 
   #   		@master.toState(self,"...");
   #   	end;
-  #    	if $g.button_down?(Gosu::KbSpace) || $g.button_down?(Gosu::KbUp)
+      	if $g.button_down?(Gosu::KbSpace) || $g.button_down?(Gosu::KbUp)
 		# 	@xS=@xS
   #   		@yS=@yS 
-  #   	  	@master.toState(self,"...")	
-  #   	end;	
+     	  	@master.toState(self,"jump")	
+     	end;	
     end;		
 end;
