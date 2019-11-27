@@ -16,7 +16,7 @@ class FallingCollider<ColliderCore
 			
 			factContact=factContacts.first;	                        	
 			if factContact
-				log "*** factContacts:"
+				log "*** #{self.class} factContacts:"
 				log factContacts.to_s
 				@master.x=factContact[:safeX];
 	            @master.y=factContact[:safeY];

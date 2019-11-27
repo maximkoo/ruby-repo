@@ -1,11 +1,4 @@
 { "compressionlevel":-1,
- "editorsettings":
-    {
-     "export":
-        {
-         "target":"..\/..\/..\/JsonTiledPlatformer4"
-        }
-    },
  "height":14,
  "infinite":false,
  "layers":[
@@ -233,7 +226,7 @@
                  "name":"KeyholeOrange",
                  "rotation":0,
                  "type":"Virtual",
-                 "visible":false,
+                 "visible":true,
                  "width":70,
                  "x":630,
                  "y":210
@@ -245,7 +238,7 @@
                  "name":"WallOrange",
                  "rotation":0,
                  "type":"Virtual",
-                 "visible":false,
+                 "visible":true,
                  "width":70,
                  "x":630,
                  "y":140
@@ -257,7 +250,7 @@
                  "name":"WallOrange",
                  "rotation":0,
                  "type":"Virtual",
-                 "visible":false,
+                 "visible":true,
                  "width":70,
                  "x":630,
                  "y":70

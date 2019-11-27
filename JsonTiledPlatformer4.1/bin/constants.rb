@@ -23,6 +23,8 @@ PRIZE="Prize"
 VIRTUAL="Virtual"
 START_POSITION="StartPosition"
 PLATFORM="Platform"
+BONUS="Bonus"
+CONTROL="Control"
 
 WALKING_SPEED=5
 JUMPING_SPEED=20

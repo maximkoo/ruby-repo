@@ -17,6 +17,13 @@ class MapObject<MovableGameObject
 
 	def disappear
 		@visible=false;
+		$map.layers.object.each do |object_layer|
+            object_layer.data["objects"].select {|c| c["name"]==@name}.each do |obj|
+            	# puts "#{obj['name']}"
+            	puts "#{obj['name']} disappears!"
+            	obj["visible"]=false;
+            end;
+        end;    	
 	end;
 
 	def appear

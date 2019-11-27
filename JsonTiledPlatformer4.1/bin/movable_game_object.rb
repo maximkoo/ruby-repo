@@ -1,6 +1,6 @@
 require './bin/Rectangle.rb'
 class MovableGameObject<Rectangle
-	attr_accessor :x,:y,:xS,:yS,:prevX,:prevY, :master,:objects, :type, :xx,:yy, :visible
+	attr_accessor :x,:y,:xS,:yS,:prevX,:prevY, :master,:objects, :type,:name, :xx,:yy, :visible
 	def initialize(master,x,y)			
 		@x,@y=x,y
 		@prevX,@prevY=x,y
@@ -19,10 +19,12 @@ class MovableGameObject<Rectangle
 	end;
 
 	def set_viewport
-		if (@x>$viewport_width/2)
-		 	$viewport_offset_x=@x-$viewport_width/2
-		else
+		if @x<=$viewport_width/2
 			$viewport_offset_x=0;
+		elsif ($map_width-@x)<=$viewport_width/2
+			$viewport_offset_x=$map_width-$viewport_width
+		else
+			$viewport_offset_x=@x-$viewport_width/2
 		end;
 	end;	
 

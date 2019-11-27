@@ -14,8 +14,8 @@ class ClimbingCollider<ColliderCore
 			factContacts=cons.select{|c| #c.stillClass="MapObject"|| 
 										(c.stillType==OBSTACLE || 
 				                        c.stillType==VIRTUAL) && c.contactType=='lower horizontal'};
-			puts "*** factContacts:"
-			puts factContacts.to_s
+			log "*** #{self.class} factContacts:"
+			log factContacts.to_s
 			factContact=factContacts.first;	                        	
 			if factContact
 				log "*** #{self.class} factContacts:"
@@ -30,7 +30,7 @@ class ClimbingCollider<ColliderCore
 				                        c.stillType==VIRTUAL) && c.contactType=='upper horizontal'};
 			factContact=factContacts.first;	                       	
 			if factContact			
-				log "*** factContacts:"
+				log "*** #{self.class} factContacts:"
 				log factContacts.to_s
 					
 				@master.x=factContact[:safeX];

@@ -10,7 +10,7 @@ require './bin/player_standing.rb'
 class Player<MovableGameObject
 	def initialize(master,x,y)
 		super(master,x,y)	
-		@type=PLAYER
+		@type=@name=PLAYER
 		set_viewport;	
 		# @walking=PlayerWalking.new(self,x,y);
 		# @falling=PlayerFalling.new(self,x,y);
