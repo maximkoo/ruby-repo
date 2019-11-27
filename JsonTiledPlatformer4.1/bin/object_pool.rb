@@ -23,7 +23,8 @@ class ObjectPool
                     mo.type=obj["type"]  
                     mo.xS=0
                     mo.yS=0;  
-                    mo.layer=object_layer.data["name"]     
+                    mo.layer=object_layer.data["name"]   
+                    mo.visible=obj["visible"]  
                     #puts mo.inspect
                 end;
         end;  

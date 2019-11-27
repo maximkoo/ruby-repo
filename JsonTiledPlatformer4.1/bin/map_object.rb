@@ -14,4 +14,16 @@ class MapObject<MovableGameObject
 		return unless [VIRTUAL, PLATFORM].include? @type 
 		#@qq.call(self)
 	end;
+
+	def disappear
+		@visible=false;
+	end;
+
+	def appear
+		@visible=true;
+	end;	
+
+	def visible?
+		@visible
+	end;		
 end;

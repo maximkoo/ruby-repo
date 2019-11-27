@@ -1,6 +1,6 @@
 require './bin/Rectangle.rb'
 class MovableGameObject<Rectangle
-	attr_accessor :x,:y,:xS,:yS,:prevX,:prevY, :master,:objects, :type, :xx,:yy
+	attr_accessor :x,:y,:xS,:yS,:prevX,:prevY, :master,:objects, :type, :xx,:yy, :visible
 	def initialize(master,x,y)			
 		@x,@y=x,y
 		@prevX,@prevY=x,y
@@ -41,4 +41,8 @@ class MovableGameObject<Rectangle
 	def draw
 		img.draw(@xx,@yy,10);
 	end;
+
+	def visible?
+		true;
+	end;	
 end;

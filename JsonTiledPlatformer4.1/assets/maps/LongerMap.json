@@ -94,7 +94,7 @@
                  "y":210
                 }, 
                 {
-                 "height":210,
+                 "height":70,
                  "id":40,
                  "name":"Crates2",
                  "rotation":0,
@@ -102,7 +102,7 @@
                  "visible":true,
                  "width":210,
                  "x":700,
-                 "y":630
+                 "y":770
                 }, 
                 {
                  "height":140,
@@ -153,7 +153,7 @@
                  "id":46,
                  "name":"Ground8",
                  "rotation":0,
-                 "type":"",
+                 "type":"Obstacle",
                  "visible":true,
                  "width":210,
                  "x":1190,
@@ -220,7 +220,7 @@
                  "id":65,
                  "name":"KeyOrange",
                  "rotation":0,
-                 "type":"Virtual",
+                 "type":"Bonus",
                  "visible":true,
                  "width":70,
                  "x":70,
@@ -233,7 +233,7 @@
                  "name":"KeyholeOrange",
                  "rotation":0,
                  "type":"Virtual",
-                 "visible":true,
+                 "visible":false,
                  "width":70,
                  "x":630,
                  "y":210
@@ -245,7 +245,7 @@
                  "name":"WallOrange",
                  "rotation":0,
                  "type":"Virtual",
-                 "visible":true,
+                 "visible":false,
                  "width":70,
                  "x":630,
                  "y":140
@@ -257,7 +257,7 @@
                  "name":"WallOrange",
                  "rotation":0,
                  "type":"Virtual",
-                 "visible":true,
+                 "visible":false,
                  "width":70,
                  "x":630,
                  "y":70
@@ -268,7 +268,7 @@
                  "id":69,
                  "name":"KeyGreen",
                  "rotation":0,
-                 "type":"Virtual",
+                 "type":"Bonus",
                  "visible":true,
                  "width":70,
                  "x":770,

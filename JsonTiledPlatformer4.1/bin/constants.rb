@@ -1,4 +1,4 @@
-MAP_FILE = File.join(File.dirname($0), 'assets','maps','LongerMap2.json');
+MAP_FILE = File.join(File.dirname($0), 'assets','maps','LongerMap.json');
 #MAP_FILE = File.join(File.dirname(__FILE__), 'TinyMap.json');
 PLAYER_BLUE_WALK_RIGHT_FILE=File.join(File.dirname($0), 	'assets','images','player','player_blue_walk_right.png');
 PLAYER_GREEN_WALK_RIGHT_FILE=File.join(File.dirname($0), 	'assets','images','player','player_green_walk_right.png');
