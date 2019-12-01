@@ -47,6 +47,10 @@ class Layer
 		@width,@height=data["width"],data["height"]
 		master<<self;
 	end;
+
+	def draw
+
+	end;	
 end;	
 
 class TileLayer<Layer
@@ -54,13 +58,21 @@ class TileLayer<Layer
 		super(master,data)
 		@data=data["data"]
 	end;	
+
+	def draw
+
+	end;	
 end;
 
 class ObjectLayer<Layer
 	def initialize(master,data)
 		super(master,data)
 		@objects=data["objects"]
-	end;	
+	end;
+
+	def draw
+
+	end;   	
 end;
 
 class TiledObject

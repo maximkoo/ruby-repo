@@ -13,7 +13,7 @@ class PlayerClimbing<PlayerState
 	end;
 
 	def enter(x,y)
-		puts "Climbing!"
+		puts "--- Climbing! ---"
 		@x,@y=x,y
 		@yS=-CLIMBING_SPEED;
 		centerOnTileX(@x,@y)
@@ -47,7 +47,10 @@ class PlayerClimbing<PlayerState
 		move;
 		@collider.update;
 		@detector.update;
-		@face=="left" ? @face="right": @face="left" if @mileage==0
+		if @mileage==0
+			@face=="left" ? @face="right": @face="left" 
+			@mileage+=1;
+		end;	
 	end;	
 
 	def img
