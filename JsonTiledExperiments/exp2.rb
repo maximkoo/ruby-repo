@@ -34,6 +34,10 @@ class TiledMap
 			Tileset.new(@tilesets, tileset_data);
 		end;	
 	end;
+
+	def all_objects
+		#return all objects from all layers
+	end;	
 	
 end;
 
@@ -65,9 +69,10 @@ class TileLayer<Layer
 end;
 
 class ObjectLayer<Layer
+	attr_accessor :objects
 	def initialize(master,data)
 		super(master,data)
-		@objects=data["objects"]
+		#@objects=data["objects"]
 	end;
 
 	def draw
@@ -75,9 +80,21 @@ class ObjectLayer<Layer
 	end;   	
 end;
 
-class TiledObject
+class AbstractObject
+	attr_accessor :layer
+	def initialize(layer)
+		@layer=layer
+		@layer.objects<<self
+	end;
+end;	
+
+class EmptyObject<<AbstractObject
 
 end;	
+
+class TiledObject<<AbstractObject
+
+end;
 
 class Tileset
 	def initialize(master, data)
@@ -96,6 +113,16 @@ class Tileset
 	def getTileByLocalId(n)
 		@tiles[n]
 	end;	
+
+	def getTileByTilesetAndId
+
+	end;
+
+	def getTileByGid
+
+	end;	
 end;	
+
+
 
 tm=TiledMap.new(map)
