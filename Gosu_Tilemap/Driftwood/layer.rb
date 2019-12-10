@@ -2,12 +2,13 @@ class AbstractLayer
     def initialize(master, data)
         @master=master;
         #@id=data["id"]
-        @data=data["data"]
-        @name=data["name"]
-        @type=data["type"]
-        @visible=data["visible"]          
-        @x,@y=data["x"],data["y"]
-        @width,@height=data["width"],data["height"]
+        # @data=data["data"]
+        # @name=data["name"]
+        # @type=data["type"]
+        # @visible=data["visible"]          
+        # @x,@y=data["x"],data["y"]
+        # @width,@height=data["width"],data["height"]
+        Service.set_data_methods(self,data)
         master.layers<<self;
     end;    
 end;

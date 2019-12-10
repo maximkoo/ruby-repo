@@ -2,6 +2,7 @@ require './layer.rb'
 require './tileset.rb'
 require './objects.rb'
 require 'json'
+require './service.rb'
 
 OBJECTLAYER="objectgroup"
 TILELAYER="tilelayer"
