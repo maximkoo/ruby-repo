@@ -12,16 +12,20 @@ class AbstractObject
 end;
 
 class EmptyObject<AbstractObject
-	def initialize
+	def initialize(layer, data)
 		super(layer,data)
 	end;	
 end;
 
-class TiledObject<AbstractObject
-	def initialize
+class TileObject<AbstractObject
+	def initialize(layer, data)
 		super(layer,data)
 		@gid=data["gid"]
 	end;
+
+	def draw
+
+	end;	
 
 	def updateTile
 

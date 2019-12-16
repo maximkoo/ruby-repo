@@ -17,7 +17,7 @@ class TileLayer<AbstractLayer
     def initialize(master,data)
         super(master,data)
         @data=data["data"]
-        puts "Layer created"
+        puts "Tile layer created, #{data["name"]}"
         @iter=0
     end;    
 
@@ -39,10 +39,25 @@ class ObjectLayer<AbstractLayer
     attr_accessor :objects
     def initialize(master,data)
         super(master,data)
+        @data=data
         #@objects=data["objects"]
+        puts "Object layer created, #{@data["name"]}"
+        @objects=[]
+        read_objects
     end;
 
     def draw
 
+    end;
+
+    private
+    def read_objects
+        @data["objects"].each do |objdata|
+            if objdata["gid"] 
+                @objects<<TileObject.new(self,objdata)
+            else
+                @objects<<EmptyObject.new(self,objdata)
+            end;    
+        end; 
     end;  
 end; 
