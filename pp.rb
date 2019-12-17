@@ -6,8 +6,10 @@ class C1
 	end;	
 
 	attr_reader :q
+	attr_writer :q
 	def initialize
-		@q=200;
+		#@q=200;
+		self.q=200
 	end;
 
 	q=q+1

@@ -1,4 +1,11 @@
 { "compressionlevel":-1,
+ "editorsettings":
+    {
+     "export":
+        {
+         "target":"."
+        }
+    },
  "height":10,
  "infinite":false,
  "layers":[
@@ -58,6 +65,17 @@
                  "height":70,
                  "id":3,
                  "name":"Crate1",
+                 "properties":[
+                        {
+                         "name":"Script",
+                         "type":"string",
+                         "value":"script1"
+                        }, 
+                        {
+                         "name":"Tag",
+                         "type":"string",
+                         "value":""
+                        }],
                  "rotation":0,
                  "type":"Obstacle",
                  "visible":true,

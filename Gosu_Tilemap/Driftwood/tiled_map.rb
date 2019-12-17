@@ -6,12 +6,19 @@ require './service.rb'
 
 OBJECTLAYER="objectgroup"
 TILELAYER="tilelayer"
+SHOW_EMPTY_OBJECTS=true
 
 class TiledMap
 	attr_reader :height,:width, :layers, :tilesets 
 
-	def initialize(path_to_map)
-		json=JSON.parse(File.read(path_to_map))
+	def initialize(path_to_map,file_name)
+		begin
+			json=JSON.parse(File.read(File.join(path_to_map,file_name)))
+		rescue Errno::ENOENT
+			abort("The file does not exist!");
+		rescue JSON::ParserError
+			abort("The file is not well-formed!");
+		end;
 		puts "Can not process infinite maps" if json["infinite"]=="true"
 		@height=json["height"]
 		@width=json["width"]

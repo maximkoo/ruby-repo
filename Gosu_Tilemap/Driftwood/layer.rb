@@ -1,4 +1,5 @@
 class AbstractLayer
+    attr_reader :master
     def initialize(master, data)
         @master=master;
         #@id=data["id"]
@@ -47,7 +48,9 @@ class ObjectLayer<AbstractLayer
     end;
 
     def draw
-
+        @objects.each do |obj|
+            obj.draw;
+        end;
     end;
 
     private
