@@ -188,6 +188,6 @@ puts GosuGeom.point_in_view?(ps0,ps,10,60);
 
 puts "--------"
 p0=GosuGeom::Point.new(100,100);
-p1=GosuGeom::Point.new(90,90);
+p1=GosuGeom::Point.new(90,100  );
 pp=GosuGeom.intersection_box(p0,p1,500,500)
 puts pp.to_s
