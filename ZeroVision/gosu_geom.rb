@@ -127,11 +127,12 @@ class Point
 	end;	
 
 	def GosuGeom.angle_between?(ap,a1,a2)
-		if (a1-a2).abs>180
-		 	a1-=360 if a1>180
-		 	a2-=360 if a2>180
-		end;	
-		a1,a2=a2,a1 if a1>a2
+		#puts "1. ap=#{ap} a1=#{a1} a2=#{a2}"
+		ap+=360 if ap<0 		
+		a1=a1%360
+		a2=a2%360		
+		a2+=360 if a2<a1
+#		puts "2. ap=#{ap} a1=#{a1} a2=#{a2}"
 		return ap.between?(a1,a2)
 	end;
 
@@ -142,7 +143,15 @@ class Point
 	def GosuGeom.point_in_view?(p0, p1, a0, a1) # p0 - viewpoint, p1 - explored point, a0 - default direction, a1 - left right scope
 		#GosuGeom.angle_between?(Gosu.angle_point(p0,p1),a1,a2);
 		ap=GosuGeom.angle_point(p0,p1)
-		puts "Actual angle between the points is #{ap.round(3)}, initial direction is #{a0}, scope is #{a0-a1/2}...#{a0+a1/2}"
+		#puts "Actual angle between the points is #{ap.round(3)}, initial direction is #{a0}, scope is #{a0-a1/2}...#{a0+a1/2}"
+		GosuGeom.angle_between?(ap,a0-a1/2, a0+a1/2)
+	end;
+
+	def GosuGeom.point_in_view_xy?(x,y, p1, a0, a1) # p0 - viewpoint, p1 - explored point, a0 - default direction, a1 - left right scope
+		#GosuGeom.angle_between?(Gosu.angle_point(p0,p1),a1,a2);
+		ap=Gosu.angle(x,y,p1.x,p1.y)
+		ap-=360 if ap>180
+		# puts "Actual angle between the points is #{ap.round(3)}, initial direction is #{a0}, scope is #{a0-a1/2}...#{a0+a1/2}"
 		GosuGeom.angle_between?(ap,a0-a1/2, a0+a1/2)
 	end;	
 
