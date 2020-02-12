@@ -7,6 +7,8 @@ require './service.rb'
 OBJECTLAYER="objectgroup"
 TILELAYER="tilelayer"
 SHOW_EMPTY_OBJECTS=true
+SHOW_TILED_OBJECTS=true
+LARGE_FONT= Gosu::Font.new(height=20,options={name:"Courier New"})
 
 class TiledMap
 	attr_reader :height,:width, :layers, :tilesets 
@@ -39,10 +41,15 @@ class TiledMap
 		json["tilesets"].each do |tileset_data|
 			Tileset.new(self, tileset_data);
 		end;	
-	end;
+	end;	
 
 	def all_objects
 		#return all objects from all layers
+		@objs=[]
+		@layers.each do |layer|
+			@objs+=layer.objects if layer.class.name=="ObjectLayer"
+		end;
+		@objs
 	end;	
 
 	def getTilesetByGid(n)

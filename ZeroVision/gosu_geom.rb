@@ -59,6 +59,7 @@ class Point
 		ds2=dx3*dy1-dx1*dy3
 
 		return nil if sgn(ds1)==sgn(ds2)
+		rx=s1.p1.x+(s1.p2.x-s1.p1.x)*(ds1.fdiv(ds1.abs+ds2.abs).abs);
 
 		dx1=s2.p2.x-s2.p1.x
 		dx2=s1.p2.x-s2.p1.x
@@ -76,12 +77,10 @@ class Point
 		return s1.p2 if ds1==0 
 		return s1.p1 if ds2==0
 
-		rx=s1.p1.x+(s1.p2.x-s1.p1.x)*(ds2.fdiv(ds1.abs+ds2.abs).abs);
-
 		return s2.last if ds1==0 
 		return s2.first if ds2==0
 
-		ry=s2.p1.y+(s2.p2.y-s2.p1.y)*(ds2.fdiv(ds1.abs+ds2.abs).abs);
+		ry=s2.p1.y+(s2.p2.y-s2.p1.y)*(ds1.fdiv(ds1.abs+ds2.abs).abs);
 
 		return Point.new(rx,ry)
 	end;
@@ -162,8 +161,8 @@ end;
 
 p1=GosuGeom::Point.new(50,100);
 p2=GosuGeom::Point.new(150,100);
-p3=GosuGeom::Point.new(50,100);
-p4=GosuGeom::Point.new(50,150);
+p3=GosuGeom::Point.new(250,250);
+p4=GosuGeom::Point.new(50,100);
 
 s1=GosuGeom::Segment.new(p1,p2)
 s2=GosuGeom::Segment.new(p3,p4)
@@ -200,3 +199,8 @@ p0=GosuGeom::Point.new(100,100);
 p1=GosuGeom::Point.new(90,100  );
 pp=GosuGeom.intersection_box(p0,p1,500,500)
 puts pp.to_s
+
+puts "bbbb"
+bar=GosuGeom::Segment.new(GosuGeom::Point.new(150,100),GosuGeom::Point.new(100,100))
+line=GosuGeom::Segment.new(GosuGeom::Point.new(250,250),GosuGeom::Point.new(100,50))
+puts GosuGeom.intersection(bar,line)

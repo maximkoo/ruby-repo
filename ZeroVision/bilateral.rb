@@ -1,15 +1,17 @@
 require 'gosu'
 require './gosu_geom.rb'
-FRAME_DELAY=16
+FRAME_DELAY=100             
 
 
 class GameWindow<Gosu::Window
 	attr_accessor :bars
 	def initialize
 		super(500,500)
-		@looker=Looker.new(self)
+		
 		@bars=[]
 		create_bars
+
+		@looker=Looker.new(self)
 	end;
 
 	def needs_cursor?
@@ -63,6 +65,14 @@ class Bar
 	end;	
 end;	
 
+class BarLine<GosuGeom::Segment
+	attr_accessor :bar
+	def initialize(p1,p2,bar)
+		@bar=bar;
+		super(p1,p2)
+	end;	
+end;	
+
 class Looker
 	attr_accessor :x,:y,:ang,:speed, :angspeed, :pv
 	def initialize(master)
@@ -74,7 +84,8 @@ class Looker
 		@pv=[]
 		@pv<<GosuGeom::Point.new(-250,-250)
 		@pv<<GosuGeom::Point.new(750,-250)
-		@ccc=0
+		@lines=[]	
+		
 	end;
 
 	def rotate(ang0)
@@ -101,7 +112,43 @@ class Looker
 	def update
 		keyControl
 		check_bars
+		create_lines
+		cross_lines
 	end;
+
+	def create_lines
+		@lines=[]
+		@master.bars.select{|s| s.visible}.each do |bar|
+			@lines<<BarLine.new(GosuGeom::Point.new(@x,@y),GosuGeom::Point.new(bar.p1.x,bar.p1.y),bar);
+			@lines<<BarLine.new(GosuGeom::Point.new(@x,@y),GosuGeom::Point.new(bar.p2.x,bar.p2.y),bar);
+		end;	
+	end;	
+
+	def cross_lines
+		@crossbars=[]
+		puts "Total bars #{@master.bars.select{|s| s.visible}.count}"
+		@master.bars.select{|s| s.visible}.each do |bar1|
+			@lines.each do |line|
+				p=GosuGeom.intersection(bar1,line);
+				if !p.nil?  && bar1.object_id!=line.bar.object_id
+					puts "Bar: #{bar1.p1.x},#{bar1.p1.y} - #{bar1.p2.x},#{bar1.p2.y}, object_id=#{bar1.object_id}, line: #{line.p1.x},#{line.p1.y} - #{line.p2.x},#{line.p2.y}, line.bar=#{line.bar.object_id}"
+					puts p
+					@crossbars<<bar1
+				end;	
+			end;	
+		end;
+		if $g.button_down?(Gosu::KbSpace)
+    		puts "@crossbars.count=#{@crossbars.count}"
+    		puts "Unique #{@crossbars.uniq.count}"
+    	end;
+	end;	
+
+	def draw_lines
+		@master.bars.select{|s| s.visible}.each do |bar|
+			Gosu.draw_line(@x,@y,Gosu::Color::RED, bar.p1.x, bar.p1.y, Gosu::Color::RED,10)
+			Gosu.draw_line(@x,@y,Gosu::Color::RED, bar.p2.x, bar.p2.y, Gosu::Color::RED,10)
+		end;	
+	end;	
 
 	def check_bars
 		@master.bars.each do |p|
@@ -126,6 +173,7 @@ class Looker
     	elsif $g.button_down?(Gosu::KbDown)
     		move(-@speed, @ang)	
     	end
+    		
     	#puts "ccc=#{@ccc}"
 	end;
 		
@@ -133,6 +181,7 @@ class Looker
 		#Gosu.draw_triangle(@x,@y,Gosu::Color::WHITE,pv[0].x,pv[0].y,Gosu::Color::WHITE,pv[1].x,pv[1].y,Gosu::Color::WHITE,10)
 		Gosu.draw_line(@x,@y,Gosu::Color::WHITE,@pv[0].x,@pv[0].y,Gosu::Color::WHITE,10)
 		Gosu.draw_line(@x,@y,Gosu::Color::WHITE,@pv[1].x,@pv[1].y,Gosu::Color::WHITE,10)
+		draw_lines
 	end;	
 end;	
 
