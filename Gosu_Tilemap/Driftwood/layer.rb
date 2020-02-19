@@ -45,6 +45,7 @@ class ObjectLayer<AbstractLayer
         puts "Object layer created, #{@data["name"]}"
         @objects=[]
         read_objects
+            #binding.pry
     end;
 
     def draw

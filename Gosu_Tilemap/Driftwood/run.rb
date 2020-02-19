@@ -2,6 +2,7 @@ require "gosu"
 require 'pathname'
 require "./tiled_map.rb"
 require './routine_holder.rb'
+require 'pry'
 
 FRAME_DELAY=16
 
