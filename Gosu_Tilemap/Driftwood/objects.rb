@@ -62,7 +62,7 @@ class EmptyObject<AbstractObject
 			Gosu.draw_line(@x+@width,@y,Gosu::Color::RED,@x+@width,@y+@height,Gosu::Color::RED,20)
 			Gosu.draw_line(@x+@width,@y+@height,Gosu::Color::RED,@x,@y+height,Gosu::Color::RED,20)
 			Gosu.draw_line(@x,@y+height,Gosu::Color::RED,@x,@y,Gosu::Color::RED,20)
-			LARGE_FONT.draw(@name,@x,@y,20,1,1,Gosu::Color::RED)
+			LARGE_FONT.draw_text(@name,@x,@y,20,1,1,Gosu::Color::RED)
 		end;
 	end;	
 end;
@@ -84,12 +84,12 @@ class TileObject<AbstractObject
 			Gosu.draw_line(@x+@width,@y,Gosu::Color::RED,@x+@width,@y-@height,Gosu::Color::RED,20)
 			Gosu.draw_line(@x+@width,@y-@height,Gosu::Color::RED,@x,@y-height,Gosu::Color::RED,20)
 			Gosu.draw_line(@x,@y-height,Gosu::Color::RED,@x,@y,Gosu::Color::RED,20)
-			LARGE_FONT.draw(@name,@x,@y,20,1,1,Gosu::Color::RED)
+			LARGE_FONT.draw_text(@name,@x,@y-@height,20,1,1,Gosu::Color::RED)
 		end;
 	end;	
 
-	def updateTile
-
+	def updateTile(new_gid)
+		@gid=new_gid;
 	end;	
 end;
 
