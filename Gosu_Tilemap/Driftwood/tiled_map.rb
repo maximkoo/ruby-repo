@@ -1,6 +1,7 @@
 require './layer.rb'
 require './tileset.rb'
 require './objects.rb'
+require './animation.rb'
 require 'json'
 require './service.rb'
 
@@ -41,15 +42,26 @@ class TiledMap
 		json["tilesets"].each do |tileset_data|
 			Tileset.new(self, tileset_data);
 		end;	
+
+		@animations=[]
+		@tilesets.each do |t|
+			@animations+=t.animations if t.animations
+		end;	
+		puts "Tiled Map reporting: animations count is #{@animations.size}"		
+		@animations
 	end;	
 
 	def all_objects
 		#return all objects from all layers
-		@objs=[]
+		objs=[]
 		@layers.each do |layer|
-			@objs+=layer.objects if layer.class.name=="ObjectLayer"
+			objs+=layer.objects if layer.class.name=="ObjectLayer"
 		end;
-		@objs
+		objs
+	end;	
+
+	def all_animations
+		@animations
 	end;	
 
 	def getTilesetByGid(n)
@@ -60,6 +72,11 @@ class TiledMap
 		tileset=getTilesetByGid(gid)
 		#puts "GID=#{gid}"
 		local_id=gid-tileset.firstgid;
+		if @animations.any?{|ani| ani.gid==gid}
+
+			local_id=@animations.select{|ani| ani.gid==gid}.first.current_gid
+			puts "got it, local_id=#{local_id}"
+		end;	
 		tileset.getTileByLocalId(local_id)
 	end;
 
