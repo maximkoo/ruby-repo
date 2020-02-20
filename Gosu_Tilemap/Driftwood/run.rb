@@ -18,8 +18,6 @@ class G1<Gosu::Window
 			#binding.pry
 		#puts "Objects are:"	
 		#puts @objects
-		puts 2147484061;
-		puts 2**1
 	end;
 
 	def draw
