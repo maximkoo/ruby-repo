@@ -65,18 +65,34 @@ class TiledMap
 	end;	
 
 	def getTilesetByGid(n)
-		@tilesets.select{|t| n.between?(t.firstgid, t.lastgid)}.first
+		nn=n-2**31 if n>1000000
+		@tilesets.select{|t| (nn||=n).between?(t.firstgid, t.lastgid)}.first
 	end;	
 
 	def getTileByGid(gid)
 		tileset=getTilesetByGid(gid)
 		#puts "GID=#{gid}"
-		local_id=gid-tileset.firstgid;
-		if @animations.any?{|ani| ani.gid==gid}
-
-			local_id=@animations.select{|ani| ani.gid==gid}.first.current_gid
-			puts "got it, local_id=#{local_id}"
-		end;	
+		
+		# if @animations.any?{|ani| ani.gid==gid}
+		# 	a=@animations.select{|ani| ani.gid==gid}.first
+		# 	local_id=a.current_gid+a.master.firstgid
+		# 	puts "got it, local_id=#{local_id}"
+		# else 
+		# 	local_id=gid-tileset.firstgid;	
+		# end;	
+		local_id=nil;
+		@animations.select{|ani| ani.big_gid==gid}.each do |a|
+			#puts "a.big_gid=#{a.big_gid}"
+			#puts "gid=#{gid}"
+			local_id=a.current_gid#+a.master.firstgid
+			#puts "a.current_gid=#{a.current_gid}"
+			#puts "a.master.firstgid=#{a.master.firstgid}"
+			#puts "local_id(1)=#{local_id}"
+			break
+		end;
+		local_id=gid-tileset.firstgid if local_id.nil?;	
+		#puts "local_id(2)=#{local_id}"
+		local_id-=2**31 if local_id>1000000
 		tileset.getTileByLocalId(local_id)
 	end;
 

@@ -78,7 +78,15 @@ class TileObject<AbstractObject
 
 	def draw
 		#puts "Drawing object #{@name}, x=#{@x}, y=#{@y}"
-		layer.master.getTileByGid(@gid).draw(@x,@y-@height,20,1,1);
+		if @gid>100000
+			layer.master.getTileByGid(@gid).draw_as_quad(@x+@width, @y-@height,Gosu::Color::WHITE,  
+				                                         @x,@y-@height, Gosu::Color::WHITE, 
+				                                         @x,@y, Gosu::Color::WHITE, 
+				                                         @x+width, @y,Gosu::Color::WHITE,  
+				                                         20);
+		else	
+			layer.master.getTileByGid(@gid).draw(@x,@y-@height,20,1,1);
+		end;
 
 		if SHOW_TILED_OBJECTS
 			Gosu.draw_line(@x,@y,Gosu::Color::RED,@x+@width,@y,Gosu::Color::RED,20)

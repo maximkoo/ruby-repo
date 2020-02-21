@@ -24,7 +24,7 @@ class Tileset
 		master.tilesets<<self;
 	end;
 
-	def getTileByLocalId(id)
+	def getTileByLocalId(id)		
 		@tiles[id]
 	end;	
 
