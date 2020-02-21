@@ -73,7 +73,7 @@ class TileObject<AbstractObject
 		super(layer,data)
 		@gid=data["gid"]
 		@sx,@sy=0,0
-			binding.pry
+			#binding.pry
 	end;
 
 	def draw
