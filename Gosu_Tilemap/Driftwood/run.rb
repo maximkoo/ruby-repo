@@ -2,6 +2,7 @@ require "gosu"
 require 'pathname'
 require "./tiled_map.rb"
 require './routine_holder.rb'
+require './service.rb'
 require 'pry'
 
 FRAME_DELAY=16
@@ -18,6 +19,9 @@ class G1<Gosu::Window
 			#binding.pry
 		#puts "Objects are:"	
 		#puts @objects
+		# puts "---"
+		# puts 2147484061-V_231
+		# puts '---'
 	end;
 
 	def draw

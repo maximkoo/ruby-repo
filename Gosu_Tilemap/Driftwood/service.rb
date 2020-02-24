@@ -2,6 +2,9 @@
 LOG_LEVEL=:all
 LOG_LEVELS={:all=>0, :debug=>1, :severe=>2, :force=>3, :none=>4}
 
+V_230=2**30
+V_231=2**31
+
 class Service
 	def Service.set_data_methods(obj,data)
 		data.each do |k,v|

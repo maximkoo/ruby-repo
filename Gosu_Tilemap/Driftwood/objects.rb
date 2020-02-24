@@ -13,7 +13,9 @@ class AbstractObject
 		# @rotation,@type,@visible=data["rotation"],data["type"],data["visible"]
 		Service.set_data_methods(self,data);
 		#puts self.methods if data["id"]==4
-		puts self.id
+
+		#puts self.methods if data["id"]==9
+
 		if data["properties"] 
 			puts 'Properties are not empty for the object with id=%s'%self.id
 			data["properties"].each do |hsh|
@@ -72,13 +74,32 @@ class TileObject<AbstractObject
 	def initialize(layer, data)
 		super(layer,data)
 		@gid=data["gid"]
+
+		@dirty_gid=@gid
+		@flip_horizontal=false;
+		@flip_vertical=false;			
+
+		if @gid<V_230
+			@gid=@gid			
+		elsif @gid<V_231
+			@gid-=V_230
+			@flip_vertical=true
+		elsif @gid<V_230+V_231
+			@gid=@gid-V_231
+			@flip_horizontal=true
+		else
+			@gid=@gid-V_230-V_231
+			@flip_horizontal=true
+			@flip_vertical=true
+		end;	
+
 		@sx,@sy=0,0
 			#binding.pry
 	end;
 
 	def draw
 		#puts "Drawing object #{@name}, x=#{@x}, y=#{@y}"
-		if @gid>100000
+		if @flip_horizontal
 			layer.master.getTileByGid(@gid).draw_as_quad(@x+@width, @y-@height,Gosu::Color::WHITE,  
 				                                         @x,@y-@height, Gosu::Color::WHITE, 
 				                                         @x,@y, Gosu::Color::WHITE, 
