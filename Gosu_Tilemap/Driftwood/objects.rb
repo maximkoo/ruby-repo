@@ -99,15 +99,26 @@ class TileObject<AbstractObject
 
 	def draw
 		#puts "Drawing object #{@name}, x=#{@x}, y=#{@y}"
-		if @flip_horizontal
-			layer.master.getTileByGid(@gid).draw_as_quad(@x+@width, @y-@height,Gosu::Color::WHITE,  
-				                                         @x,@y-@height, Gosu::Color::WHITE, 
-				                                         @x,@y, Gosu::Color::WHITE, 
-				                                         @x+width, @y,Gosu::Color::WHITE,  
-				                                         20);
-		else	
-			layer.master.getTileByGid(@gid).draw(@x,@y-@height,20,1,1);
-		end;
+		xx1=@flip_horizontal ? @x+@width : @x
+		xx2=@flip_horizontal ? @x : @x+@width
+		yy1=@flip_vertical ? @y : @y-@height
+		yy2=@flip_vertical ? @y-@height : @y
+
+		layer.master.getTileByGid(@gid).draw_as_quad(xx1,yy1,Gosu::Color::WHITE, 
+													 xx2,yy1,Gosu::Color::WHITE,
+													 xx2,yy2,Gosu::Color::WHITE,
+													 xx1,yy2,Gosu::Color::WHITE,
+													 20);
+
+		# if @flip_horizontal
+		# 	layer.master.getTileByGid(@gid).draw_as_quad(@x+@width, @y-@height,Gosu::Color::WHITE,  
+		# 		                                         @x,@y-@height, Gosu::Color::WHITE, 
+		# 		                                         @x,@y, Gosu::Color::WHITE, 
+		# 		                                         @x+width, @y,Gosu::Color::WHITE,  
+		# 		                                         20);
+		# else	
+		# 	layer.master.getTileByGid(@gid).draw(@x,@y-@height,20,1,1);
+		# end;
 
 		if SHOW_TILED_OBJECTS
 			Gosu.draw_line(@x,@y,Gosu::Color::RED,@x+@width,@y,Gosu::Color::RED,20)
