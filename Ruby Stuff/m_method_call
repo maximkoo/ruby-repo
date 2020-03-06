@@ -1,0 +1,11 @@
+class C1
+	def m1
+		puts "This is m1"
+	end;
+end;	
+
+c1=C1.new;
+a="m1"
+
+
+
