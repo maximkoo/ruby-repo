@@ -160,6 +160,33 @@
          "spacing":0,
          "tilecount":168,
          "tileheight":70,
+         "tiles":[
+                {
+                 "id":65,
+                 "objectgroup":
+                    {
+                     "draworder":"index",
+                     "id":2,
+                     "name":"",
+                     "objects":[
+                            {
+                             "height":30,
+                             "id":1,
+                             "name":"Block65",
+                             "rotation":0,
+                             "type":"TileObstacle",
+                             "visible":true,
+                             "width":30,
+                             "x":20,
+                             "y":20
+                            }],
+                     "opacity":1,
+                     "type":"objectgroup",
+                     "visible":true,
+                     "x":0,
+                     "y":0
+                    }
+                }],
          "tilewidth":70
         }, 
         {
