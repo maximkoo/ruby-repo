@@ -1,0 +1,1 @@
+yield if block_given?
