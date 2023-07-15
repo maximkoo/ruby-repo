@@ -1,1 +1,0 @@
-ruby.exe game_window.rb

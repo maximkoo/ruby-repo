@@ -1,0 +1,5 @@
+a=[1,2,3]
+a.each do |i|
+	a<<4 if i==2
+	puts i
+end;
