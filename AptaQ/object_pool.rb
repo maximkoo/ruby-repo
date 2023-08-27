@@ -3,9 +3,11 @@ class ObjectPool
 attr_accessor :objects
 def initialize
   @objects=[]
-    (0..9).each do |i|
-      @objects<<Bird.new(self, rand(600),rand(600),1,rand(361))
-  end 
+  (0..19).each do |i|
+    @objects<<Bird.new(self, rand(600),rand(600),1,rand(361))  
+  end
+  #@objects<<Bird.new(self,20,100,0,90)
+  #@objects<<Bird.new(self,580,100,0,270) 
   @c=@objects.size
 end
 
