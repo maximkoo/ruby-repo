@@ -5,6 +5,7 @@ BIRD_LENGTH=15
 BIRD_WIDTH=5
 VELOCITY=1
 VISION=50
+SCALE=30
 class GameWindow<Gosu::Window
   SCREEN_WIDTH=Gosu.screen_width;
   SCREEN_HEIGHT=Gosu.screen_height;
