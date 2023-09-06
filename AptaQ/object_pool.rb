@@ -3,13 +3,14 @@ require './obstacle.rb'
 require './bird_vector.rb'
 class ObjectPool
 attr_accessor :objects, :vector
+attr_accessor :birds
 def initialize
   @objects=[]
-  # (0..19).each do |i|
-    # @objects<<Bird.new(self, rand(600),rand(600),1,rand(361))  
-  # end
-   objects<<Bird.new(self,20,100,1,90)
-   objects<<Bird.new(self,40,100,1,90)
+  (0..19).each do |i|
+    @objects<<Bird.new(self, rand(600),rand(600),1,rand(361))  
+  end
+   #objects<<Bird.new(self,40,100,1,90)
+   #objects<<Bird.new(self,20,100,1,100)
    #objects<<Bird.new(self,60,100,1,90)
   
   #objects<<Bird.new(self,100,330,1,0)
@@ -26,10 +27,23 @@ def initialize
   @c=@objects.size
   #
   @vector=BirdVector.new
+  @birds=[]
 end
 
 def update
-  @objects.map!(&:update)
+  #@objects.map!(&:update)
+  #
+  @birds=@objects.select{|obj| obj.class.name=='Bird'}
+  @birds.map(&:update110) #self-movement
+  @birds.map(&:update120) #collect neighbours
+  
+  @birds.map(&:update130) #process obstacles
+  @birds.map(&:update140) #calculate average velocity vector
+  
+  @birds.map(&:update160) #avoid collision
+  @birds.map(&:update150) #steer towards average velocity
+  
+  
 end
 
 def draw

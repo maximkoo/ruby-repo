@@ -27,23 +27,24 @@ class Bird
     Gosu::draw_quad(x-s/2, y-s/2, c, x+s/2, y-s/2, c, x-s/2, y+s/2, c, x+s/2, y+s/2, c, z);
   end
   
-  
-  def update    
+  def update110
+    # self-movement
     @x=@x+v*Math::cos(@angle.degrees_to_radians)
     @y=@y+v*Math::sin(@angle.degrees_to_radians)
-    
+    #screen-wrapping
     @x=0 if @x>$window_width
     @y=0 if @y>$window_height
     @x=$window_width if @x<0
     @y=$window_height if @y<0
-    #
-    #@xi,@yi=@x,@y
-    #    
+  end
+  
+  def update120
+    #collect neighbours and process obstacles     
     @neighbours.clear
     @color=Gosu::Color::WHITE
     @master.objects.each do |obj|
+    #@master.birds.each do |obj|
       dst=distance(self, obj)
-      #sdst=shortest_distance(self, obj)
       sdsti=shortest_distance(self, obj)
       if obj!=self && obj.class.name=="Bird"
         if sdsti[0]<VISION
@@ -51,7 +52,92 @@ class Bird
            @neighbours<<{:obj=>obj,:dst=>dst, :sdst=>sdsti[0], :xi=>sdsti[1], :yi=>sdsti[2]}
         end
       end
-      
+    end; #loop  
+  end 
+  
+  def update130
+    #process obstacles 
+    @master.objects.each do |obj|
+      if obj.class.name=='Obstacle'
+        sdsti=shortest_distance(self, obj)
+        if sdsti[0]<VISION
+          #@color=obj.color
+          c=@master.vector.cw(self, obj)
+          #puts c
+          if sign(c)>0 #-- Obstacle to the left
+            steer_cw(2)
+          #elsif sign(c)<0
+          else
+            steer_ccw(2)
+          end    
+        end  
+      end    
+    end #loop
+  end
+  
+  def update140
+    neighbours_and_me=[]
+    @neighbours.each {|x| neighbours_and_me<<x}
+    neighbours_and_me<<{:obj=>self,:dst=>0, :sdst=>0, :xi=>@x, :yi=>@y}
+           
+    @avgV=@master.vector.sum_neighbours(neighbours_and_me)
+    @avgP=@master.vector.mid_neighbours(neighbours_and_me);
+    @avgA=Gosu.angle(@avgP[:x],@avgP[:y], @avgP[:x]+@avgV[:dx],@avgP[:y]+@avgV[:dy])
+  end
+  
+  def update150
+    if @neighbours.size>0
+      # if Gosu.angle_diff(@angle, @avgA)>0
+        # steer_cw(0.25)
+      # elsif Gosu.angle_diff(@angle, @avgA)<0
+        # steer_ccw(0.25)  
+      # end
+      steer_cw(1*sign(Gosu.angle_diff(@angle, @avgA)))
+    end
+  end
+  
+  def update160
+    #avoid collision
+    @neighbours.each do |obj|
+      if obj[:sdst]<VISION 
+        aa=10.fdiv(obj[:sdst])
+        if @master.vector.cw(self,obj[:obj])<0 
+          #puts "is LEFT, aa=#{aa}"
+          steer_ccw(aa)
+        elsif @master.vector.cw(self,obj[:obj])>0
+          #puts "is RIGHT, aa=#{aa}"
+          steer_cw(aa) 
+        end
+      end
+    end
+  end
+  
+  def update    
+    # self-movement
+    @x=@x+v*Math::cos(@angle.degrees_to_radians)
+    @y=@y+v*Math::sin(@angle.degrees_to_radians)
+    #screen-wrapping
+    @x=0 if @x>$window_width
+    @y=0 if @y>$window_height
+    @x=$window_width if @x<0
+    @y=$window_height if @y<0
+    
+    #collect neighbours and process obstacles     
+    @neighbours.clear
+    @color=Gosu::Color::WHITE
+    
+    #collect neighbours
+    @master.objects.each do |obj|
+      dst=distance(self, obj)
+      sdsti=shortest_distance(self, obj)
+      if obj!=self && obj.class.name=="Bird"
+        if sdsti[0]<VISION
+           @color=Gosu::Color::RED    
+           @neighbours<<{:obj=>obj,:dst=>dst, :sdst=>sdsti[0], :xi=>sdsti[1], :yi=>sdsti[2]}
+        end
+      end
+     
+     #process obstacles 
       if obj.class.name=='Obstacle'
         if sdsti[0]<VISION
           #@color=obj.color
@@ -66,20 +152,14 @@ class Bird
       end    
     end #loop
     
+    #steer towards average velocity vector
     neighbours_and_me=[]
     @neighbours.each {|x| neighbours_and_me<<x}
     neighbours_and_me<<{:obj=>self,:dst=>0, :sdst=>0, :xi=>@x, :yi=>@y}
            
     @avgV=@master.vector.sum_neighbours(neighbours_and_me)
-    @avgP=@master.vector.mid_neighbours(neighbours_and_me);    
-    #puts "size=#{@neighbours.size}"
-    #puts 'avgP='
-    #puts avgP
-    #draw_square(@avgP[:x],@avgP[:y],2,Gosu::Color::YELLOW,1)
+    @avgP=@master.vector.mid_neighbours(neighbours_and_me);
     @avgA=Gosu.angle(@avgP[:x],@avgP[:y], @avgP[:x]+@avgV[:dx],@avgP[:y]+@avgV[:dy])
-    #puts avgA
-    #Gosu::draw_line(avgP[:x],avgP[:y], Gosu::Color::YELLOW, avgP[:x]+SCALE*Math.cos(avgA.degrees_to_radians),avgP[:y]+SCALE*Math.sin(avgA.degrees_to_radians),Gosu::Color::YELLOW,1)
-    #
     if @neighbours.size>0
       if Gosu.angle_diff(@angle, @avgA)>0
         steer_cw(0.25)
@@ -89,7 +169,7 @@ class Bird
       end
     end
     
-    #puts "size=#{@neighbours.size}"
+    #avoid collision
     @neighbours.each do |obj|
       if obj[:sdst]<VISION 
         aa=2.fdiv(obj[:sdst])
@@ -146,14 +226,14 @@ class Bird
     
     Gosu.draw_triangle(x1, y1, @color, x2, y2, @color, x3, y3, @color, z=0);
     
-    @neighbours.each do |obj|            
-      Gosu::draw_line(self.x, self.y, @color, obj[:xi], obj[:yi], @color, 0) if obj!=self
-    end
+    # @neighbours.each do |obj|            
+      # Gosu::draw_line(self.x, self.y, @color, obj[:xi], obj[:yi], @color, 0) if obj!=self
+    # end
         
     #puts "This is Bird. @neighbours.size=#{@neighbours.size}"
     
-    draw_square(@avgP[:x],@avgP[:y],2,Gosu::Color::YELLOW,1)
-    Gosu::draw_line(@avgP[:x],@avgP[:y], Gosu::Color::YELLOW, @avgP[:x]+SCALE*Math.cos(@avgA.degrees_to_radians),@avgP[:y]+SCALE*Math.sin(@avgA.degrees_to_radians),Gosu::Color::YELLOW,1)
+    ##draw_square(@avgP[:x],@avgP[:y],2,Gosu::Color::YELLOW,1)
+    ##Gosu::draw_line(@avgP[:x],@avgP[:y], Gosu::Color::YELLOW, @avgP[:x]+SCALE*Math.cos(@avgA.degrees_to_radians),@avgP[:y]+SCALE*Math.sin(@avgA.degrees_to_radians),Gosu::Color::YELLOW,1)
     #Gosu::draw_line(self.x, self.y, Gosu::Color::CYAN, @x+Gosu.offset_x(@angle+90, @v)*SCALE,@y+Gosu.offset_y(@angle+90, @v)*SCALE,Gosu::Color::CYAN, z=0)
     #Gosu::draw_line(self.x, self.y, Gosu::Color::GRAY, @x+Gosu.offset_x(@angle+90, @v)*SCALE,@y,Gosu::Color::GRAY, z=0)     
     #Gosu::draw_line(self.x, self.y, Gosu::Color::GRAY, @x,@y+Gosu.offset_y(@angle+90, @v)*SCALE,Gosu::Color::GRAY, z=0)

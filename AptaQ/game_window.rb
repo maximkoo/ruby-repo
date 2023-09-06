@@ -36,8 +36,8 @@ class GameWindow<Gosu::Window
     def update
       now=Gosu.milliseconds
       return if (now-@last_update||=now) < FRAME_DELAY 
-      @objectPool.objects.map(&:update);
-
+      #@objectPool.objects.map(&:update);
+      @objectPool.update;
       @objectPool.objects.reject!{|a| a.expired==true}  
       @last_update=now;
     end;
