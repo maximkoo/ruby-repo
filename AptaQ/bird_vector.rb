@@ -7,16 +7,9 @@ def sum2(obj1, obj2)
   {dx:dx, dy:dy}  
 end
 
-def sum_neighbours(args)
-  # args.each do |obj|
-#           
-  # end
-  #puts "args"
-  puts "This is sum_neighbours. Size=#{args.size}"
-  if args.size!=0
-    #puts args[0]
-    #puts args[0][:obj].angle
-    #puts args[0][:obj].v
+def sum_neighbours(args)  
+  #puts "This is sum_neighbours. Size=#{args.size}"
+  if args.size!=0   
     dx=args.inject(0){|sum, obj| sum+Gosu.offset_x(obj[:obj].angle, obj[:obj].v)}
     dy=args.inject(0){|sum, obj| sum+Gosu.offset_y(obj[:obj].angle, obj[:obj].v)}
     {dx:dx.round(5), dy:dy.round(5)}
@@ -24,9 +17,8 @@ def sum_neighbours(args)
 end
 
 def mid_neighbours(args)
-  puts "This is mid_neighbours. Size=#{args.size}"
-  if args.size!=0
-    #puts args[0][:xi], args[0][:yi]    
+  #puts "This is mid_neighbours. Size=#{args.size}"
+  if args.size!=0       
     mx=args.inject(0){|sum, obj| sum+obj[:xi]}.fdiv(args.size)
     my=args.inject(0){|sum, obj| sum+obj[:yi]}.fdiv(args.size)
     {x:mx, y:my}
