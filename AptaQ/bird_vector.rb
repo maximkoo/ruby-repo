@@ -41,6 +41,11 @@ def cw(obj1, obj2) # Above zero = obj2 is to the left, below zero = obj2 is to t
   sign(b)
 end
 
+def cwxy(obj1, x, y)
+  a=Gosu::angle(obj1.x,obj1.y, x, y)
+  b=Gosu::angle_diff(obj1.angle-90, a)
+  sign(b)
+end
 end;
 
 

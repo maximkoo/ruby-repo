@@ -60,15 +60,16 @@ class Bird
     @master.objects.each do |obj|
       if obj.class.name=='Obstacle'
         sdsti=shortest_distance(self, obj)
-        if sdsti[0]<VISION
+        if sdsti[0]<VISION && sdsti[0]!=0
           #@color=obj.color
           c=@master.vector.cw(self, obj)
           #puts c
           if sign(c)>0 #-- Obstacle to the left
-            steer_cw(2)
-          #elsif sign(c)<0
+            #steer_cw(2)
+            steer_cw(0.1+50.fdiv(sdsti[0]))
           else
-            steer_ccw(2)
+            #steer_ccw(2)
+            steer_ccw(0.1+50.fdiv(sdsti[0]))
           end    
         end  
       end    
@@ -83,6 +84,7 @@ class Bird
     @avgV=@master.vector.sum_neighbours(neighbours_and_me)
     @avgP=@master.vector.mid_neighbours(neighbours_and_me);
     @avgA=Gosu.angle(@avgP[:x],@avgP[:y], @avgP[:x]+@avgV[:dx],@avgP[:y]+@avgV[:dy])
+    
   end
   
   def update150
@@ -100,7 +102,7 @@ class Bird
     #avoid collision
     @neighbours.each do |obj|
       if obj[:sdst]<VISION 
-        aa=10.fdiv(obj[:sdst])
+        aa=15.fdiv(obj[:sdst])
         if @master.vector.cw(self,obj[:obj])<0 
           #puts "is LEFT, aa=#{aa}"
           steer_ccw(aa)
@@ -108,6 +110,19 @@ class Bird
           #puts "is RIGHT, aa=#{aa}"
           steer_cw(aa) 
         end
+      end
+    end
+  end
+  
+  def update170
+    #steer towards the mid-point
+    if @neighbours.size>0
+      aa=0.25
+      if @master.vector.cwxy(self,@avgP[:x],@avgP[:y])<0       
+         steer_cw(aa)
+      elsif @master.vector.cwxy(self,@avgP[:x],@avgP[:y])>0
+         #puts "is RIGHT, aa=#{aa}"
+         steer_ccw(aa) 
       end
     end
   end
@@ -139,14 +154,16 @@ class Bird
      
      #process obstacles 
       if obj.class.name=='Obstacle'
-        if sdsti[0]<VISION
+        if sdsti[0]<VISION && sdsti[0]!=0
           #@color=obj.color
           c=@master.vector.cw(self, obj)
           #puts c
           if sign(c)>0 #-- Obstacle to the left
-            steer_cw(1)
+            #steer_cw(1)
+            steer_cw(10/sdsti[0])
           else
-            steer_ccw(1)
+            #steer_ccw(1)
+            steer_ccw(10/sdsti[0])
           end    
         end  
       end    
@@ -226,9 +243,9 @@ class Bird
     
     Gosu.draw_triangle(x1, y1, @color, x2, y2, @color, x3, y3, @color, z=0);
     
-    # @neighbours.each do |obj|            
-      # Gosu::draw_line(self.x, self.y, @color, obj[:xi], obj[:yi], @color, 0) if obj!=self
-    # end
+    ##@neighbours.each do |obj|            
+    ##  Gosu::draw_line(self.x, self.y, @color, obj[:xi], obj[:yi], @color, 0) if obj!=self
+    ##end
         
     #puts "This is Bird. @neighbours.size=#{@neighbours.size}"
     

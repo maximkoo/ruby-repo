@@ -16,24 +16,45 @@ def initialize
   #objects<<Bird.new(self,100,330,1,0)
   #######
   # @objects<<Obstacle.new(self,100,100)
-  #@objects<<Obstacle.new(self,300,100) 
+  @objects<<Obstacle.new(self,300,100) 
   # @objects<<Obstacle.new(self,500,100)
   #@objects<<Obstacle.new(self,100,300)
   @objects<<Obstacle.new(self,300,300) 
   #@objects<<Obstacle.new(self,500,300)
   # @objects<<Obstacle.new(self,100,500)
-  #@objects<<Obstacle.new(self,300,500) 
+  @objects<<Obstacle.new(self,300,500) 
   # @objects<<Obstacle.new(self,500,500)
   @c=@objects.size
   #
   @vector=BirdVector.new
-  @birds=[]
+  #@birds=[]
+  @birds=@objects.select{|obj| obj.class.name=='Bird'}
+end
+
+def createBird(x,y)
+  b=Bird.new(self, x,y,1,rand(361))
+  @objects<<b
+  @birds<<b 
+end
+
+def ToggleObstacle(x,y)
+  a=0
+  @objects.select{|obj|obj.class.name=='Obstacle'}.each do |obj|
+    if (x-obj.x).abs<=OBSTACLE_SIZE.fdiv(2) && (y-obj.y).abs<=OBSTACLE_SIZE.fdiv(2)
+      @objects=@objects-[obj];
+      a+=1      
+    end
+  end
+  if a==0 
+    b=Obstacle.new(self, x,y)
+    @objects<<b  
+  end;
 end
 
 def update
   #@objects.map!(&:update)
   #
-  @birds=@objects.select{|obj| obj.class.name=='Bird'}
+  
   @birds.map(&:update110) #self-movement
   @birds.map(&:update120) #collect neighbours
   
@@ -43,7 +64,7 @@ def update
   @birds.map(&:update160) #avoid collision
   @birds.map(&:update150) #steer towards average velocity
   
-  
+  @birds.map(&:update170) #steer towards the mid-point
 end
 
 def draw

@@ -6,6 +6,7 @@ BIRD_WIDTH=5
 VELOCITY=1
 VISION=50
 SCALE=30
+OBSTACLE_SIZE=10
 class GameWindow<Gosu::Window
   SCREEN_WIDTH=Gosu.screen_width;
   SCREEN_HEIGHT=Gosu.screen_height;
@@ -31,7 +32,17 @@ class GameWindow<Gosu::Window
       if id==Gosu::KbLeft
         @objectPool.steer_ccw(5)     
       end;
+      
+      if id==Gosu::MsLeft
+        @objectPool.createBird(mouse_x, mouse_y)
+      end
+      
+      if id==Gosu::MsRight
+        @objectPool.ToggleObstacle(mouse_x, mouse_y)
+      end
     end;
+    
+     
 
     def update
       now=Gosu.milliseconds

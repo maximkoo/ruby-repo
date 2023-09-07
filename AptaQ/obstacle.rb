@@ -1,4 +1,3 @@
-OBSTACLE_SIZE=20
 class Obstacle
   attr_accessor :master
   attr_accessor :x, :y  
